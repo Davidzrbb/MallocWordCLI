@@ -14,25 +14,17 @@ typedef struct Player Player;
 
 void StatDepartPlayer(Player *);
 
-void CollecteRessources(Player *);
+void MovePlayer();
 
-void PrintInventory(Player);
+void CollecteRessources(Player *, int nextBox);
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     //Stat du Player au début de la partie
     StatDepartPlayer(&PlayerStruct);
-    //CollecteRessources
-    CollecteRessources(&PlayerStruct);
     //printInventaire
-    PrintInventory(PlayerStruct);
+    MovePlayer(PlayerStruct);
     return 0;
-}
-
-void PrintInventory(Player p) {
-    for (int i = 0; i < 5; i++) {
-        printf("Votre inventaire : %d", p.inventory[i][0]);
-    }
 }
 
 void StatDepartPlayer(Player *PlayerDebut) {
@@ -53,8 +45,13 @@ void StatDepartPlayer(Player *PlayerDebut) {
     PlayerDebut->inventory[3][2] = 0;
 }
 
-void CollecteRessources(Player *inventoryCollect) {
+void MovePlayer(PlayerStruct) {
     int nextBox = 3;
+    //CollecteRessources
+    CollecteRessources(&PlayerStruct, nextBox);
+}
+
+void CollecteRessources(Player *inventoryCollect, int nextBox) {
     //on verifie si ressource
     int nextBoxRessource = VerifResource(inventoryCollect, nextBox);
     if (nextBoxRessource != -1) {
@@ -83,7 +80,6 @@ void CollecteRessources(Player *inventoryCollect) {
         printf("PAS UNE RESSOURCE");
     }
 }
-
 
 int *ToolsNecessary(int nextBox) {
     //PLANTE
