@@ -1,6 +1,6 @@
 #include "../include/collectRessource.h";
 
-void StatDepartPlayer(Player *);
+void InitPlayerr(Player *);
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
