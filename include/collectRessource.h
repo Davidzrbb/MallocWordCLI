@@ -6,14 +6,47 @@
 #include <stdlib.h>
 #include <time.h>
 
+typedef struct Weapon Weapon;
+
+typedef struct Player Player;
+
+struct Weapon{
+    char * name;
+    int id;
+    int damage;
+    float max_durability;
+    float actual_durabiulity;
+};
+typedef struct Weapon Weapon;
+
+struct Tools{
+   char * name;
+    int id;
+    float max_durability;
+    float actual_durabiulity;
+};
+typedef struct Tools Tools;
+
+struct Resource{
+    int id;
+    int quantity;
+};
+typedef struct Resource Resource;
+
+struct AllObjectInventory{
+    struct  Weapon weapon;
+    struct  Tools tools;
+    struct  Resource resource;
+};
+typedef struct AllObjectInventory AllObjectInventory;
+
 struct Player {
     int experience;
     int level;
     int currentHealthPoints;
     int maxHealthpoints;
-    int inventory[10][3];
+    AllObjectInventory inventory[10];
 };
-typedef struct Player Player;
 
 enum entity {
     PORTAL1_2 = -3,
@@ -60,7 +93,8 @@ enum tools {
 };
 typedef enum tools tools;
 
-void MovePlayer();
+void InitPlayer(Player * );
+void MovePlayer(Player);
 void CollecteRessources(Player *inventoryCollect, int nextBox);
 int VerifResource(Player *inventoryCollect,int nextBox);
 int VerifItem(Player *inventoryCollect, int nextBox);

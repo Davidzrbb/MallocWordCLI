@@ -135,7 +135,7 @@ int VerifResource(Player *inventoryCollect, int nextBox) {
     //on verifie si le Player a deja l'element
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         //on verifie si le Player a deja de la pierre
-        if (inventoryCollect->inventory[i][0] == resource) {
+        if (inventoryCollect->inventory[i].resource.id == resource) {
             return i;
         }
     }
@@ -148,7 +148,7 @@ int VerifItem(Player *inventoryCollect, int nextBox) {
     int *tools = ToolsNecessary(nextBox);
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         for (int j = 0; j < sizeof(tools); j++) {
-            if (inventoryCollect->inventory[i][0] == tools[j]) {
+            if (inventoryCollect->inventory[i].tools.id == tools[j]) {
                 return i;
             }
         }
@@ -169,9 +169,9 @@ int VerifDurability(Player *inventoryCollect, int nextBox, int item) {
         percentage = 40;
     }
     //si la pelle à de la durabilité
-    if (inventoryCollect->inventory[item][1] != 0) {
+    if (inventoryCollect->inventory[item].tools.actual_durabiulity != 0) {
         //on enleve % de durabilité
-        inventoryCollect->inventory[item][1] -= inventoryCollect->inventory[item][1] / percentage;
+        inventoryCollect->inventory[item].tools.actual_durabiulity -= inventoryCollect->inventory[item].tools.actual_durabiulity / percentage;
         return 0;
     }
     return -1;
@@ -188,18 +188,17 @@ int AddInventoryResources(Player *inventoryCollect, int nextBox) {
     }
     //On verifie si il y a de la pierre et on stack de 1 à 4
     if (indexResources < 100) {
-        inventoryCollect->inventory[indexResources][1] += randomResourceNumber;
+        inventoryCollect->inventory[indexResources].resource.quantity += randomResourceNumber;
         //on verifie si il y a plus de 20 on met a 20
-        if (inventoryCollect->inventory[indexResources][0] > 20) {
-            inventoryCollect->inventory[indexResources][0] = 20;
+        if (inventoryCollect->inventory[indexResources].resource.quantity > 20) {
+            inventoryCollect->inventory[indexResources].resource.quantity = 20;
         }
     } else {
         //On verifie la disponibilité dans l'inventory du Player et on ajouter 1 à 4
         if (sizeof(inventoryCollect) != 10) {
             indexResources -= 100;
-            inventoryCollect->inventory[sizeof(inventoryCollect)][0] = indexResources;
-            inventoryCollect->inventory[sizeof(inventoryCollect)][1] = randomResourceNumber;
-            inventoryCollect->inventory[sizeof(inventoryCollect)][2] = 0;
+            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.id = indexResources;
+            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.quantity = randomResourceNumber;
         } else {
             //pas de place dans l'inventaire
             return -2;
