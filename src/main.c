@@ -1,8 +1,8 @@
-#include "../include/collectRessource.h";
+#include "../include/collectRessource.h"
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
-    AllObjectInventory AllObjectInventoryStruct;
+    Item ItemStruct;
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
     //printInventaire
@@ -12,26 +12,27 @@ int main(int argc, const char *argv[]) {
 
 void InitPlayer(Player* firstPlayer) {
 
-    AllObjectInventory *WeaponSword = malloc(sizeof(Weapon));
+    Item *WeaponSword = malloc(sizeof(Item));
     WeaponSword->weapon.name = "sword";
     WeaponSword->weapon.damage= 1;
     WeaponSword->weapon.max_durability = 10;
     WeaponSword->weapon.actual_durabiulity  = 10;
     WeaponSword->weapon.id = 1;
+    WeaponSword->type=1;
 
-    AllObjectInventory *ToolsPickaxe = malloc(sizeof(Tools));
+    Item *ToolsPickaxe = malloc(sizeof(Item));
     ToolsPickaxe->tools.name ="pickaxe";
     ToolsPickaxe->tools.id = WOODEN_PICKAXE;
     ToolsPickaxe->tools.max_durability=10;
     ToolsPickaxe->tools.actual_durabiulity=10;
 
-    AllObjectInventory  *ToolsBillhook = malloc(sizeof(Tools));
+    Item  *ToolsBillhook = malloc(sizeof(Item ));
     ToolsBillhook->tools.name ="billhook";
     ToolsBillhook->tools.id = WOODEN_BILLHOOK;
     ToolsBillhook->tools.max_durability=10;
-    ToolsBillhook->tools.actual_durabiulity=0;
+    ToolsBillhook->tools.actual_durabiulity=10;
 
-    AllObjectInventory *ToolsAx = malloc(sizeof(Tools));
+    Item *ToolsAx = malloc(sizeof(Item ));
     ToolsAx->tools.name ="ax";
     ToolsAx->tools.id = WOODEN_AX;
     ToolsAx->tools.max_durability=10;
@@ -45,14 +46,13 @@ void InitPlayer(Player* firstPlayer) {
     firstPlayer->inventory[2] = *ToolsBillhook ;
     firstPlayer->inventory[3] = *ToolsAx ;
 
-
 }
 
 void MovePlayer(Player PlayerStruct) {
     int nextBox = 3;
    // printf("Votre arme %d",PlayerStruct.inventory[0].weapon.id);
     //CollecteRessources
-    CollecteRessources(&PlayerStruct, nextBox);
+   CollecteRessources(&PlayerStruct, nextBox);
 }
 
 
