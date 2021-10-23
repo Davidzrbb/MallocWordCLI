@@ -1,4 +1,4 @@
-#include "../include/collectRessource.h"
+#include "CollecteResource.h"
 
 void CollecteRessources(Player *inventoryCollect, int nextBox) {
     //on verifie si ressource
@@ -135,7 +135,7 @@ int VerifResource(Player *inventoryCollect, int nextBox) {
     //on verifie si le Player a deja l'element
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         //on verifie si le Player a deja de la pierre
-        if (inventoryCollect->inventory[i].resource.id == resource) {
+        if (inventoryCollect->inventory[i].type == resource) {
             return i;
         }
     }
@@ -148,7 +148,7 @@ int VerifItem(Player *inventoryCollect, int nextBox) {
     int *tools = ToolsNecessary(nextBox);
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         for (int j = 0; j < sizeof(tools); j++) {
-            if (inventoryCollect->inventory[i].tools.id == tools[j]) {
+            if (inventoryCollect->inventory[i].type == tools[j]) {
                 return i;
             }
         }
@@ -197,7 +197,7 @@ int AddInventoryResources(Player *inventoryCollect, int nextBox) {
         //On verifie la disponibilité dans l'inventory du Player et on ajouter 1 à 4
         if (sizeof(inventoryCollect) != 10) {
             indexResources -= 100;
-            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.id = indexResources;
+            inventoryCollect->inventory[sizeof(inventoryCollect)].type = indexResources;
             inventoryCollect->inventory[sizeof(inventoryCollect)].resource.quantity = randomResourceNumber;
         } else {
             //pas de place dans l'inventaire

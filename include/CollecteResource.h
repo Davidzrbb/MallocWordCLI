@@ -1,18 +1,13 @@
-#ifndef MALLOC_WORLD_CLI_COLLECT_RESSOURCE_H
-#define MALLOC_WORLD_CLI_COLLECT_RESSOURCE_H
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct Weapon Weapon;
-
 typedef struct Player Player;
 
 struct Weapon {
     char *name;
-    int id;
     int damage;
     float max_durability;
     float actual_durabiulity;
@@ -21,14 +16,12 @@ typedef struct Weapon Weapon;
 
 struct Tools {
     char *name;
-    int id;
     float max_durability;
     float actual_durabiulity;
 };
 typedef struct Tools Tools;
 
 struct Resource {
-    int id;
     int quantity;
 };
 typedef struct Resource Resource;
@@ -36,7 +29,7 @@ typedef struct Resource Resource;
 
 struct Item {
     int type;
-    union  {
+    union {
         struct Weapon weapon;
         struct Tools tools;
         struct Resource resource;
@@ -84,6 +77,16 @@ enum resource {
     HEMP = 29,
 };
 typedef enum resource resource;
+enum weaponEnum {
+    WOODEN_SWORD = 1,
+    STONE_SWORD = 8,
+    STONE_SPEAR = 9,
+    STONE_HAMMER = 10,
+    IRON_SWORD = 19,
+    IRON_SPEAR = 20,
+    IRON_HAMMER = 21,
+};
+typedef enum weaponEnum weaponEnum;
 enum tools {
     WOODEN_PICKAXE = 2,
     WOODEN_BILLHOOK = 3,
@@ -110,6 +113,3 @@ int VerifItem(Player *inventoryCollect, int nextBox);
 int VerifDurability(Player *inventoryCollect, int nextBox, int item);
 
 int AddInventoryResources(Player *inventoryCollect, int nextBox);
-
-
-#endif //MALLOC_WORLD_CLI_COLLECT_RESSOURCE_H
