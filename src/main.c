@@ -5,8 +5,10 @@ int main(int argc, const char *argv[]) {
     Item ItemStruct;
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
+    //PnjFix
+    pnjChoice(&PlayerStruct);
 //Print
-    printTest(PlayerStruct);
+//    printTest(PlayerStruct);
     return 0;
 }
 

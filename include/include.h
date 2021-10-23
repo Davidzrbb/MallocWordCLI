@@ -44,7 +44,7 @@ struct Player {
     int maxHealthpoints;
     Item inventory[10];
 };
-
+typedef struct Player  Player;
 enum entity {
     PORTAL1_2 = -3,
     PORTAL2_3 = -2,
@@ -101,5 +101,6 @@ enum tools {
 typedef enum tools tools;
 
 void InitPlayer(Player *);
-
+void pnjChoice(Player *);
+const char * pnjFix(Player *);
 void printTest(Player);
