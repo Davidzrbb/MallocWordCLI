@@ -25,7 +25,7 @@ void CollecteRessources(Player *inventoryCollect, int nextBox) {
         } else {
             printf("Vous n'avez pas l'outil necessaire !");
         }
-    }else{
+    } else {
         printf("PAS UNE RESSOURCE");
     }
 }
@@ -80,7 +80,7 @@ int *ToolsNecessary(int nextBox) {
     }
     if (nextBox == WOOD2) {
         int tools[2];
-        tools[0] =  STONE_AX;
+        tools[0] = STONE_AX;
         tools[1] = IRON_AX;
         return tools;
     }
@@ -135,8 +135,10 @@ int VerifResource(Player *inventoryCollect, int nextBox) {
     //on verifie si le Player a deja l'element
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         //on verifie si le Player a deja de la pierre
-        if (inventoryCollect->inventory[i].type == resource) {
-            return i;
+        if (inventoryCollect->inventory[i].type == RESOURCE) {
+            if (inventoryCollect->inventory[i].resource.id == resource) {
+                return i;
+            }
         }
     }
     resource += 100;
@@ -148,8 +150,10 @@ int VerifItem(Player *inventoryCollect, int nextBox) {
     int *tools = ToolsNecessary(nextBox);
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         for (int j = 0; j < sizeof(tools); j++) {
-            if (inventoryCollect->inventory[i].type == tools[j]) {
-                return i;
+            if (inventoryCollect->inventory[i].type == TOOL) {
+                if (inventoryCollect->inventory[i].tools.id == tools[j]) {
+                    return i;
+                }
             }
         }
     }
@@ -171,7 +175,8 @@ int VerifDurability(Player *inventoryCollect, int nextBox, int item) {
     //si la pelle à de la durabilité
     if (inventoryCollect->inventory[item].tools.actual_durabiulity != 0) {
         //on enleve % de durabilité
-        inventoryCollect->inventory[item].tools.actual_durabiulity -= inventoryCollect->inventory[item].tools.actual_durabiulity / percentage;
+        inventoryCollect->inventory[item].tools.actual_durabiulity -=
+                inventoryCollect->inventory[item].tools.actual_durabiulity / percentage;
         return 0;
     }
     return -1;
@@ -197,7 +202,7 @@ int AddInventoryResources(Player *inventoryCollect, int nextBox) {
         //On verifie la disponibilité dans l'inventory du Player et on ajouter 1 à 4
         if (sizeof(inventoryCollect) != 10) {
             indexResources -= 100;
-            inventoryCollect->inventory[sizeof(inventoryCollect)].type = indexResources;
+            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.id = indexResources;
             inventoryCollect->inventory[sizeof(inventoryCollect)].resource.quantity = randomResourceNumber;
         } else {
             //pas de place dans l'inventaire

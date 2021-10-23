@@ -7,6 +7,7 @@
 typedef struct Player Player;
 
 struct Weapon {
+    int id;
     char *name;
     int damage;
     float max_durability;
@@ -15,6 +16,7 @@ struct Weapon {
 typedef struct Weapon Weapon;
 
 struct Tools {
+    int id;
     char *name;
     float max_durability;
     float actual_durabiulity;
@@ -22,6 +24,7 @@ struct Tools {
 typedef struct Tools Tools;
 
 struct Resource {
+    int id;
     int quantity;
 };
 typedef struct Resource Resource;
@@ -100,6 +103,12 @@ enum tools {
 };
 typedef enum tools tools;
 
+enum type {
+    WEAPON = 1,
+    TOOL = 2,
+    RESOURCE = 3,
+};
+typedef enum tools tools;
 void InitPlayer(Player *);
 
 void MovePlayer(Player);
