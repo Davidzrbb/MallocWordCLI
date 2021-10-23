@@ -8,7 +8,7 @@ int main(int argc, const char *argv[]) {
     //PnjFix
     pnjChoice(&PlayerStruct);
 //Print
-    printTest(PlayerStruct);
+    //printTest(PlayerStruct);
     return 0;
 }
 
@@ -24,7 +24,7 @@ void InitPlayer(Player* firstPlayer) {
     Item *ToolsPickaxe = malloc(sizeof(Item));
     ToolsPickaxe->tools.name ="pickaxe";
     ToolsPickaxe->tools.max_durability=10;
-    ToolsPickaxe->tools.actual_durabiulity=10;
+    ToolsPickaxe->tools.actual_durabiulity=5;
     ToolsPickaxe->tools.id= WOODEN_PICKAXE;
     ToolsPickaxe->type= TOOL;
 
