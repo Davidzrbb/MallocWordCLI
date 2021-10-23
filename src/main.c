@@ -12,6 +12,7 @@ int main(int argc, const char *argv[]) {
 
 void InitPlayer(Player* firstPlayer) {
     Item *WeaponSword = malloc(sizeof(Item));
+    WeaponSword->weapon.name ="sword";
     WeaponSword->weapon.damage= 1;
     WeaponSword->weapon.max_durability = 10;
     WeaponSword->weapon.actual_durabiulity  = 10;
