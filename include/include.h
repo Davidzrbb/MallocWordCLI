@@ -7,6 +7,7 @@
 typedef struct Player Player;
 
 struct Weapon {
+    int id;
     char *name;
     int damage;
     float max_durability;
@@ -15,6 +16,7 @@ struct Weapon {
 typedef struct Weapon Weapon;
 
 struct Tools {
+    int id;
     char *name;
     float max_durability;
     float actual_durabiulity;
@@ -22,6 +24,7 @@ struct Tools {
 typedef struct Tools Tools;
 
 struct Resource {
+    int id;
     int quantity;
 };
 typedef struct Resource Resource;
@@ -99,8 +102,13 @@ enum tools {
     IRON_AX = 25,
 };
 typedef enum tools tools;
-
+enum type {
+    WEAPON = 1,
+    TOOL = 2,
+    RESOURCE = 3,
+};
+typedef enum item item;
 void InitPlayer(Player *);
 void pnjChoice(Player *);
-const char * pnjFix(Player *);
+void pnjFix(Player *);
 void printTest(Player);
