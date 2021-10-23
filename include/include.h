@@ -1,50 +1,48 @@
-#define MALLOC_WORLD_CLI_COLLECT_RESSOURCE_H
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
-
-
 typedef struct Player Player;
 
-struct Weapon{
-    char * name;
-    int id;
+struct Weapon {
+    char *name;
     int damage;
     float max_durability;
     float actual_durabiulity;
 };
 typedef struct Weapon Weapon;
 
-struct Tools{
-    char * name;
-    int id;
+struct Tools {
+    char *name;
     float max_durability;
     float actual_durabiulity;
 };
 typedef struct Tools Tools;
 
-struct Resource{
-    int id;
+struct Resource {
     int quantity;
 };
 typedef struct Resource Resource;
 
-struct AllObjectInventory{
-    struct  Weapon weapon;
-    struct  Tools tools;
-    struct  Resource resource;
+
+struct Item {
+    int type;
+    union {
+        struct Weapon weapon;
+        struct Tools tools;
+        struct Resource resource;
+    };
 };
-typedef struct AllObjectInventory AllObjectInventory;
+typedef struct Item Item;
 
 struct Player {
     int experience;
     int level;
     int currentHealthPoints;
     int maxHealthpoints;
-    AllObjectInventory inventory[10];
+    Item inventory[10];
 };
 
 enum entity {
@@ -55,15 +53,15 @@ enum entity {
     PLAYER = 1,
     NPC = 2,
     PLANT1 = 3,
-    ROCK1= 4,
-    WOOD1=5,
-    PLANT2=6,
-    ROCK2=7,
-    WOOD2=8,
-    PLANT3=9,
-    ROCK3=10,
-    WOOD3=11,
-    END8BOSS=99,
+    ROCK1 = 4,
+    WOOD1 = 5,
+    PLANT2 = 6,
+    ROCK2 = 7,
+    WOOD2 = 8,
+    PLANT3 = 9,
+    ROCK3 = 10,
+    WOOD3 = 11,
+    END8BOSS = 99,
 };
 typedef enum entity entity;
 
@@ -73,24 +71,35 @@ enum resource {
     GRASS = 7,
     BEECH = 16,
     IRON = 17,
-    LAVANDER= 18,
+    LAVANDER = 18,
     OAK = 27,
-    DIAMOND= 28,
-    HEMP=29,
+    DIAMOND = 28,
+    HEMP = 29,
 };
 typedef enum resource resource;
+enum weaponEnum {
+    WOODEN_SWORD = 1,
+    STONE_SWORD = 8,
+    STONE_SPEAR = 9,
+    STONE_HAMMER = 10,
+    IRON_SWORD = 19,
+    IRON_SPEAR = 20,
+    IRON_HAMMER = 21,
+};
+typedef enum weaponEnum weaponEnum;
 enum tools {
     WOODEN_PICKAXE = 2,
     WOODEN_BILLHOOK = 3,
     WOODEN_AX = 4,
     STONE_PICKAXE = 12,
     STONE_BILLHOOK = 13,
-    STONE_AX= 14,
+    STONE_AX = 14,
     IRON_PICKAXE = 23,
-    IRON_BILLHOOK= 24,
-    IRON_AX =25,
+    IRON_BILLHOOK = 24,
+    IRON_AX = 25,
 };
 typedef enum tools tools;
 
-void InitPlayer(Player * );
+void InitPlayer(Player *);
+
 void printTest(Player);
