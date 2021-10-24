@@ -3,10 +3,12 @@
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     Item ItemStruct;
+    PnjLinkedList stock;
+
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
     //PnjFix
-    pnjChoice(&PlayerStruct);
+    pnjChoice(&PlayerStruct,&stock);
 //Print
     //printTest(PlayerStruct);
     return 0;
@@ -56,7 +58,7 @@ void InitPlayer(Player* firstPlayer) {
 
 void printTest(Player PlayerStruct){
     for (int i = 0; i<sizeof(PlayerStruct.inventory[i].type);i++){
-            printf("Vos item %s", PlayerStruct.inventory[i].tools.name);
+            //printf("Vos item %s", PlayerStruct.inventory[i].tools.name);
         }
 
 }

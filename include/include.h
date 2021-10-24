@@ -47,7 +47,7 @@ struct Player {
     int maxHealthpoints;
     Item inventory[10];
 };
-typedef struct Player  Player;
+typedef struct Player Player;
 enum entity {
     PORTAL1_2 = -3,
     PORTAL2_3 = -2,
@@ -108,7 +108,25 @@ enum type {
     RESOURCE = 3,
 };
 typedef enum item item;
+
+
+typedef struct PnjLinkedList PnjLinkedList;
+struct PnjLinkedList {
+    Item *data;
+    PnjLinkedList *next;
+};
+
+
 void InitPlayer(Player *);
-void pnjChoice(Player *);
+
+void pnjChoice(Player *,PnjLinkedList*);
+
 void pnjFix(Player *);
+
+void pnjStock(Player *, PnjLinkedList *);
+
+PnjLinkedList *insertion(Item *nvNombre,PnjLinkedList*);
+
+void afficherListe(Player *, PnjLinkedList* );
+
 void printTest(Player);
