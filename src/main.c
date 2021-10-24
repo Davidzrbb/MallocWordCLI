@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "map.h"
+
 
 struct Player
 {
@@ -17,8 +19,10 @@ void initPlayer(Player*);
 
 int main(int argc, const char *argv[]) {
     Player playerStruct;
+
+    create_map();
     //Stat du joueur au début de la partie
-    initPlayer(&playerStruct);
+    //initPlayer(&playerStruct);
     
     return 0;
 }
