@@ -1,8 +1,8 @@
-#include "../include/include.h";
+#include "../include/include.h"
 
-void pnjChoice(Player *playerStruct,PnjLinkedList*nouveau) {
+void pnjChoice(Player *playerStruct, PnjLinkedList *nouveau) {
     /* Création du nouvel élément */
-    PnjLinkedList *nouveau1 = malloc(sizeof(PnjLinkedList));
+
     int c;
 
     printf("\n Bonjour, je suis le pnj que souhaitez vous faire ? \n 1 = Reparer votre item \n 2 = Crafter un nouvelle item \n 3 = Deposer un item \n 4 = Recuperer un item \n "
@@ -21,7 +21,7 @@ void pnjChoice(Player *playerStruct,PnjLinkedList*nouveau) {
             break;
 
         case 3 :
-            pnjStock(playerStruct,nouveau1);
+            pnjStock(playerStruct, nouveau);
             break;
 
         case 4 :
@@ -61,10 +61,10 @@ void pnjFix(Player *playerStruct) {
     }
 }
 
-void pnjStock(Player *playerStruct,PnjLinkedList* nouveau) {
+void pnjStock(Player *playerStruct, PnjLinkedList *nouveau) {
 
     int stockItem = 0;
-    Item  data ;
+    Item data;
     int index;
     int verif = 0;
     printf("\nVeuillez choisir l'item a stocker:\n");
@@ -90,28 +90,39 @@ void pnjStock(Player *playerStruct,PnjLinkedList* nouveau) {
         }
     }
 
-   nouveau = insertion(&data,nouveau);
-    afficherListe(playerStruct,nouveau);
+    insertion(&data, nouveau);
+    afficherListe(playerStruct, nouveau);
 }
 
-PnjLinkedList * insertion(Item *nvItem,PnjLinkedList* nouveau)
-{
+PnjLinkedList *insertion(Item *nvItem, PnjLinkedList *actualStockPos) {
+    if (actualStockPos == NULL) {
+        printf("NULL");
+        actualStockPos = malloc(sizeof(PnjLinkedList));
+        actualStockPos->data = nvItem;
+        actualStockPos->next = NULL;
+    } else {
+        printf(" PAS NULL");
+        PnjLinkedList *cache = actualStockPos;
+        while (cache->next != NULL) {
+            cache = cache->next;
+        }
+        cache->next = malloc(sizeof(PnjLinkedList));
+        cache = cache->next;
+        cache->data = nvItem;
+        cache->next = NULL;
 
-        nouveau->data = nvItem;
-        /* Insertion de l'élément au début de la liste */
-        nouveau->next = NULL;
+        return cache;
+    }
 
-    return nouveau;
+    return actualStockPos;
 }
 
-void afficherListe(Player *playerStruct,PnjLinkedList* nouveau)
-{
 
-    while (nouveau != NULL)
-    {
-        printf("%s -> ", nouveau->data->weapon.name);
+void afficherListe(Player *playerStruct, PnjLinkedList *nouveau) {
+    while (nouveau->next != NULL) {
+        printf("%d -> ", nouveau->data->weapon.id);
         nouveau = nouveau->next;
     }
     printf("NULL\n");
-    pnjStock(playerStruct,nouveau);
+    pnjStock(playerStruct, nouveau);
 }

@@ -1,14 +1,15 @@
-#include "../include/include.h";
+#include "../include/include.h"
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     Item ItemStruct;
-    PnjLinkedList stock;
-
+    //PnjLinkedList stock;
+    PnjLinkedList * stock = malloc(sizeof (PnjLinkedList));
+    stock->next = NULL;
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
     //PnjFix
-    pnjChoice(&PlayerStruct,&stock);
+    pnjChoice(&PlayerStruct,stock);
 //Print
     //printTest(PlayerStruct);
     return 0;
@@ -54,6 +55,7 @@ void InitPlayer(Player* firstPlayer) {
     firstPlayer->inventory[1] = *ToolsPickaxe ;
     firstPlayer->inventory[2] = *ToolsBillhook ;
     firstPlayer->inventory[3] = *ToolsAx ;
+
 }
 
 void printTest(Player PlayerStruct){

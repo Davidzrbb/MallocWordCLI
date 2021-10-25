@@ -117,6 +117,7 @@ struct PnjLinkedList {
 };
 
 
+
 void InitPlayer(Player *);
 
 void pnjChoice(Player *,PnjLinkedList*);
@@ -128,5 +129,6 @@ void pnjStock(Player *, PnjLinkedList *);
 PnjLinkedList *insertion(Item *nvNombre,PnjLinkedList*);
 
 void afficherListe(Player *, PnjLinkedList* );
+void freeLinked(PnjLinkedList*);
 
 void printTest(Player);
