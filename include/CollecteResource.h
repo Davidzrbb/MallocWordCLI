@@ -113,7 +113,7 @@ void InitPlayer(Player *);
 
 void MovePlayer(Player);
 
-void CollecteRessources(Player *inventoryCollect, int nextBox);
+int CollecteRessources(Player *inventoryCollect, int nextBox);
 
 int VerifResource(Player *inventoryCollect, int nextBox);
 
