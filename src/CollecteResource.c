@@ -1,6 +1,6 @@
 #include "CollecteResource.h"
 
-void CollecteRessources(Player *inventoryCollect, int nextBox) {
+int CollecteRessources(Player *inventoryCollect, int nextBox) {
     //on verifie si ressource
     int nextBoxRessource = VerifResource(inventoryCollect, nextBox);
     if (nextBoxRessource != -1) {
@@ -16,18 +16,24 @@ void CollecteRessources(Player *inventoryCollect, int nextBox) {
                     printf("%d Ressources ajoute ! ", addResource);
                 } else if (addResource == -1) {
                     printf("C'est pas une ressource ");
+                    return 0;
                 } else {
                     printf("Inventaire pleins !");
+                    return 0;
                 }
             } else {
                 printf("Vous n'avez plus de durabilite sur l'outil necessaire !");
+                return 0;
             }
         } else {
             printf("Vous n'avez pas l'outil necessaire !");
+            return 0;
         }
     } else {
         printf("PAS UNE RESSOURCE");
+        return 0;
     }
+    return 1;
 }
 
 int *ToolsNecessary(int nextBox) {
@@ -202,6 +208,7 @@ int AddInventoryResources(Player *inventoryCollect, int nextBox) {
         //On verifie la disponibilité dans l'inventory du Player et on ajouter 1 à 4
         if (sizeof(inventoryCollect) != 10) {
             indexResources -= 100;
+            inventoryCollect->inventory[sizeof(inventoryCollect)].type = RESOURCE;
             inventoryCollect->inventory[sizeof(inventoryCollect)].resource.id = indexResources;
             inventoryCollect->inventory[sizeof(inventoryCollect)].resource.quantity = randomResourceNumber;
         } else {
