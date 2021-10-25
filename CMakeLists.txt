@@ -1,10 +1,17 @@
 cmake_minimum_required(VERSION 3.20)
-project(MallocWordCLI C)
+project(MallocWordCLI)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 
 add_executable(MallocWordCLI
+        .idea/.gitignore
+        .idea/MallocWordCLI.iml
+        .idea/misc.xml
+        .idea/modules.xml
+        .idea/vcs.xml
+        .idea/workspace.xml
         include/include.h
-        src/main.c src/PnjService.c)
+        src/main.c
+        src/PnjService.c)
