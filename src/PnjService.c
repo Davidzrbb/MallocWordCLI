@@ -1,8 +1,9 @@
 #include "../include/include.h"
 
-void pnjChoice(Player *playerStruct, PnjLinkedList *nouveau) {
-    /* Création du nouvel élément */
+extern int countDelet = 0;
 
+void pnjChoice(Player *playerStruct, PnjLinkedList *stock) {
+    /* Création du nouvel élément */
     int c;
 
     printf("\n Bonjour, je suis le pnj que souhaitez vous faire ? \n 1 = Reparer votre item \n 2 = Crafter un nouvelle item \n 3 = Deposer un item \n 4 = Recuperer un item \n "
@@ -21,7 +22,7 @@ void pnjChoice(Player *playerStruct, PnjLinkedList *nouveau) {
             break;
 
         case 3 :
-            pnjStock(playerStruct, nouveau);
+            pnjStock(playerStruct, stock);
             break;
 
         case 4 :
@@ -42,6 +43,7 @@ void pnjFix(Player *playerStruct) {
     int fix = 0;
     int verif = 0;
     printf("\nVeuillez choisir l'item a reparer :\n");
+
     for (int i = 0; i < sizeof(playerStruct->inventory[i].type); i++) {
         printf("%d = %s , durability = %.2lf\n", playerStruct->inventory[i].tools.id,
                playerStruct->inventory[i].tools.name, playerStruct->inventory[i].tools.actual_durabiulity);
@@ -61,14 +63,16 @@ void pnjFix(Player *playerStruct) {
     }
 }
 
-void pnjStock(Player *playerStruct, PnjLinkedList *nouveau) {
+void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = 0;
     Item data;
     int index;
     int verif = 0;
+
     printf("\nVeuillez choisir l'item a stocker:\n");
-    for (int i = 0; i < sizeof(playerStruct->inventory[i].type); i++) {
+
+    for (int i = 0; i < sizeof(playerStruct->inventory[i].tools.id) - countDelet; i++) {
         printf("%d = %s \n", playerStruct->inventory[i].tools.id,
                playerStruct->inventory[i].tools.name);
     }
@@ -84,45 +88,61 @@ void pnjStock(Player *playerStruct, PnjLinkedList *nouveau) {
     if (verif == 0) {
         printf("Votre item n'est pas dans votre inventaire !\n");
     } else {
-        //ON SUPRIME L'ELEMENT DANS LE TABLEAU
-        for (int i = index; i < sizeof(playerStruct->inventory->type) - 1; i++) {
-            playerStruct->inventory[i] = playerStruct->inventory[i + 1];
-        }
+        ++countDelet;
+        deleteElement(playerStruct->inventory, sizeof(playerStruct->inventory) / sizeof(playerStruct->inventory[0]),
+                      index);
     }
-
-    insertion(&data, nouveau);
-    afficherListe(playerStruct, nouveau);
+    insertion(&data, stock);
+    afficherListe(playerStruct, stock);
 }
 
-PnjLinkedList *insertion(Item *nvItem, PnjLinkedList *actualStockPos) {
+void deleteElement(Item arr[], int n, int x) {
+// Search x in array
+    int i;
+    for (i = 0; i < n; i++)
+        if (i == x)
+            break;
+
+// If x found in array
+    if (i < n) {
+        // reduce size of array and move all
+        // elements on space ahead
+        n = n - 1;
+        for (int j = i; j < n; j++)
+            arr[j] = arr[j + 1];
+    }
+}
+
+void initStructStock(PnjLinkedList *stock) {
+    stock->next = NULL;
+    stock->data = malloc(sizeof(Item));
+}
+
+void insertion(Item *nvItem, PnjLinkedList *actualStockPos) {
+    int verif = 0;
     if (actualStockPos == NULL) {
-        printf("NULL");
         actualStockPos = malloc(sizeof(PnjLinkedList));
         actualStockPos->data = nvItem;
         actualStockPos->next = NULL;
     } else {
-        printf(" PAS NULL");
         PnjLinkedList *cache = actualStockPos;
         while (cache->next != NULL) {
             cache = cache->next;
+            verif++;
         }
         cache->next = malloc(sizeof(PnjLinkedList));
-        cache = cache->next;
         cache->data = nvItem;
+        cache = cache->next;
         cache->next = NULL;
-
-        return cache;
     }
-
-    return actualStockPos;
 }
 
 
-void afficherListe(Player *playerStruct, PnjLinkedList *nouveau) {
-    while (nouveau->next != NULL) {
-        printf("%d -> ", nouveau->data->weapon.id);
-        nouveau = nouveau->next;
+void afficherListe(Player *playerStruct, PnjLinkedList *stock) {
+    PnjLinkedList *cache = stock;
+    while (cache->next != NULL) {
+        printf("%s -> ", cache->data->weapon.name);
+        cache = cache->next;
     }
-    printf("NULL\n");
-    pnjStock(playerStruct, nouveau);
+    pnjStock(playerStruct, stock);
 }

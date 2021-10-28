@@ -118,6 +118,7 @@ struct PnjLinkedList {
 
 
 
+
 void InitPlayer(Player *);
 
 void pnjChoice(Player *,PnjLinkedList*);
@@ -125,10 +126,11 @@ void pnjChoice(Player *,PnjLinkedList*);
 void pnjFix(Player *);
 
 void pnjStock(Player *, PnjLinkedList *);
+void deleteElement(Item arr[], int n, int x);
+void insertion(Item *, PnjLinkedList *);
 
-PnjLinkedList *insertion(Item *nvNombre,PnjLinkedList*);
-
-void afficherListe(Player *, PnjLinkedList* );
+void afficherListe(Player *, PnjLinkedList*);
+void initStructStock(PnjLinkedList*);
 void freeLinked(PnjLinkedList*);
 
 void printTest(Player);

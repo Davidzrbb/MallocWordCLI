@@ -3,13 +3,16 @@
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     Item ItemStruct;
+
     //PnjLinkedList stock;
-    PnjLinkedList * stock = malloc(sizeof (PnjLinkedList));
-    stock->next = NULL;
+    PnjLinkedList *stock = malloc(sizeof (PnjLinkedList));
+    initStructStock(stock);
+
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
     //PnjFix
     pnjChoice(&PlayerStruct,stock);
+
 //Print
     //printTest(PlayerStruct);
     return 0;
