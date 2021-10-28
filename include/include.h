@@ -45,6 +45,8 @@ struct Player {
     int level;
     int currentHealthPoints;
     int maxHealthpoints;
+    int coord_x;
+    int coord_y;
     Item inventory[10];
 };
 

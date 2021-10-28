@@ -1,4 +1,4 @@
-#include "../include/include.h";
+#include "../include/include.h"
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
