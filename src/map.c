@@ -37,7 +37,7 @@ int **generate_land(int **map, int x, int y, int map_id) {
     for (int i = 0; i < x; ++i) {
         for (int j = 0; j < y; ++j) {
 
-            perlin = perlin2d(i, j, 8, 5);
+            perlin = perlin2d(i, j, 0.3f, 8);
 
             if (perlin < 0.1 || perlin > 0.9) {
                 map[i][j] = IMPASSABLE;
