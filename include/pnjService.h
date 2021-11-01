@@ -4,6 +4,11 @@ struct PnjLinkedList {
     PnjLinkedList *next;
 };
 
+struct ArrayItemCraft {
+    int arrayItemCraft[25][2];
+};
+typedef struct ArrayItemCraft ArrayItemCraft;
+
 void pnjChoice(Player *, PnjLinkedList *);
 
 void pnjFix(Player *);
@@ -22,4 +27,9 @@ void recoverItemStockToInventory(Player *playerStruct, PnjLinkedList *stock);
 
 PnjLinkedList *deleteElementLinkedList(Player *playerStruct, PnjLinkedList *stock, int choiceRecover);
 
-void freeLinked(PnjLinkedList *);
+void craftItem(Player *playerStruct);
+
+void initArrayCraftItem(ArrayItemCraft *arrayItemCraft);
+
+extern int countDelet;
+extern int choicePnj;
