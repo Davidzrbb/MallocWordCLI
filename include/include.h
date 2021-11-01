@@ -8,7 +8,7 @@ typedef struct Player Player;
 
 struct Weapon {
     int id;
-    char *name;
+    const char *name;
     int damage;
     float max_durability;
     float actual_durabiulity;
@@ -17,7 +17,7 @@ typedef struct Weapon Weapon;
 
 struct Tools {
     int id;
-    char *name;
+    const char *name;
     float max_durability;
     float actual_durabiulity;
 };
@@ -109,28 +109,5 @@ enum type {
 };
 typedef enum item item;
 
-
-typedef struct PnjLinkedList PnjLinkedList;
-struct PnjLinkedList {
-    Item *data;
-    PnjLinkedList *next;
-};
-
-
-
-
 void InitPlayer(Player *);
-
-void pnjChoice(Player *,PnjLinkedList*);
-
-void pnjFix(Player *);
-
-void pnjStock(Player *, PnjLinkedList *);
-void deleteElement(Item arr[], int n, int x);
-void insertion(Item *, PnjLinkedList *);
-
-void afficherListe(Player *, PnjLinkedList*);
-void initStructStock(PnjLinkedList*);
-void freeLinked(PnjLinkedList*);
-
 void printTest(Player);

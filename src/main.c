@@ -1,5 +1,5 @@
 #include "../include/include.h"
-
+#include "../include/pnjService.h"
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     Item ItemStruct;
@@ -12,7 +12,6 @@ int main(int argc, const char *argv[]) {
     InitPlayer(&PlayerStruct);
     //PnjFix
     pnjChoice(&PlayerStruct,stock);
-
 //Print
     //printTest(PlayerStruct);
     return 0;
@@ -28,7 +27,7 @@ void InitPlayer(Player* firstPlayer) {
     WeaponSword->type = WEAPON;
 
     Item *ToolsPickaxe = malloc(sizeof(Item));
-    ToolsPickaxe->tools.name ="pickaxe";
+    ToolsPickaxe->tools.name = "pickaxe";
     ToolsPickaxe->tools.max_durability=10;
     ToolsPickaxe->tools.actual_durabiulity=5;
     ToolsPickaxe->tools.id= WOODEN_PICKAXE;
