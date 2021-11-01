@@ -1,4 +1,5 @@
-#include "CollecteResource.h"
+#include "include.h"
+#include "collecteResource.h"
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
@@ -13,7 +14,7 @@ int main(int argc, const char *argv[]) {
 void InitPlayer(Player* firstPlayer) {
 
     Item *WeaponSword = malloc(sizeof(Item));
-    WeaponSword->weapon.name = "sword";
+    WeaponSword->weapon.name = "epee en bois";
     WeaponSword->weapon.damage= 1;
     WeaponSword->weapon.max_durability = 10;
     WeaponSword->weapon.actual_durabiulity  = 10;
@@ -21,14 +22,14 @@ void InitPlayer(Player* firstPlayer) {
     WeaponSword->type = WEAPON;
 
     Item *ToolsPickaxe = malloc(sizeof(Item));
-    ToolsPickaxe->tools.name ="pickaxe";
+    ToolsPickaxe->tools.name ="pioche en bois";
     ToolsPickaxe->tools.max_durability=10;
     ToolsPickaxe->tools.actual_durabiulity=10;
     ToolsPickaxe->tools.id= WOODEN_PICKAXE;
     ToolsPickaxe->type= TOOL;
 
     Item  *ToolsBillhook = malloc(sizeof(Item));
-    ToolsBillhook->tools.name ="billhook";
+    ToolsBillhook->tools.name ="serpette en bois";
     ToolsBillhook->tools.max_durability=10;
     ToolsBillhook->tools.actual_durabiulity=10;
     ToolsBillhook->tools.id= WOODEN_BILLHOOK;
@@ -36,7 +37,7 @@ void InitPlayer(Player* firstPlayer) {
 
 
     Item *ToolsAx = malloc(sizeof(Item));
-    ToolsAx->tools.name ="ax";
+    ToolsAx->tools.name ="hache en bois";
     ToolsAx->tools.max_durability=10;
     ToolsAx->tools.actual_durabiulity=10;
     ToolsAx->tools.id = WOODEN_AX;
@@ -55,8 +56,8 @@ void InitPlayer(Player* firstPlayer) {
 void MovePlayer(Player PlayerStruct) {
     int nextBox = 3;
    // printf("Votre arme %d",PlayerStruct.inventory[0].weapon.id);
-   //CollecteRessources
-   CollecteRessources(&PlayerStruct, nextBox);
+   //collecteRessources
+    collecteRessources(&PlayerStruct, nextBox);
 }
 
 

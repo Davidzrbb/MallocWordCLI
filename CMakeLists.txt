@@ -6,6 +6,5 @@ set(CMAKE_C_STANDARD 11)
 include_directories(include)
 
 add_executable(MallocWordCLI
-        include/CollecteResource.h
         src/CollecteResource.c
         src/main.c)

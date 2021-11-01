@@ -1,17 +1,18 @@
-#include "CollecteResource.h"
+#include "include.h"
+#include "collecteResource.h"
 
-int CollecteRessources(Player *inventoryCollect, int nextBox) {
+int collecteRessources(Player *inventoryCollect, int nextBox) {
     //on verifie si ressource
-    int nextBoxRessource = VerifResource(inventoryCollect, nextBox);
+    int nextBoxRessource = verifResource(inventoryCollect, nextBox);
     if (nextBoxRessource != -1) {
         //On verifie l'item
-        int indexItem = VerifItem(inventoryCollect, nextBox);
+        int indexItem = verifItem(inventoryCollect, nextBox);
         if (indexItem != -1) {
             //On verifie la durabilite
-            int durability = VerifDurability(inventoryCollect, nextBox, indexItem);
+            int durability = verifDurability(inventoryCollect, nextBox, indexItem);
             if (durability != -1) {
                 //On ajoute la ressource
-                int addResource = AddInventoryResources(inventoryCollect, nextBox);
+                int addResource = addInventoryResources(inventoryCollect, nextBox);
                 if (addResource > 0) {
                     printf("%d Ressources ajoute ! ", addResource);
                 } else if (addResource == -1) {
@@ -36,7 +37,7 @@ int CollecteRessources(Player *inventoryCollect, int nextBox) {
     return 1;
 }
 
-int *ToolsNecessary(int nextBox) {
+int *toolsNecessary(int nextBox) {
 
     //PLANTE
     if (nextBox == PLANT1) {
@@ -97,7 +98,7 @@ int *ToolsNecessary(int nextBox) {
     }
 }
 
-int ResourceNecessary(int nextBox) {
+int resourceNecessary(int nextBox) {
     if (nextBox < PLANT1 || nextBox > WOOD3) {
         return -1;
     }
@@ -133,8 +134,8 @@ int ResourceNecessary(int nextBox) {
     }
 }
 
-int VerifResource(Player *inventoryCollect, int nextBox) {
-    int resource = ResourceNecessary(nextBox);
+int verifResource(Player *inventoryCollect, int nextBox) {
+    int resource = resourceNecessary(nextBox);
     if (resource == -1) {
         return -1;
     }
@@ -151,9 +152,9 @@ int VerifResource(Player *inventoryCollect, int nextBox) {
     return resource;
 }
 
-int VerifItem(Player *inventoryCollect, int nextBox) {
+int verifItem(Player *inventoryCollect, int nextBox) {
     //On verifie si il l'item
-    int *tools = ToolsNecessary(nextBox);
+    int *tools = toolsNecessary(nextBox);
     for (int i = 0; i < sizeof(inventoryCollect); i++) {
         for (int j = 0; j < sizeof(tools); j++) {
             if (inventoryCollect->inventory[i].type == TOOL) {
@@ -166,7 +167,40 @@ int VerifItem(Player *inventoryCollect, int nextBox) {
     return -1;
 }
 
-int VerifDurability(Player *inventoryCollect, int nextBox, int item) {
+char *resourceName(int resourceId) {
+    if (resourceId == GRASS) {
+        return "herbe";
+    }
+    if (resourceId == LAVANDER) {
+        return "lavande";
+    }
+    if (resourceId == HEMP) {
+        return "chanvre";
+    }
+    //ROCHE
+    if (resourceId == ROCK) {
+        return "pierre";
+    }
+    if (resourceId == IRON) {
+        return "fer";
+    }
+    if (resourceId == DIAMOND) {
+        return "diamant";
+    }
+    //BOIS
+    if (resourceId == FIR) {
+        return "sapin";
+    }
+    if (resourceId == BEECH) {
+        return "hetre";
+    }
+    if (resourceId == OAK) {
+        return "chene";
+    }
+    return "null";
+}
+
+int verifDurability(Player *inventoryCollect, int nextBox, int item) {
     int percentage = 0;
     //On determine la zone
     if (nextBox > NPC && nextBox < PLANT2) {
@@ -188,10 +222,10 @@ int VerifDurability(Player *inventoryCollect, int nextBox, int item) {
     return -1;
 }
 
-int AddInventoryResources(Player *inventoryCollect, int nextBox) {
+int addInventoryResources(Player *inventoryCollect, int nextBox) {
 
     srand(time(NULL));
-    int indexResources = VerifResource(inventoryCollect, nextBox);
+    int indexResources = verifResource(inventoryCollect, nextBox);
     int randomResourceNumber = rand() % ((5) - 1) + 1;
     //on verifie si la next box est une ressource si -1 pas ressource
     if (indexResources == -1) {
@@ -209,8 +243,10 @@ int AddInventoryResources(Player *inventoryCollect, int nextBox) {
         if (sizeof(inventoryCollect) != 10) {
             indexResources -= 100;
             inventoryCollect->inventory[sizeof(inventoryCollect)].type = RESOURCE;
+            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.name = resourceName(indexResources);
             inventoryCollect->inventory[sizeof(inventoryCollect)].resource.id = indexResources;
             inventoryCollect->inventory[sizeof(inventoryCollect)].resource.quantity = randomResourceNumber;
+            printf("Item ajoutee a votre inventaire : \n %s ",inventoryCollect->inventory[sizeof(inventoryCollect)].resource.name = resourceName(indexResources));
         } else {
             //pas de place dans l'inventaire
             return -2;
@@ -218,3 +254,4 @@ int AddInventoryResources(Player *inventoryCollect, int nextBox) {
     }
     return randomResourceNumber;
 }
+

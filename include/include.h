@@ -24,6 +24,7 @@ struct Tools {
 typedef struct Tools Tools;
 
 struct Resource {
+    char *name;
     int id;
     int quantity;
 };
@@ -113,12 +114,3 @@ void InitPlayer(Player *);
 
 void MovePlayer(Player);
 
-int CollecteRessources(Player *inventoryCollect, int nextBox);
-
-int VerifResource(Player *inventoryCollect, int nextBox);
-
-int VerifItem(Player *inventoryCollect, int nextBox);
-
-int VerifDurability(Player *inventoryCollect, int nextBox, int item);
-
-int AddInventoryResources(Player *inventoryCollect, int nextBox);
