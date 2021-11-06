@@ -5,22 +5,49 @@ void verifItemCraft(AllItemCraft *pCraft, Player *pPlayer);
 
 void craftItem(Player *playerStruct) {
     //init tab craft
-    AllItemCraft  allItemCraft;
+    AllItemCraft allItemCraft;
     initArrayCraftItem(&allItemCraft);
     verifItemCraft(&allItemCraft, playerStruct);
 
 }
 
 void verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
+    int count = 0;
     if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
 
-        for (int i = 0; i < sizeof(playerStruct->inventory[i].type); i++) {
-            for (int j = 0; j <25; j++) {
-                if (playerStruct->inventory[i].resource.id == allItemCraft->itemCraft[j].idCreation) {
-                    printf("\nVous avez du %d !\n",playerStruct->inventory[i].resource.id);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 25; j++) {
+                if (playerStruct->inventory[i].resource.id == allItemCraft->itemCraft[j].arrayItemCraftNecessary[0] &&
+                    playerStruct->inventory[i].resource.quantity >=
+                    allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
+                    allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] == -1) {
+                    printf("\nAvec %d de %s vous pouvez faire %s ! , Tapez  %d\n",
+                           playerStruct->inventory[i].resource.quantity, playerStruct->inventory[i].resource.name,
+                           allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
+                }
+                if (playerStruct->inventory[i].resource.id == allItemCraft->itemCraft[j].arrayItemCraftNecessary[0] &&
+                    playerStruct->inventory[i].resource.quantity >=
+                    allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
+                    allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] != -1) {
+                    count = 1;
+                }
+                if (count == 1) {
+                    for (int k = 0; k < 10; k++) {
+                        if (playerStruct->inventory[k].resource.id ==
+                            allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] &&
+                            playerStruct->inventory[k].resource.quantity >=
+                            allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1]) {
+                            printf("\nAvec %d de %s vous pouvez faire %s ! , Tapez  %d\n",
+                                   playerStruct->inventory[i].resource.quantity,
+                                   playerStruct->inventory[i].resource.name,
+                                   allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
+                        }
+                    }
                 }
             }
+            count = 0;
         }
+
     } else {
         printf("\nVous n'avez plus d'item dans votre inventaire !\n");
     }
@@ -28,6 +55,8 @@ void verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
 
 void initArrayCraftItem(AllItemCraft *allItemCraft) {
     ArrayItemCraft *swordWoodWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    swordWoodWeaponCraft->name = malloc(sizeof(char *));
+    swordWoodWeaponCraft->name = "epee en bois";
     swordWoodWeaponCraft->idCreation = WOODEN_SWORD;
     swordWoodWeaponCraft->arrayItemCraftNecessary[0] = FIR;
     swordWoodWeaponCraft->arrayItemCraftNecessary[1] = -1;
@@ -35,6 +64,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     swordWoodWeaponCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *swordRockWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    swordRockWeaponCraft->name = malloc(sizeof(char *));
+    swordRockWeaponCraft->name = "epee en pierre";
     swordRockWeaponCraft->idCreation = STONE_SWORD;
     swordRockWeaponCraft->arrayItemCraftNecessary[0] = FIR;
     swordRockWeaponCraft->arrayItemCraftNecessary[1] = ROCK;
@@ -42,6 +73,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     swordRockWeaponCraft->arrayQuantityCraftNecessary[1] = 3;
 
     ArrayItemCraft *swordIronWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    swordIronWeaponCraft->name = malloc(sizeof(char *));
+    swordIronWeaponCraft->name = "epee en fer";
     swordIronWeaponCraft->idCreation = IRON_SWORD;
     swordIronWeaponCraft->arrayItemCraftNecessary[0] = BEECH;
     swordIronWeaponCraft->arrayItemCraftNecessary[1] = IRON;
@@ -49,6 +82,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     swordIronWeaponCraft->arrayQuantityCraftNecessary[1] = 4;
 
     ArrayItemCraft *swordDiamondWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    swordDiamondWeaponCraft->name = malloc(sizeof(char *));
+    swordDiamondWeaponCraft->name = "epee en diamant";
     swordDiamondWeaponCraft->idCreation = DIAMOND_SWORD;
     swordDiamondWeaponCraft->arrayItemCraftNecessary[0] = OAK;
     swordDiamondWeaponCraft->arrayItemCraftNecessary[1] = DIAMOND;
@@ -56,6 +91,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     swordDiamondWeaponCraft->arrayQuantityCraftNecessary[1] = 5;
 
     ArrayItemCraft *spearRockWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    spearRockWeaponCraft->name = malloc(sizeof(char *));
+    spearRockWeaponCraft->name = "lance en pierre";
     spearRockWeaponCraft->idCreation = STONE_SPEAR;
     spearRockWeaponCraft->arrayItemCraftNecessary[0] = FIR;
     spearRockWeaponCraft->arrayItemCraftNecessary[1] = ROCK;
@@ -63,6 +100,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     spearRockWeaponCraft->arrayQuantityCraftNecessary[1] = 4;
 
     ArrayItemCraft *spearIronWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    spearIronWeaponCraft->name = malloc(sizeof(char *));
+    spearIronWeaponCraft->name = "lance en fer";
     spearIronWeaponCraft->idCreation = IRON_SPEAR;
     spearIronWeaponCraft->arrayItemCraftNecessary[0] = BEECH;
     spearIronWeaponCraft->arrayItemCraftNecessary[1] = IRON;
@@ -70,6 +109,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     spearIronWeaponCraft->arrayQuantityCraftNecessary[1] = 5;
 
     ArrayItemCraft *spearDiamondWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    spearDiamondWeaponCraft->name = malloc(sizeof(char *));
+    spearDiamondWeaponCraft->name = "lance en diamant";
     spearDiamondWeaponCraft->idCreation = DIAMOND_SPEAR;
     spearDiamondWeaponCraft->arrayItemCraftNecessary[0] = OAK;
     spearDiamondWeaponCraft->arrayItemCraftNecessary[1] = DIAMOND;
@@ -77,6 +118,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     spearDiamondWeaponCraft->arrayQuantityCraftNecessary[1] = 6;
 
     ArrayItemCraft *hammerRockWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    hammerRockWeaponCraft->name = malloc(sizeof(char *));
+    hammerRockWeaponCraft->name = "marteau en pierre";
     hammerRockWeaponCraft->idCreation = STONE_HAMMER;
     hammerRockWeaponCraft->arrayItemCraftNecessary[0] = FIR;
     hammerRockWeaponCraft->arrayItemCraftNecessary[1] = ROCK;
@@ -84,6 +127,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     hammerRockWeaponCraft->arrayQuantityCraftNecessary[1] = 6;
 
     ArrayItemCraft *hammerIronWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    hammerIronWeaponCraft->name = malloc(sizeof(char *));
+    hammerIronWeaponCraft->name = "marteau en fer";
     hammerIronWeaponCraft->idCreation = IRON_HAMMER;
     hammerIronWeaponCraft->arrayItemCraftNecessary[0] = BEECH;
     hammerIronWeaponCraft->arrayItemCraftNecessary[1] = IRON;
@@ -91,6 +136,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     hammerIronWeaponCraft->arrayQuantityCraftNecessary[1] = 7;
 
     ArrayItemCraft *hammerDiamondWeaponCraft = malloc(sizeof(ArrayItemCraft));
+    hammerDiamondWeaponCraft->name = malloc(sizeof(char *));
+    hammerDiamondWeaponCraft->name = "marteau en diamant";
     hammerDiamondWeaponCraft->idCreation = DIAMOND_HAMMER;
     hammerDiamondWeaponCraft->arrayItemCraftNecessary[0] = OAK;
     hammerDiamondWeaponCraft->arrayItemCraftNecessary[1] = DIAMOND;
@@ -98,6 +145,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     hammerDiamondWeaponCraft->arrayQuantityCraftNecessary[1] = 8;
 
     ArrayItemCraft *chestplateRockCraft = malloc(sizeof(ArrayItemCraft));
+    chestplateRockCraft->name = malloc(sizeof(char *));
+    chestplateRockCraft->name = "armure en pierre";
     chestplateRockCraft->idCreation = 11;
     chestplateRockCraft->arrayItemCraftNecessary[0] = ROCK;
     chestplateRockCraft->arrayItemCraftNecessary[1] = -1;
@@ -105,6 +154,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     chestplateRockCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *chestplateIronCraft = malloc(sizeof(ArrayItemCraft));
+    chestplateIronCraft->name = malloc(sizeof(char *));
+    chestplateIronCraft->name = "armure en fer";
     chestplateIronCraft->idCreation = 11;
     chestplateIronCraft->arrayItemCraftNecessary[0] = IRON;
     chestplateIronCraft->arrayItemCraftNecessary[1] = -1;
@@ -112,6 +163,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     chestplateIronCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *chestplateDiamondCraft = malloc(sizeof(ArrayItemCraft));
+    chestplateDiamondCraft->name = malloc(sizeof(char *));
+    chestplateDiamondCraft->name = "armure en diamant";
     chestplateDiamondCraft->idCreation = 11;
     chestplateDiamondCraft->arrayItemCraftNecessary[0] = DIAMOND;
     chestplateDiamondCraft->arrayItemCraftNecessary[1] = -1;
@@ -119,6 +172,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     chestplateDiamondCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *pickaxeWoodToolsCraft = malloc(sizeof(ArrayItemCraft));
+    pickaxeWoodToolsCraft->name = malloc(sizeof(char *));
+    pickaxeWoodToolsCraft->name = "pioche en bois";
     pickaxeWoodToolsCraft->idCreation = WOODEN_PICKAXE;
     pickaxeWoodToolsCraft->arrayItemCraftNecessary[0] = FIR;
     pickaxeWoodToolsCraft->arrayItemCraftNecessary[1] = -1;
@@ -126,6 +181,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     pickaxeWoodToolsCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *pickaxeStoneToolsCraft = malloc(sizeof(ArrayItemCraft));
+    pickaxeStoneToolsCraft->name = malloc(sizeof(char *));
+    pickaxeStoneToolsCraft->name = "pioche en pierre";
     pickaxeStoneToolsCraft->idCreation = STONE_PICKAXE;
     pickaxeStoneToolsCraft->arrayItemCraftNecessary[0] = FIR;
     pickaxeStoneToolsCraft->arrayItemCraftNecessary[1] = ROCK;
@@ -133,6 +190,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     pickaxeStoneToolsCraft->arrayQuantityCraftNecessary[1] = 3;
 
     ArrayItemCraft *pickaxeIronToolsCraft = malloc(sizeof(ArrayItemCraft));
+    pickaxeIronToolsCraft->name = malloc(sizeof(char *));
+    pickaxeIronToolsCraft->name = "pioche en fer";
     pickaxeIronToolsCraft->idCreation = IRON_PICKAXE;
     pickaxeIronToolsCraft->arrayItemCraftNecessary[0] = BEECH;
     pickaxeIronToolsCraft->arrayItemCraftNecessary[1] = IRON;
@@ -140,6 +199,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     pickaxeIronToolsCraft->arrayQuantityCraftNecessary[1] = 4;
 
     ArrayItemCraft *axWoodToolsCraft = malloc(sizeof(ArrayItemCraft));
+    axWoodToolsCraft->name = malloc(sizeof(char *));
+    axWoodToolsCraft->name = "hache en bois";
     axWoodToolsCraft->idCreation = WOODEN_AX;
     axWoodToolsCraft->arrayItemCraftNecessary[0] = FIR;
     axWoodToolsCraft->arrayItemCraftNecessary[1] = -1;
@@ -147,6 +208,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     axWoodToolsCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *axStoneToolsCraft = malloc(sizeof(ArrayItemCraft));
+    axStoneToolsCraft->name = malloc(sizeof(char *));
+    axStoneToolsCraft->name = "hache en pierre";
     axStoneToolsCraft->idCreation = STONE_AX;
     axStoneToolsCraft->arrayItemCraftNecessary[0] = FIR;
     axStoneToolsCraft->arrayItemCraftNecessary[1] = ROCK;
@@ -154,6 +217,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     axStoneToolsCraft->arrayQuantityCraftNecessary[1] = 3;
 
     ArrayItemCraft *axIronToolsCraft = malloc(sizeof(ArrayItemCraft));
+    axIronToolsCraft->name = malloc(sizeof(char *));
+    axIronToolsCraft->name = "hache en fer";
     axIronToolsCraft->idCreation = IRON_AX;
     axIronToolsCraft->arrayItemCraftNecessary[0] = BEECH;
     axIronToolsCraft->arrayItemCraftNecessary[1] = IRON;
@@ -161,6 +226,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     axIronToolsCraft->arrayQuantityCraftNecessary[1] = 4;
 
     ArrayItemCraft *billhookWoodToolsCraft = malloc(sizeof(ArrayItemCraft));
+    billhookWoodToolsCraft->name = malloc(sizeof(char *));
+    billhookWoodToolsCraft->name = "serpe en bois";
     billhookWoodToolsCraft->idCreation = WOODEN_BILLHOOK;
     billhookWoodToolsCraft->arrayItemCraftNecessary[0] = FIR;
     billhookWoodToolsCraft->arrayItemCraftNecessary[1] = -1;
@@ -168,6 +235,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     billhookWoodToolsCraft->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *billhookStoneToolsCraft = malloc(sizeof(ArrayItemCraft));
+    billhookStoneToolsCraft->name = malloc(sizeof(char *));
+    billhookStoneToolsCraft->name = "serpe en pierre";
     billhookStoneToolsCraft->idCreation = STONE_BILLHOOK;
     billhookStoneToolsCraft->arrayItemCraftNecessary[0] = FIR;
     billhookStoneToolsCraft->arrayItemCraftNecessary[1] = ROCK;
@@ -175,6 +244,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     billhookStoneToolsCraft->arrayQuantityCraftNecessary[1] = 3;
 
     ArrayItemCraft *billhookIronToolsCraft = malloc(sizeof(ArrayItemCraft));
+    billhookIronToolsCraft->name = malloc(sizeof(char *));
+    billhookIronToolsCraft->name = "serpe en fer";
     billhookIronToolsCraft->idCreation = IRON_AX;
     billhookIronToolsCraft->arrayItemCraftNecessary[0] = BEECH;
     billhookIronToolsCraft->arrayItemCraftNecessary[1] = IRON;
@@ -182,6 +253,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     billhookIronToolsCraft->arrayQuantityCraftNecessary[1] = 4;
 
     ArrayItemCraft *healOne = malloc(sizeof(ArrayItemCraft));
+    healOne->name = malloc(sizeof(char *));
+    healOne->name = "potion 1";
     healOne->idCreation = 15;
     healOne->arrayItemCraftNecessary[0] = GRASS;
     healOne->arrayItemCraftNecessary[1] = -1;
@@ -189,6 +262,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     healOne->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *healTwo = malloc(sizeof(ArrayItemCraft));
+    healTwo->name = malloc(sizeof(char *));
+    healTwo->name = "potion 2";
     healTwo->idCreation = 26;
     healTwo->arrayItemCraftNecessary[0] = LAVANDER;
     healTwo->arrayItemCraftNecessary[1] = -1;
@@ -196,6 +271,8 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     healTwo->arrayQuantityCraftNecessary[1] = -1;
 
     ArrayItemCraft *healThree = malloc(sizeof(ArrayItemCraft));
+    healThree->name = malloc(sizeof(char *));
+    healThree->name = "potion 3";
     healThree->idCreation = 34;
     healThree->arrayItemCraftNecessary[0] = HEMP;
     healThree->arrayItemCraftNecessary[1] = -1;

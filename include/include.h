@@ -8,7 +8,7 @@ typedef struct Player Player;
 
 struct Weapon {
     int id;
-    const char *name;
+    char *name;
     int damage;
     float max_durability;
     float actual_durabiulity;
@@ -17,13 +17,14 @@ typedef struct Weapon Weapon;
 
 struct Tools {
     int id;
-    const char *name;
+    char *name;
     float max_durability;
     float actual_durabiulity;
 };
 typedef struct Tools Tools;
 
 struct Resource {
+    char *name;
     int id;
     int quantity;
 };

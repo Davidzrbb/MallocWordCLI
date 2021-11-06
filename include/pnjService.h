@@ -8,6 +8,7 @@ struct ArrayItemCraft {
     int idCreation;
     int arrayItemCraftNecessary[2];
     int arrayQuantityCraftNecessary[2];
+    char* name;
 };
 typedef struct ArrayItemCraft ArrayItemCraft;
 

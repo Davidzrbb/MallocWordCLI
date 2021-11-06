@@ -52,6 +52,20 @@ void InitPlayer(Player* firstPlayer) {
     ToolsAx->tools.id = WOODEN_AX;
     ToolsAx->type= TOOL;
 
+    Item *Sapin = malloc(sizeof(Item));
+    Sapin->resource.name = malloc(sizeof (char *));
+    Sapin->resource.name ="sapin";
+    Sapin->resource.id = FIR;
+    Sapin->resource.quantity=3;
+    Sapin->type= RESOURCE;
+
+    Item *Pierre = malloc(sizeof(Item));
+    Pierre->resource.name = malloc(sizeof (char *));
+    Pierre->resource.name ="pierre";
+    Pierre->resource.id = ROCK;
+    Pierre->resource.quantity=4;
+    Pierre->type= RESOURCE;
+
 
     firstPlayer->level = 1;
     firstPlayer->currentHealthPoints = 100;
@@ -60,6 +74,8 @@ void InitPlayer(Player* firstPlayer) {
     firstPlayer->inventory[1] = *ToolsPickaxe ;
     firstPlayer->inventory[2] = *ToolsBillhook ;
     firstPlayer->inventory[3] = *ToolsAx ;
+    firstPlayer->inventory[4] = *Sapin ;
+    firstPlayer->inventory[5] = *Pierre ;
 
 }
 
