@@ -83,11 +83,14 @@ typedef enum resource resource;
 enum weaponEnum {
     WOODEN_SWORD = 1,
     STONE_SWORD = 8,
-    STONE_SPEAR = 9,
-    STONE_HAMMER = 10,
     IRON_SWORD = 19,
+    DIAMOND_SWORD = 30,
+    STONE_SPEAR = 9,
     IRON_SPEAR = 20,
+    DIAMOND_SPEAR = 31,
+    STONE_HAMMER = 10,
     IRON_HAMMER = 21,
+    DIAMOND_HAMMER = 32,
 };
 typedef enum weaponEnum weaponEnum;
 enum tools {

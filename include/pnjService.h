@@ -5,7 +5,9 @@ struct PnjLinkedList {
 };
 
 struct ArrayItemCraft {
-    int arrayItemCraft[25][2];
+    int idCreation;
+    int arrayItemCraftNecessary[2];
+    int arrayQuantityCraftNecessary[2];
 };
 typedef struct ArrayItemCraft ArrayItemCraft;
 
