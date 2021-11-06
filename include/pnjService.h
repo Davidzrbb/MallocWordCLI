@@ -11,6 +11,11 @@ struct ArrayItemCraft {
 };
 typedef struct ArrayItemCraft ArrayItemCraft;
 
+struct AllItemCraft {
+    ArrayItemCraft itemCraft[25];
+};
+typedef struct AllItemCraft AllItemCraft;
+
 void pnjChoice(Player *, PnjLinkedList *);
 
 void pnjFix(Player *);
@@ -19,19 +24,19 @@ void pnjStock(Player *, PnjLinkedList *);
 
 void deleteElementInventory(Item inventory[], int sizeArr, int index);
 
-void insertionToStock(Item *nvItem, PnjLinkedList *actualStockPos);
+void insertionToStock(Item *, PnjLinkedList *);
 
-void displayStock(Player *playerStruct, PnjLinkedList *stock);
+void displayStock(Player *, PnjLinkedList *);
 
 void initStructStock(PnjLinkedList *);
 
-void recoverItemStockToInventory(Player *playerStruct, PnjLinkedList *stock);
+void recoverItemStockToInventory(Player *, PnjLinkedList *);
 
-PnjLinkedList *deleteElementLinkedList(Player *playerStruct, PnjLinkedList *stock, int choiceRecover);
+PnjLinkedList *deleteElementLinkedList(Player *, PnjLinkedList *, int );
 
-void craftItem(Player *playerStruct);
+void craftItem(Player *);
 
-void initArrayCraftItem(ArrayItemCraft *arrayItemCraft);
+void initArrayCraftItem(AllItemCraft*);
 
 extern int countDelet;
 extern int choicePnj;

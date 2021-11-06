@@ -10,9 +10,12 @@ int main(int argc, const char *argv[]) {
 
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
+
+
     //PnjFix
     pnjChoice(&PlayerStruct,stock);
-//Print
+
+    //Print
     //printTest(PlayerStruct);
     return 0;
 }
