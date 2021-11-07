@@ -41,7 +41,9 @@ void initArrayCraftItem(AllItemCraft*);
 
 void verifItemCraft(AllItemCraft *, Player *);
 
-void choiceStock(Player *, PnjLinkedList *);
+void createItemCraft(AllItemCraft *, Player *);
+
+void displayItemCraft(AllItemCraft *);
 
 extern int countDelet;
 extern int choicePnj;
