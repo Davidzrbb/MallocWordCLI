@@ -7,10 +7,18 @@ int main(int argc, const char *argv[]) {
     //PnjLinkedList stock;
     PnjLinkedList *stock = malloc(sizeof (PnjLinkedList));
     initStructStock(stock);
+    MovePlayer(PlayerStruct);
 
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
 
+    Item *WeaponSword = malloc(sizeof(Item));
+    WeaponSword->weapon.name = "epee en bois";
+    WeaponSword->weapon.damage= 1;
+    WeaponSword->weapon.max_durability = 10;
+    WeaponSword->weapon.actual_durabiulity  = 10;
+    WeaponSword->weapon.id = WOODEN_SWORD;
+    WeaponSword->type = WEAPON;
 
     //PnjFix
     pnjChoice(&PlayerStruct,stock);
@@ -43,6 +51,14 @@ void InitPlayer(Player* firstPlayer) {
     ToolsBillhook->tools.id= WOODEN_BILLHOOK;
     ToolsBillhook->type= TOOL;
 
+    firstPlayer->level = 1;
+    firstPlayer->currentHealthPoints = 100;
+    firstPlayer->maxHealthpoints = 100;
+    firstPlayer->inventory[0] = *WeaponSword ;
+    firstPlayer->inventory[1] = *ToolsPickaxe ;
+    firstPlayer->inventory[2] = *ToolsBillhook ;
+    firstPlayer->inventory[3] = *ToolsAx ;
+}
 
     Item *ToolsAx = malloc(sizeof(Item));
     ToolsAx->tools.name = malloc(sizeof (char *));
@@ -51,6 +67,12 @@ void InitPlayer(Player* firstPlayer) {
     ToolsAx->tools.actual_durabiulity=10;
     ToolsAx->tools.id = WOODEN_AX;
     ToolsAx->type= TOOL;
+void MovePlayer(Player PlayerStruct) {
+    int nextBox = 3;
+   // printf("Votre arme %d",PlayerStruct.inventory[0].weapon.id);
+   //collecteRessources
+    collecteRessources(&PlayerStruct, nextBox);
+}
 
     Item *Sapin = malloc(sizeof(Item));
     Sapin->resource.name = malloc(sizeof (char *));
