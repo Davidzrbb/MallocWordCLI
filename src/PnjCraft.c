@@ -27,6 +27,7 @@ void craftItem(Player *playerStruct) {
             default :
                 printf("\n Choix non disponible\n");
 
+
         }
     }
 }
