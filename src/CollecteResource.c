@@ -140,7 +140,7 @@ int verifResource(Player *inventoryCollect, int nextBox) {
         return -1;
     }
     //on verifie si le Player a deja l'element
-    for (int i = 0; i < sizeof(inventoryCollect); i++) {
+    for (int i = 0; i < 10; i++) {
         //on verifie si le Player a deja de la pierre
         if (inventoryCollect->inventory[i].type == RESOURCE) {
             if (inventoryCollect->inventory[i].resource.id == resource) {
@@ -155,8 +155,8 @@ int verifResource(Player *inventoryCollect, int nextBox) {
 int verifItem(Player *inventoryCollect, int nextBox) {
     //On verifie si il l'item
     int *tools = toolsNecessary(nextBox);
-    for (int i = 0; i < sizeof(inventoryCollect); i++) {
-        for (int j = 0; j < sizeof(tools); j++) {
+    for (int i = 0; i < 10;i++) {
+        for (int j = 0; j < 4; j++) {
             if (inventoryCollect->inventory[i].type == TOOL) {
                 if (inventoryCollect->inventory[i].tools.id == tools[j]) {
                     return i;
@@ -240,16 +240,23 @@ int addInventoryResources(Player *inventoryCollect, int nextBox) {
         }
     } else {
         //On verifie la disponibilité dans l'inventory du Player et on ajouter 1 à 4
-        if (sizeof(inventoryCollect) != 10) {
+        int sizeinv = 1;
+        for (int i = 0; i < 10; i++) {
+            if (inventoryCollect->inventory[i].type > 0 && inventoryCollect->inventory[i].type < 4) {
+                sizeinv++;
+            }
+        }
+        if (sizeinv < 10) {
             indexResources -= 100;
-            inventoryCollect->inventory[sizeof(inventoryCollect)].type = RESOURCE;
-            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.name = resourceName(indexResources);
-            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.id = indexResources;
-            inventoryCollect->inventory[sizeof(inventoryCollect)].resource.quantity = randomResourceNumber;
-            printf("Item ajoutee a votre inventaire : \n %s ",inventoryCollect->inventory[sizeof(inventoryCollect)].resource.name = resourceName(indexResources));
+            inventoryCollect->inventory[sizeinv].type = RESOURCE;
+            inventoryCollect->inventory[sizeinv].resource.name = resourceName(indexResources);
+            inventoryCollect->inventory[sizeinv].resource.id = indexResources;
+            inventoryCollect->inventory[sizeinv].resource.quantity = randomResourceNumber;
+            printf("Item ajoutee a votre inventaire : \n %s ",
+                   inventoryCollect->inventory[sizeinv].resource.name = resourceName(
+                           indexResources));
         } else {
-            //pas de place dans l'inventaire
-            return -2;
+            printf("Vous avez deja 10 inventaires !");
         }
     }
     return randomResourceNumber;

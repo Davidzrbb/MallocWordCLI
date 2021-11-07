@@ -116,4 +116,4 @@ typedef enum item item;
 void InitPlayer(Player *);
 void printTest(Player);
 
-void MovePlayer(Player);
+void MovePlayer(Player*);

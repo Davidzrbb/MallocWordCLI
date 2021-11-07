@@ -1,6 +1,6 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
-
+#include "../include/collecteResource.h"
 void craftItem(Player *playerStruct) {
     //init tab craft
     AllItemCraft allItemCraft;
@@ -33,19 +33,23 @@ void craftItem(Player *playerStruct) {
 }
 
 void displayItemCraft(AllItemCraft *allItemCraft) {
+    char * resourceNameString;
+    char * resourceNameString2;
     for (int i = 0; i < 25; i++) {
         if (allItemCraft->itemCraft[i].arrayItemCraftNecessary[1] == -1) {
-            printf("\n%s = %d %d\n", allItemCraft->itemCraft[i].name,
+            resourceNameString = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[0]);
+            printf("\n%s = %d %s\n", allItemCraft->itemCraft[i].name,
                    allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[0],
-                   allItemCraft->itemCraft->arrayItemCraftNecessary[0]);
-
+                   resourceNameString);
         }
         if (allItemCraft->itemCraft[i].arrayItemCraftNecessary[1] != -1) {
-            printf("\n%s = %d %d + %d %d\n", allItemCraft->itemCraft[i].name,
+            resourceNameString = resourceName( allItemCraft->itemCraft[i].arrayItemCraftNecessary[0]);
+            resourceNameString2=resourceName( allItemCraft->itemCraft[i].arrayItemCraftNecessary[1]);
+            printf("\n%s = %d %s + %d %s\n", allItemCraft->itemCraft[i].name,
                    allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[0],
-                   allItemCraft->itemCraft[i].arrayItemCraftNecessary[0],
+                   resourceNameString,
                    allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[1],
-                   allItemCraft->itemCraft[i].arrayItemCraftNecessary[1]);
+                   resourceNameString2);
         }
     }
 }
@@ -63,6 +67,7 @@ void displayItemCraft(AllItemCraft *allItemCraft) {
                         playerStruct->inventory[i].resource.quantity >=
                         allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
                         allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] == -1) {
+
                         printf("\nAvec %d de %s, vous pouvez faire %s ! , Tapez  %d\n",
                                playerStruct->inventory[i].resource.quantity, playerStruct->inventory[i].resource.name,
                                allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);

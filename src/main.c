@@ -4,13 +4,13 @@
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     Item ItemStruct;
-
     //PnjLinkedList stock;
     PnjLinkedList *stock = malloc(sizeof (PnjLinkedList));
     initStructStock(stock);
-    MovePlayer(PlayerStruct);
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
+    //move for collect
+    MovePlayer(&PlayerStruct);
     //PnjFix
     pnjChoice(&PlayerStruct,stock);
     //Print
@@ -77,11 +77,11 @@ void InitPlayer(Player* firstPlayer) {
 }
 
 
-void MovePlayer(Player PlayerStruct) {
+void MovePlayer(Player *PlayerStruct) {
     int nextBox = 3;
    // printf("Votre arme %d",PlayerStruct.inventory[0].weapon.id);
    //collecteRessources
-    collecteRessources(&PlayerStruct, nextBox);
+    collecteRessources(PlayerStruct, nextBox);
 }
 
 
