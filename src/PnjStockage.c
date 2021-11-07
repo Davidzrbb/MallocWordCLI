@@ -9,16 +9,19 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
     int index;
     int verif = 0;
 
+
     if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
         printf("\nVeuillez choisir l'item a stocker:\n");
-        for (int i = 0; i < sizeof(playerStruct->inventory[i].tools.id) - countDelet; i++) {
-            printf("%d = %s \n", playerStruct->inventory[i].tools.id,
-                   playerStruct->inventory[i].tools.name);
+        for (int i = 0; i < 10; i++) {
+            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 4) {
+                printf("%d = %s \n", playerStruct->inventory[i].tools.id,
+                       playerStruct->inventory[i].tools.name);
+            }
         }
         printf("0 = Quitter");
         printf("\nVotre choix : ");
         scanf("%d", &stockItem);
-        for (int i = 0; i < sizeof(playerStruct->inventory[i].type); i++) {
+        for (int i = 0; i < 10; i++) {
             if (playerStruct->inventory[i].tools.id == stockItem) {
                 nvItem = playerStruct->inventory[i];
                 verif = 1;
@@ -48,6 +51,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 }
 
 void deleteElementInventory(Item inventory[], int sizeArr, int index) {
+
     int i;
     for (i = 0; i < sizeArr; i++)
         if (i == index)
@@ -122,7 +126,13 @@ PnjLinkedList *deleteElementLinkedList(Player *playerStruct, PnjLinkedList *stoc
     }
     previous = stock;
     if (previous->data->weapon.id == choiceRecover) {
-        playerStruct->inventory[sizeof(playerStruct->inventory[0].tools.id) - countDelet] = *previous->data;
+        sizeInv = 0;
+        for (int i = 0; i < 10; i++) {
+            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 4) {
+                sizeInv++;
+            }
+        }
+        playerStruct->inventory[sizeInv] = *previous->data;
         --countDelet;
         printf("%s est maitenant dans votre inventaire !\n", previous->data->weapon.name);
         stock = previous->next;
@@ -132,7 +142,7 @@ PnjLinkedList *deleteElementLinkedList(Player *playerStruct, PnjLinkedList *stoc
     while (tmp != NULL) {
         if (previous->data->weapon.id == choiceRecover) {
             previous->next = tmp->next;
-            playerStruct->inventory[sizeof(playerStruct->inventory[0].tools.id) - countDelet] = *previous->data;
+            playerStruct->inventory[sizeInv] = *previous->data;
             --countDelet;
             printf("%s est maitenant dans votre inventaire !\n", previous->data->weapon.name);
             return (stock);

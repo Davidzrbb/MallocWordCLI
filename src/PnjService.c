@@ -3,11 +3,12 @@
 
 int countDelet = 0;
 int choicePnj = -1;
+int sizeInv =0;
 
-void pnjChoice(Player *playerStruct, PnjLinkedList *stock, AllItemCraft *allItemCraft) {
+void pnjChoice(Player *playerStruct, PnjLinkedList *stock) {
     /* Création du nouvel élément */
     while (choicePnj != 0) {
-        printf("\n Bonjour, je suis le pnj que souhaitez vous faire ? \n 1 = Reparer vos items \n 2 = Crafter un nouvelle item \n 3 = Deposer un item \n 4 = Recuperer un item \n "
+        printf("\n Bonjour, je suis le pnj que souhaitez vous faire ? \n 1 = Reparer vos items \n 2 = Craft \n 3 = Deposer un item \n 4 = Recuperer un item \n "
                "0 = Quitter \n Votre choix : ");
 
         scanf("%d", &choicePnj);
@@ -19,7 +20,7 @@ void pnjChoice(Player *playerStruct, PnjLinkedList *stock, AllItemCraft *allItem
                 break;
 
             case 2 :
-                craftItem(playerStruct,allItemCraft);
+                craftItem(playerStruct);
                 break;
 
             case 3 :

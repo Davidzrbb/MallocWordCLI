@@ -39,5 +39,10 @@ void craftItem(Player *);
 
 void initArrayCraftItem(AllItemCraft*);
 
+void verifItemCraft(AllItemCraft *, Player *);
+
+void choiceStock(Player *, PnjLinkedList *);
+
 extern int countDelet;
 extern int choicePnj;
+extern int sizeInv;

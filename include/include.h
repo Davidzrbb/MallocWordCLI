@@ -24,8 +24,8 @@ struct Tools {
 typedef struct Tools Tools;
 
 struct Resource {
-    char *name;
     int id;
+    char *name;
     int quantity;
 };
 typedef struct Resource Resource;

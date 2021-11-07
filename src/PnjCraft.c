@@ -1,14 +1,34 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
 
-void verifItemCraft(AllItemCraft *pCraft, Player *pPlayer);
-
 void craftItem(Player *playerStruct) {
     //init tab craft
     AllItemCraft allItemCraft;
     initArrayCraftItem(&allItemCraft);
-    verifItemCraft(&allItemCraft, playerStruct);
+    int choiceCraft = -1;
+    while (choiceCraft == -1) {
+        printf("\n 1 = Voir tous les crafts \n 2 = Crafter un nouvelle item \n 0 = Quitter \n Votre choix : ");
 
+        scanf("%d", &choiceCraft);
+
+        switch (choiceCraft) {
+
+            case 1:
+                pnjFix(playerStruct);
+                break;
+
+            case 2 :
+                verifItemCraft(&allItemCraft, playerStruct);
+                break;
+
+            case 0 :
+                break;
+
+            default :
+                printf("\n Choix non disponible\n");
+
+        }
+    }
 }
 
 void verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
@@ -21,7 +41,7 @@ void verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
                     playerStruct->inventory[i].resource.quantity >=
                     allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
                     allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] == -1) {
-                    printf("\nAvec %d de %s vous pouvez faire %s ! , Tapez  %d\n",
+                    printf("\nAvec %d de %s, vous pouvez faire %s ! , Tapez  %d\n",
                            playerStruct->inventory[i].resource.quantity, playerStruct->inventory[i].resource.name,
                            allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
                 }
@@ -37,9 +57,11 @@ void verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
                             allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] &&
                             playerStruct->inventory[k].resource.quantity >=
                             allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1]) {
-                            printf("\nAvec %d de %s vous pouvez faire %s ! , Tapez  %d\n",
+                            printf("\nAvec %d de %s et %d de %s, vous pouvez faire %s ! , Tapez  %d\n",
                                    playerStruct->inventory[i].resource.quantity,
                                    playerStruct->inventory[i].resource.name,
+                                   playerStruct->inventory[k].resource.quantity,
+                                   playerStruct->inventory[k].resource.name,
                                    allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
                         }
                     }
