@@ -4,7 +4,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct Player Player;
+struct Armor{
+    char * name;
+    int id;
+    int protection;
+};
+typedef struct Armor Armor;
+
+struct healthPotion{
+    char * name;
+    int id;
+    int pvRestore;
+    int quantity;
+};
+typedef struct healthPotion healthPotion;
 
 struct Weapon {
     int id;
@@ -37,6 +50,8 @@ struct Item {
         struct Weapon weapon;
         struct Tools tools;
         struct Resource resource;
+        struct Armor armor;
+        struct healthPotion heal;
     };
 };
 typedef struct Item Item;
@@ -110,6 +125,8 @@ enum type {
     WEAPON = 1,
     TOOL = 2,
     RESOURCE = 3,
+    HEAL = 4,
+    ARMOR = 5,
 };
 typedef enum item item;
 

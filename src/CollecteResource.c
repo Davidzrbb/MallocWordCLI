@@ -240,13 +240,15 @@ int addInventoryResources(Player *inventoryCollect, int nextBox) {
         }
     } else {
         //On verifie la disponibilité dans l'inventory du Player et on ajouter 1 à 4
-        int sizeinv = 1;
+        int sizeinv = 0;
         for (int i = 0; i < 10; i++) {
-            if (inventoryCollect->inventory[i].type > 0 && inventoryCollect->inventory[i].type < 4) {
+            if (inventoryCollect->inventory[i].type > 0 && inventoryCollect->inventory[i].type < 6) {
                 sizeinv++;
+
             }
         }
-        if (sizeinv < 10) {
+        if (sizeinv < 9) {
+
             indexResources -= 100;
             inventoryCollect->inventory[sizeinv].type = RESOURCE;
             inventoryCollect->inventory[sizeinv].resource.name = resourceName(indexResources);

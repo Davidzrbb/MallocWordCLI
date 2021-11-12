@@ -5,10 +5,17 @@ struct PnjLinkedList {
 };
 
 struct ArrayItemCraft {
+    int type;
     int idCreation;
     int arrayItemCraftNecessary[2];
     int arrayQuantityCraftNecessary[2];
     char* name;
+    int damage;
+    float max_durability;
+    float actual_durabiulity;
+    int pvRestore;
+    int protection;
+    int quantity;
 };
 typedef struct ArrayItemCraft ArrayItemCraft;
 
@@ -39,11 +46,13 @@ void craftItem(Player *);
 
 void initArrayCraftItem(AllItemCraft*);
 
-void verifItemCraft(AllItemCraft *, Player *);
+int verifItemCraft(AllItemCraft *, Player *);
 
-void createItemCraft(AllItemCraft *, Player *);
+void createItemCraft(AllItemCraft *, Player *,int);
 
 void displayItemCraft(AllItemCraft *);
+
+void addItemCraft(AllItemCraft *, Player *, int);
 
 extern int countDelet;
 extern int choicePnj;

@@ -13,7 +13,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
     if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
         printf("\nVeuillez choisir l'item a stocker:\n");
         for (int i = 0; i < 10; i++) {
-            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 4) {
+            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 6) {
                 printf("%d = %s \n", playerStruct->inventory[i].tools.id,
                        playerStruct->inventory[i].tools.name);
             }
@@ -25,7 +25,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
             if (playerStruct->inventory[i].tools.id == stockItem) {
                 nvItem = playerStruct->inventory[i];
                 verif = 1;
-                index = i;
+                index = stockItem;
             }
         }
         if (verif == 0) {
@@ -51,16 +51,24 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 }
 
 void deleteElementInventory(Item inventory[], int sizeArr, int index) {
+    int i ;
+    int j ;
 
-    int i;
-    for (i = 0; i < sizeArr; i++)
-        if (i == index)
+    for (i = 0; i < sizeArr; i++) {
+        if (inventory[i].tools.id == index) {
+            for (j = i; j < 10; j++) {
+                if (j < 10 - 1) {
+                    printf("test");
+                    inventory[j] = inventory[j + 1];
+                } else {
+                    inventory[j].type = -1;
+                }
+            }
             break;
-    if (i < sizeArr) {
-        sizeArr = sizeArr - 1;
-        for (int j = i; j < sizeArr; j++)
-            inventory[j] = inventory[j + 1];
+        }
     }
+
+
 }
 
 void initStructStock(PnjLinkedList *stock) {
