@@ -31,7 +31,7 @@ void InitPlayer(Player* firstPlayer) {
     ToolsPickaxe->tools.name = "pioche en bois";
     ToolsPickaxe->tools.max_durability=10;
     ToolsPickaxe->tools.actual_durabiulity=5;
-    ToolsPickaxe->tools.id= WOODEN_PICKAXE;
+    ToolsPickaxe->tools.id= 13;
     ToolsPickaxe->type=TOOL;
 
     Item  *ToolsBillhook = malloc(sizeof(Item));
