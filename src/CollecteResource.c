@@ -14,7 +14,7 @@ int collecteRessources(Player *inventoryCollect, int nextBox) {
                 //On ajoute la ressource
                 int addResource = addInventoryResources(inventoryCollect, nextBox);
                 if (addResource > 0) {
-                    printf("%d Ressources ajoute ! ", addResource);
+                    printf("%d Ressources ajoute ! \n", addResource);
                 } else if (addResource == -1) {
                     printf("C'est pas une ressource ");
                     return 0;
@@ -27,7 +27,7 @@ int collecteRessources(Player *inventoryCollect, int nextBox) {
                 return 0;
             }
         } else {
-            printf("Vous n'avez pas l'outil necessaire !");
+            printf("Vous n'avez pas l'outil necessaire !\n");
             return 0;
         }
     } else {
@@ -38,64 +38,59 @@ int collecteRessources(Player *inventoryCollect, int nextBox) {
 }
 
 int *toolsNecessary(int nextBox) {
-
+    static int tools[3];
+    for (int i = 0; i < 3; i++) {
+        tools[i] = -1;
+    }
     //PLANTE
     if (nextBox == PLANT1) {
-        int tools[3];
         tools[0] = WOODEN_BILLHOOK;
         tools[1] = STONE_BILLHOOK;
         tools[2] = IRON_BILLHOOK;
         return tools;
     }
     if (nextBox == PLANT2) {
-        int tools[2];
         tools[0] = STONE_BILLHOOK;
         tools[1] = IRON_BILLHOOK;
         return tools;
     }
     if (nextBox == PLANT3) {
-        int tools[1];
         tools[0] = IRON_BILLHOOK;
         return tools;
     }
     //ROCHE
     if (nextBox == ROCK1) {
-        int tools[3];
         tools[0] = WOODEN_PICKAXE;
         tools[1] = STONE_PICKAXE;
         tools[2] = IRON_PICKAXE;
         return tools;
     }
     if (nextBox == ROCK2) {
-        int tools[2];
         tools[0] = STONE_PICKAXE;
         tools[1] = IRON_PICKAXE;
         return tools;
     }
     if (nextBox == ROCK3) {
-        int tools[1];
         tools[0] = IRON_PICKAXE;
         return tools;
     }
     //BOIS
     if (nextBox == WOOD1) {
-        int tools[3];
         tools[0] = WOODEN_AX;
         tools[1] = STONE_AX;
         tools[2] = IRON_AX;
         return tools;
     }
     if (nextBox == WOOD2) {
-        int tools[2];
         tools[0] = STONE_AX;
         tools[1] = IRON_AX;
         return tools;
     }
     if (nextBox == WOOD3) {
-        int tools[1];
         tools[0] = IRON_AX;
         return tools;
     }
+    return tools;
 }
 
 int resourceNecessary(int nextBox) {
@@ -155,12 +150,25 @@ int verifResource(Player *inventoryCollect, int nextBox) {
 int verifItem(Player *inventoryCollect, int nextBox) {
     //On verifie si il l'item
     int *tools = toolsNecessary(nextBox);
-    for (int i = 0; i < 10;i++) {
-        for (int j = 0; j < 4; j++) {
+    int choiceItemCollect = -1;
+    int verifItemCollect = false;
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 3; j++) {
             if (inventoryCollect->inventory[i].type == TOOL) {
                 if (inventoryCollect->inventory[i].tools.id == tools[j]) {
-                    return i;
+                    printf("\nPour utiliser %s ! Taper %d\n", inventoryCollect->inventory[i].tools.name,
+                           inventoryCollect->inventory[i].tools.id);
+                    verifItemCollect = true;
                 }
+            }
+        }
+    }
+    if (verifItemCollect == true) {
+        printf("Votre choix :");
+        scanf_s("%d", &choiceItemCollect);
+        for (int i = 0; i < 10; i++) {
+            if (inventoryCollect->inventory[i].tools.id == choiceItemCollect) {
+                return i;
             }
         }
     }
@@ -201,7 +209,7 @@ char *resourceName(int resourceId) {
 }
 
 int verifDurability(Player *inventoryCollect, int nextBox, int item) {
-    int percentage = 0;
+    float percentage = 0;
     //On determine la zone
     if (nextBox > NPC && nextBox < PLANT2) {
         percentage = 10;
@@ -217,6 +225,7 @@ int verifDurability(Player *inventoryCollect, int nextBox, int item) {
         //on enleve % de durabilité
         inventoryCollect->inventory[item].tools.actual_durabiulity -=
                 inventoryCollect->inventory[item].tools.actual_durabiulity / percentage;
+        printf("\nIl vous reste %.2f de durability a %s\n",inventoryCollect->inventory[item].tools.actual_durabiulity,inventoryCollect->inventory[item].tools.name );
         return 0;
     }
     return -1;
@@ -253,7 +262,7 @@ int addInventoryResources(Player *inventoryCollect, int nextBox) {
             inventoryCollect->inventory[sizeinv].resource.name = resourceName(indexResources);
             inventoryCollect->inventory[sizeinv].resource.id = indexResources;
             inventoryCollect->inventory[sizeinv].resource.quantity = randomResourceNumber;
-            printf("Item ajoutee a votre inventaire : \n %s ",
+            printf("Ressources ajoutee a votre inventaire : %s ",
                    inventoryCollect->inventory[sizeinv].resource.name = resourceName(
                            indexResources));
         } else {

@@ -167,7 +167,8 @@ void addItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, const int *v
                         allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] == -1) {
 
                         playerStruct->inventory[i].resource.quantity -= allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0];
-                        printf("\nVous avez perdu %d %s\n", allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0],
+
+                        printf("\nIl vous reste %d %s\n", playerStruct->inventory[i].resource.quantity,
                                playerStruct->inventory[i].resource.name);
 
                     }
@@ -185,15 +186,15 @@ void addItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, const int *v
                                 playerStruct->inventory[k].resource.quantity >=
                                 allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1]) {
 
-
-                                printf("\nVous avez perdu %d %s et %d %s\n",
-                                       allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0],
-                                       playerStruct->inventory[i].resource.name,
-                                       allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1],
-                                       playerStruct->inventory[k].resource.name);
-
                                 playerStruct->inventory[i].resource.quantity -= allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0];
                                 playerStruct->inventory[k].resource.quantity -= allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1];
+
+                                printf("\nIl vous reste %d %s et %d %s\n",
+                                       playerStruct->inventory[i].resource.quantity,
+                                       playerStruct->inventory[i].resource.name,
+                                       playerStruct->inventory[k].resource.quantity,
+                                       playerStruct->inventory[k].resource.name);
+
                             }
                         }
                     }
