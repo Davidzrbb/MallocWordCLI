@@ -17,7 +17,6 @@ int main(int argc, const char *argv[]) {
     //printTest(PlayerStruct);
     return 0;
 }
-
 void InitPlayer(Player* firstPlayer) {
     Item *WeaponSword = malloc(sizeof(Item));
     WeaponSword->weapon.damage= 1;
