@@ -3,19 +3,19 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <stdbool.h>
 struct Armor{
-    char * name;
     int id;
+    char * name;
     int protection;
 };
 typedef struct Armor Armor;
 
 struct healthPotion{
-    char * name;
     int id;
-    int pvRestore;
+    char *name;
     int quantity;
+    int pvRestore;
 };
 typedef struct healthPotion healthPotion;
 

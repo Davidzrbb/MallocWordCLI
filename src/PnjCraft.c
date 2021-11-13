@@ -19,7 +19,7 @@ void craftItem(Player *playerStruct) {
                 break;
 
             case 2 :
-                createItemCraft(&allItemCraft, playerStruct,0);
+                createItemCraft(&allItemCraft, playerStruct, 0);
                 break;
 
             case 0 :
@@ -32,107 +32,144 @@ void craftItem(Player *playerStruct) {
 }
 
 void displayItemCraft(AllItemCraft *allItemCraft) {
+    printf("\nARMES : \n");
+    displayItemCraftSection(allItemCraft, WEAPON);
+    printf("\nOUTILS : \n");
+    displayItemCraftSection(allItemCraft, TOOL);
+    printf("\nARMURES : \n");
+    displayItemCraftSection(allItemCraft, ARMOR);
+    printf("\nPOTION : \n");
+    displayItemCraftSection(allItemCraft, HEAL);
+}
+
+void displayItemCraftSection(AllItemCraft *allItemCraft, int type) {
     char *resourceNameString;
     char *resourceNameString2;
+
     for (int i = 0; i < 25; i++) {
-        if (allItemCraft->itemCraft[i].arrayItemCraftNecessary[1] == -1) {
-            resourceNameString = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[0]);
-            printf("\n%s = %d %s\n", allItemCraft->itemCraft[i].name,
-                   allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[0],
-                   resourceNameString);
-        }
-        if (allItemCraft->itemCraft[i].arrayItemCraftNecessary[1] != -1) {
-            resourceNameString = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[0]);
-            resourceNameString2 = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[1]);
-            printf("\n%s = %d %s + %d %s\n", allItemCraft->itemCraft[i].name,
-                   allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[0],
-                   resourceNameString,
-                   allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[1],
-                   resourceNameString2);
+        if (allItemCraft->itemCraft[i].type == type) {
+            if (allItemCraft->itemCraft[i].arrayItemCraftNecessary[1] == -1) {
+                resourceNameString = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[0]);
+                printf("| %s = %d %s \n", allItemCraft->itemCraft[i].name,
+                       allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[0],
+                       resourceNameString);
+            }
+            if (allItemCraft->itemCraft[i].arrayItemCraftNecessary[1] != -1) {
+                resourceNameString = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[0]);
+                resourceNameString2 = resourceName(allItemCraft->itemCraft[i].arrayItemCraftNecessary[1]);
+                printf("| %s = %d %s + %d %s \n", allItemCraft->itemCraft[i].name,
+                       allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[0],
+                       resourceNameString,
+                       allItemCraft->itemCraft[i].arrayQuantityCraftNecessary[1],
+                       resourceNameString2);
+            }
         }
     }
 }
 
 void createItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, int choiceItemCraft) {
-
-    choiceItemCraft = verifItemCraft(allItemCraft, playerStruct);
-
-
+    int *verifItemCraftArray;
+    verifItemCraftArray = verifItemCraft(allItemCraft, playerStruct);
+    choiceItemCraft = verifItemCraftArray[0];
     if (choiceItemCraft != 0) {
-        addItemCraft(allItemCraft, playerStruct, choiceItemCraft);
+        addItemCraft(allItemCraft, playerStruct, verifItemCraftArray);
     }
 }
 
-void addItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, int choiceItemCraft) {
+void addItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, const int *verifItemCraftArray) {
     //On verifie la disponibilité dans l'inventory du Player et on ajoute
     int sizeinv = 0;
-    for (int i = 0; i < 10; i++) {
-        if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 6) {
-            sizeinv = i;
-        }
-    }
-
-    if (sizeinv < 9) {
-        sizeinv++;
-        for (int i = 0; i < 25; i++) {
-            if (allItemCraft->itemCraft[i].idCreation == choiceItemCraft) {
-                playerStruct->inventory[sizeinv].type = allItemCraft->itemCraft[i].type;
-                if (allItemCraft->itemCraft[i].type == TOOL) {
-                    playerStruct->inventory[sizeinv].tools.id = choiceItemCraft;
-                    playerStruct->inventory[sizeinv].tools.name = allItemCraft->itemCraft[i].name;
-                    playerStruct->inventory[sizeinv].tools.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
-                    playerStruct->inventory[sizeinv].tools.max_durability = allItemCraft->itemCraft[i].max_durability;
-                }
-                if (allItemCraft->itemCraft[i].type == WEAPON) {
-                    playerStruct->inventory[sizeinv].weapon.id = choiceItemCraft;
-                    playerStruct->inventory[sizeinv].weapon.name = allItemCraft->itemCraft[i].name;
-                    playerStruct->inventory[sizeinv].weapon.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
-                    playerStruct->inventory[sizeinv].weapon.max_durability = allItemCraft->itemCraft[i].max_durability;
-                    playerStruct->inventory[sizeinv].weapon.damage = allItemCraft->itemCraft[i].damage;
-                }
-                if (allItemCraft->itemCraft[i].type == HEAL) {
-                    playerStruct->inventory[sizeinv].heal.id = choiceItemCraft;
-                    playerStruct->inventory[sizeinv].heal.name = allItemCraft->itemCraft[i].name;
-                    playerStruct->inventory[sizeinv].heal.quantity = allItemCraft->itemCraft[i].quantity;
-                    playerStruct->inventory[sizeinv].heal.pvRestore = allItemCraft->itemCraft[i].pvRestore;
-                }
-                if (allItemCraft->itemCraft[i].type == ARMOR) {
-                    playerStruct->inventory[sizeinv].armor.id = choiceItemCraft;
-                    playerStruct->inventory[sizeinv].armor.name = allItemCraft->itemCraft[i].name;
-                    playerStruct->inventory[sizeinv].armor.protection = allItemCraft->itemCraft[i].protection;
-                }
+    int healQuantity = 0;
+    int addQuantityHeal = 0;
+    int count = 0;
+    int choiceItemCraft = verifItemCraftArray[0];
+    bool checkChoice = false;
+    for (int i = 0; i < 26; i++) {
+        if (i != 0) {
+            if (choiceItemCraft == verifItemCraftArray[i]) {
+                checkChoice = true;
             }
         }
-
-        printf("\nItem ajoutee a votre inventaire : %s \n",
-               playerStruct->inventory[sizeinv].resource.name);
-    } else {
-        printf("Vous avez deja 10 inventaires !");
     }
-}
-
-int verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
-    int count = 0;
-    int sizeinv = 0;
-    int choiceItemCraft;
-    if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
+    if (checkChoice == true) {
         for (int i = 0; i < 10; i++) {
             if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 6) {
+                if (playerStruct->inventory[i].heal.id == choiceItemCraft) {
+                    if (playerStruct->inventory[i].type == HEAL) {
+                        if (playerStruct->inventory[i].heal.quantity > 19) {
+                            healQuantity = -1;
+                        } else {
+                            healQuantity = i;
+                        }
+                    }
+                } else {
+                    healQuantity = -1;
+                }
                 sizeinv = i;
             }
         }
         if (sizeinv < 9) {
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 25; j++) {
+            sizeinv++;
+            for (int i = 0; i < 25; i++) {
+                if (allItemCraft->itemCraft[i].idCreation == choiceItemCraft) {
+                    if (allItemCraft->itemCraft[i].type == TOOL) {
+                        playerStruct->inventory[sizeinv].tools.id = choiceItemCraft;
+                        playerStruct->inventory[sizeinv].tools.name = allItemCraft->itemCraft[i].name;
+                        playerStruct->inventory[sizeinv].tools.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
+                        playerStruct->inventory[sizeinv].tools.max_durability = allItemCraft->itemCraft[i].max_durability;
+                    }
+                    if (allItemCraft->itemCraft[i].type == WEAPON) {
+                        playerStruct->inventory[sizeinv].weapon.id = choiceItemCraft;
+                        playerStruct->inventory[sizeinv].weapon.name = allItemCraft->itemCraft[i].name;
+                        playerStruct->inventory[sizeinv].weapon.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
+                        playerStruct->inventory[sizeinv].weapon.max_durability = allItemCraft->itemCraft[i].max_durability;
+                        playerStruct->inventory[sizeinv].weapon.damage = allItemCraft->itemCraft[i].damage;
+                    }
+                    if (allItemCraft->itemCraft[i].type == ARMOR) {
+                        playerStruct->inventory[sizeinv].armor.id = choiceItemCraft;
+                        playerStruct->inventory[sizeinv].armor.name = allItemCraft->itemCraft[i].name;
+                        playerStruct->inventory[sizeinv].armor.protection = allItemCraft->itemCraft[i].protection;
+                    }
+                    if (allItemCraft->itemCraft[i].type == HEAL) {
+                        if (healQuantity == -1) {
+                            playerStruct->inventory[sizeinv].heal.id = choiceItemCraft;
+                            playerStruct->inventory[sizeinv].heal.name = allItemCraft->itemCraft[i].name;
+                            playerStruct->inventory[sizeinv].heal.quantity = allItemCraft->itemCraft[i].quantity;
+                            playerStruct->inventory[sizeinv].heal.pvRestore = allItemCraft->itemCraft[i].pvRestore;
+                        } else {
+                            playerStruct->inventory[healQuantity].heal.quantity += 1;
+                            addQuantityHeal = 1;
+                        }
+                    }
+                    if (addQuantityHeal == 0) {
+                        playerStruct->inventory[sizeinv].type = allItemCraft->itemCraft[i].type;
+                    }
+                }
+            }
+            if (addQuantityHeal == 0) {
+                printf("\nItem ajoutee a votre inventaire : %s \n",
+                       playerStruct->inventory[sizeinv].resource.name);
+            } else {
+                printf("\nItem ajoutee a votre inventaire : %s \n",
+                       playerStruct->inventory[healQuantity].resource.name);
+            }
+
+        } else {
+            printf("\nVous avez deja 10 inventaires !\n");
+        }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 25; j++) {
+                if (allItemCraft->itemCraft[j].idCreation == choiceItemCraft) {
                     if (playerStruct->inventory[i].resource.id ==
                         allItemCraft->itemCraft[j].arrayItemCraftNecessary[0] &&
                         playerStruct->inventory[i].resource.quantity >=
                         allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
                         allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] == -1) {
 
-                        printf("\nAvec %d de %s, vous pouvez faire %s ! Taper %d\n",
-                               playerStruct->inventory[i].resource.quantity, playerStruct->inventory[i].resource.name,
-                               allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
+                        playerStruct->inventory[i].resource.quantity -= allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0];
+                        printf("\nVous avez perdu %d %s\n", allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0],
+                               playerStruct->inventory[i].resource.name);
+
                     }
                     if (playerStruct->inventory[i].resource.id ==
                         allItemCraft->itemCraft[j].arrayItemCraftNecessary[0] &&
@@ -147,31 +184,114 @@ int verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
                                 allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] &&
                                 playerStruct->inventory[k].resource.quantity >=
                                 allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1]) {
+
+
+                                printf("\nVous avez perdu %d %s et %d %s\n",
+                                       allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0],
+                                       playerStruct->inventory[i].resource.name,
+                                       allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1],
+                                       playerStruct->inventory[k].resource.name);
+
+                                playerStruct->inventory[i].resource.quantity -= allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0];
+                                playerStruct->inventory[k].resource.quantity -= allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1];
+                            }
+                        }
+                    }
+                }
+            }
+            count = 0;
+        }
+    } else {
+        printf("Votre choix n'est pas possible !");
+    }
+}
+
+int *verifItemCraft(AllItemCraft *allItemCraft, Player *playerStruct) {
+    int count = 0;
+    int sizeinv = 0;
+    int countArmor = 0;
+    int choiceItemCraft;
+    int c = 0;
+    static int verifItemCraftArray[26];
+
+    for (int i = 0; i < 26; i++) {
+        verifItemCraftArray[i] = -1;
+    }
+
+    if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
+        for (int i = 0; i < 10; i++) {
+            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 6) {
+                sizeinv = i;
+                if (playerStruct->inventory[i].type == ARMOR) {
+                    countArmor = 1;
+                }
+            }
+        }
+        if (sizeinv < 9) {
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 25; j++) {
+                    if (playerStruct->inventory[i].resource.id ==
+                        allItemCraft->itemCraft[j].arrayItemCraftNecessary[0] &&
+                        playerStruct->inventory[i].resource.quantity >=
+                        allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
+                        allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] == -1) {
+                        printf("\nAvec %d de %s, vous pouvez faire %s ! Taper %d\n",
+                               playerStruct->inventory[i].resource.quantity,
+                               playerStruct->inventory[i].resource.name,
+                               allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
+                        c = j + 1;
+                        verifItemCraftArray[c] = allItemCraft->itemCraft[j].idCreation;
+                    }
+                    if (playerStruct->inventory[i].resource.id ==
+                        allItemCraft->itemCraft[j].arrayItemCraftNecessary[0] &&
+                        playerStruct->inventory[i].resource.quantity >=
+                        allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[0] &&
+                        allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] != -1) {
+                        count = 1;
+                    }
+                    if (count == 1) {
+                        for (int k = 0; k < 10; k++) {
+                            if (playerStruct->inventory[k].resource.id ==
+                                allItemCraft->itemCraft[j].arrayItemCraftNecessary[1] &&
+                                playerStruct->inventory[k].resource.quantity >=
+                                allItemCraft->itemCraft[j].arrayQuantityCraftNecessary[1]) {
+
                                 printf("\nAvec %d de %s et %d de %s, vous pouvez faire %s ! Taper %d\n",
                                        playerStruct->inventory[i].resource.quantity,
                                        playerStruct->inventory[i].resource.name,
                                        playerStruct->inventory[k].resource.quantity,
                                        playerStruct->inventory[k].resource.name,
                                        allItemCraft->itemCraft[j].name, allItemCraft->itemCraft[j].idCreation);
+                                c = j + 1;
+                                verifItemCraftArray[c] = allItemCraft->itemCraft[j].idCreation;
                             }
                         }
                     }
                 }
                 count = 0;
             }
-            printf("\nAnnuler, Taper 0");
+            printf("\nAnnuler, Taper 0\n");
             printf("\nVotre choix : ");
             scanf("%d", &choiceItemCraft);
-            return choiceItemCraft;
-        }else{
-            printf("Vous avez deja 10 inventaires !");
-            return 0;
+            if (choiceItemCraft == 11 || choiceItemCraft == 22 || choiceItemCraft == 33) {
+                if (countArmor == 1) {
+                    printf("\nMax une armure dans l'inventaire, veuillez la deposer dans le stock !\n");
+                    choiceItemCraft = 0;
+                }
+            }
+            verifItemCraftArray[0] = choiceItemCraft;
+            return verifItemCraftArray;
+        } else {
+            printf("\nVous avez deja 10 inventaires !\n");
+            verifItemCraftArray[0] = 0;
+            return verifItemCraftArray;
         }
 
 
     } else {
         printf("\nVous n'avez plus d'item dans votre inventaire !\n");
-        return 0;
+        verifItemCraftArray[0] = 0;
+        return verifItemCraftArray;
     }
 
 }

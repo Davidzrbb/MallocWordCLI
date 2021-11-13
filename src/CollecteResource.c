@@ -248,7 +248,6 @@ int addInventoryResources(Player *inventoryCollect, int nextBox) {
             }
         }
         if (sizeinv < 9) {
-
             indexResources -= 100;
             inventoryCollect->inventory[sizeinv].type = RESOURCE;
             inventoryCollect->inventory[sizeinv].resource.name = resourceName(indexResources);

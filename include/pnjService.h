@@ -9,7 +9,7 @@ struct ArrayItemCraft {
     int idCreation;
     int arrayItemCraftNecessary[2];
     int arrayQuantityCraftNecessary[2];
-    char* name;
+    char *name;
     int damage;
     float max_durability;
     float actual_durabiulity;
@@ -40,19 +40,21 @@ void initStructStock(PnjLinkedList *);
 
 void recoverItemStockToInventory(Player *, PnjLinkedList *);
 
-PnjLinkedList *deleteElementLinkedList(Player *, PnjLinkedList *, int );
+PnjLinkedList *deleteElementLinkedList(Player *, PnjLinkedList *, int);
 
 void craftItem(Player *);
 
-void initArrayCraftItem(AllItemCraft*);
+void initArrayCraftItem(AllItemCraft *);
 
-int verifItemCraft(AllItemCraft *, Player *);
+int* verifItemCraft(AllItemCraft *, Player *);
 
-void createItemCraft(AllItemCraft *, Player *,int);
+void createItemCraft(AllItemCraft *, Player *, int);
 
 void displayItemCraft(AllItemCraft *);
 
-void addItemCraft(AllItemCraft *, Player *, int);
+void addItemCraft(AllItemCraft *, Player *, const int*);
+
+void displayItemCraftSection(AllItemCraft *, int);
 
 extern int countDelet;
 extern int choicePnj;

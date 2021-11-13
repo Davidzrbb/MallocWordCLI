@@ -32,7 +32,7 @@ void InitPlayer(Player* firstPlayer) {
     ToolsPickaxe->tools.max_durability=10;
     ToolsPickaxe->tools.actual_durabiulity=5;
     ToolsPickaxe->tools.id= WOODEN_PICKAXE;
-    ToolsPickaxe->type= TOOL;
+    ToolsPickaxe->type=TOOL;
 
     Item  *ToolsBillhook = malloc(sizeof(Item));
     ToolsBillhook->tools.name ="serpette en bois";
@@ -61,7 +61,7 @@ void InitPlayer(Player* firstPlayer) {
     Pierre->resource.name = malloc(sizeof (char *));
     Pierre->resource.name ="pierre";
     Pierre->resource.id = ROCK;
-    Pierre->resource.quantity=4;
+    Pierre->resource.quantity=10;
     Pierre->type= RESOURCE;
 
 

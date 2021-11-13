@@ -51,14 +51,13 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 }
 
 void deleteElementInventory(Item inventory[], int sizeArr, int index) {
-    int i ;
-    int j ;
+    int i;
+    int j;
 
     for (i = 0; i < sizeArr; i++) {
         if (inventory[i].tools.id == index) {
             for (j = i; j < 10; j++) {
                 if (j < 10 - 1) {
-                    printf("test");
                     inventory[j] = inventory[j + 1];
                 } else {
                     inventory[j].type = -1;
