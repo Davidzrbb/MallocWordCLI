@@ -78,6 +78,7 @@ void InitPlayer(Player* firstPlayer) {
     armor1 -> armor.name = "chestplate11";
     armor1 -> armor.id = 11;
     armor1 -> armor.protection = 10;
+    armor1->type= 5;
 
     firstPlayer->level = 1;
     firstPlayer->currentHealthPoints = 40;

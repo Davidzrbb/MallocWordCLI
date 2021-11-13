@@ -104,11 +104,19 @@ void attackPlayer(Player* player, Monster* monster, Weapon* weapon) {
 void attackMonster(Player* player, Monster* monster) {
     int idMonster = 0;
     idMonster = monster -> id;
+    int armorId = 0;
+    for (int i = 0; i<10;i++){
+        if(player->inventory[i].type == 5){
+            armorId = player->inventory[i].armor.id;
+
+        }
+    }
     if(player -> currentHealthPoints != 0){
         
         switch (idMonster) {
             case  1:
-                switch(player -> inventory -> armor.id){
+
+                switch(armorId){
                     case 0 :
                         player -> currentHealthPoints -= monster -> damage;
                         break;
@@ -131,7 +139,7 @@ void attackMonster(Player* player, Monster* monster) {
                 break;
 
             case  2:
-                switch(player -> inventory -> armor.id){
+                switch(armorId){
                     case 0 :
                         player -> currentHealthPoints -= monster -> damage;
                         break;
@@ -154,11 +162,11 @@ void attackMonster(Player* player, Monster* monster) {
                 break;
 
             case 3:
-                switch(player -> inventory -> armor.id){
+                switch(armorId){
                     case 0 :
                         player -> currentHealthPoints -= monster -> damage;
                         break;
-                        
+
                     case 11 :
                         player -> currentHealthPoints -= (monster -> damage * 0.9);
                         break;
