@@ -34,6 +34,7 @@ void InitPlayer(Player* firstPlayer) {
     ToolsPickaxe->tools.id= STONE_PICKAXE;
     ToolsPickaxe->type=TOOL;
 
+
     Item  *ToolsBillhook = malloc(sizeof(Item));
     ToolsBillhook->tools.name ="serpette en bois";
     ToolsBillhook->tools.max_durability=10;
