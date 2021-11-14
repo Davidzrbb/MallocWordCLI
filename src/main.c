@@ -1,12 +1,41 @@
-#include "../include/include.h";
+#include "map.h"
+#include "../include/include.h"
+#include "movement.h"
 
 int main(int argc, const char *argv[]) {
     Player PlayerStruct;
-    Item ItemStruct;
+    //Item ItemStruct;
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
 //Print
-    printTest(PlayerStruct);
+    //printTest(PlayerStruct);
+
+    int **map1;
+    map1 = malloc(sizeof(int *) * 8);
+    for (int i = 0; i < 8; ++i) {
+        map1[i] = malloc(sizeof(int) * 8);
+    }
+    int **map2;
+    map2 = malloc(sizeof(int *) * 10);
+    for (int i = 0; i < 10; ++i) {
+        map2[i] = malloc(sizeof(int) * 10);
+    }
+    int **map3;
+    map3 = malloc(sizeof(int *) * 12);
+    for (int i = 0; i < 12; ++i) {
+        map3[i] = malloc(sizeof(int) * 12);
+    }
+
+    int *** map_list = malloc(sizeof (map1)+sizeof (map2)+sizeof (map3));
+    map_list[0]=map1;
+    map_list[1]=map2;
+    map_list[2]=map3;
+
+    generate_land(map_list[0], 8, 8, 1);
+    generate_land(map_list[1], 10, 10, 2);
+    generate_land(map_list[2], 12, 12, 3);
+
+    movement(&PlayerStruct, map_list);
     return 0;
 }
 
@@ -49,6 +78,11 @@ void InitPlayer(Player* firstPlayer) {
     firstPlayer->inventory[1] = *ToolsPickaxe ;
     firstPlayer->inventory[2] = *ToolsBillhook ;
     firstPlayer->inventory[3] = *ToolsAx ;
+
+    firstPlayer->coord_x = 1;
+    firstPlayer->coord_y = 0;
+
+    firstPlayer->actual_map = 0;
 }
 
 void printTest(Player PlayerStruct){

@@ -5,30 +5,7 @@
 #include "map.h"
 #include "perlin_gen.h"
 #include "usefulFunc.h"
-
-void create_map() {
-
-    int **map1;
-    map1 = malloc(sizeof(int *) * 8);
-    for (int i = 0; i < 8; ++i) {
-        map1[i] = malloc(sizeof(int) * 8);
-    }
-    int **map2;
-    map2 = malloc(sizeof(int *) * 10);
-    for (int i = 0; i < 10; ++i) {
-        map2[i] = malloc(sizeof(int) * 10);
-    }
-    int **map3;
-    map3 = malloc(sizeof(int *) * 12);
-    for (int i = 0; i < 12; ++i) {
-        map3[i] = malloc(sizeof(int) * 12);
-    }
-
-    generate_land(map1, 8, 8, 1);
-    generate_land(map2, 10, 10, 2);
-    generate_land(map3, 12, 12, 3);
-
-}
+#include "include.h"
 
 int **generate_land(int **map, int x, int y, int map_id) {
 
@@ -37,7 +14,7 @@ int **generate_land(int **map, int x, int y, int map_id) {
     for (int i = 0; i < x; ++i) {
         for (int j = 0; j < y; ++j) {
 
-            perlin = perlin2d(i, j, 0.3f, 8);
+            perlin = perlin2d(i, j, 0.3f, 8);  //TODO gerer la seed
 
             if (perlin < 0.1 || perlin > 0.9) {
                 map[i][j] = IMPASSABLE;

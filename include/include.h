@@ -1,3 +1,5 @@
+#ifndef MALLOC_WORLD_INCLUDE_H
+#define MALLOC_WORLD_INCLUDE_H
 
 #include <stdio.h>
 #include <string.h>
@@ -45,6 +47,9 @@ struct Player {
     int level;
     int currentHealthPoints;
     int maxHealthpoints;
+    int coord_x;
+    int coord_y;
+    int actual_map;
     Item inventory[10];
 };
 
@@ -64,7 +69,7 @@ enum entity {
     PLANT3 = 9,
     ROCK3 = 10,
     WOOD3 = 11,
-    END8BOSS = 99,
+    END8BOSS = 99
 };
 typedef enum entity entity;
 
@@ -112,3 +117,5 @@ typedef enum tools tools;
 void InitPlayer(Player *);
 
 void printTest(Player);
+
+#endif
