@@ -1,24 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "map.h"
-
-
-struct Player
-{
-    int experience;
-    int level;
-    int currentHealthPoints;
-    int maxHealthpoints;
-    int inventory[10][3];
-};
-typedef struct Player Player;
-
-void initPlayer(Player*);
-
-
 #include "../include/include.h"
 #include "../include/pnjService.h"
 #include "../include/collecteResource.h"
+#include "map.h"
+#include "../include/include.h"
+#include "movement.h"
 
 int main(int argc, const char *argv[]) {
     Player playerStruct;
@@ -26,7 +11,7 @@ int main(int argc, const char *argv[]) {
     create_map();
     //Stat du joueur au début de la partie
     //initPlayer(&playerStruct);
-    
+
     Player PlayerStruct;
     Item ItemStruct;
     //PnjLinkedList stock;
@@ -34,6 +19,35 @@ int main(int argc, const char *argv[]) {
     initStructStock(stock);
     //Stat du Player au début de la partie
     InitPlayer(&PlayerStruct);
+//Print
+    //printTest(PlayerStruct);
+
+    int **map1;
+    map1 = malloc(sizeof(int *) * 8);
+    for (int i = 0; i < 8; ++i) {
+        map1[i] = malloc(sizeof(int) * 8);
+    }
+    int **map2;
+    map2 = malloc(sizeof(int *) * 10);
+    for (int i = 0; i < 10; ++i) {
+        map2[i] = malloc(sizeof(int) * 10);
+    }
+    int **map3;
+    map3 = malloc(sizeof(int *) * 12);
+    for (int i = 0; i < 12; ++i) {
+        map3[i] = malloc(sizeof(int) * 12);
+    }
+
+    int *** map_list = malloc(sizeof (map1)+sizeof (map2)+sizeof (map3));
+    map_list[0]=map1;
+    map_list[1]=map2;
+    map_list[2]=map3;
+
+    generate_land(map_list[0], 8, 8, 1);
+    generate_land(map_list[1], 10, 10, 2);
+    generate_land(map_list[2], 12, 12, 3);
+
+    movement(&PlayerStruct, map_list);
     //PnjFix
     //pnjChoice(&PlayerStruct, stock);
     return 0;
@@ -71,6 +85,7 @@ void InitPlayer(Player *firstPlayer) {
     ToolsAx->tools.id = WOODEN_AX;
     ToolsAx->type = TOOL;
 
+
     firstPlayer->level = 1;
     firstPlayer->currentHealthPoints = 100;
     firstPlayer->maxHealthpoints = 100;
@@ -89,6 +104,11 @@ void InitPlayer(Player *firstPlayer) {
     firstPlayer->inventory[3][0] =  4;
     firstPlayer->inventory[3][1] =  10;
     firstPlayer->inventory[3][2] =  0;
+
+    firstPlayer->coord_x = 1;
+    firstPlayer->coord_y = 0;
+
+    firstPlayer->actual_map = 0;
 }
 
 

@@ -1,3 +1,5 @@
+#ifndef MALLOC_WORLD_INCLUDE_H
+#define MALLOC_WORLD_INCLUDE_H
 
 #include <stdio.h>
 #include <string.h>
@@ -56,16 +58,17 @@ struct Item {
 };
 typedef struct Item Item;
 
+typedef struct Player Player;
 struct Player {
     int experience;
     int level;
     int currentHealthPoints;
     int maxHealthpoints;
+    int actual_map;
     int coord_x;
     int coord_y;
     Item inventory[10];
 };
-typedef struct Player Player;
 enum entity {
     PORTAL1_2 = -3,
     PORTAL2_3 = -2,
@@ -101,12 +104,12 @@ typedef enum resource resource;
 enum weaponEnum {
     WOODEN_SWORD = 1,
     STONE_SWORD = 8,
+    STONE_SPEAR = 9,
+    STONE_HAMMER = 10,
     IRON_SWORD = 19,
     DIAMOND_SWORD = 30,
-    STONE_SPEAR = 9,
     IRON_SPEAR = 20,
     DIAMOND_SPEAR = 31,
-    STONE_HAMMER = 10,
     IRON_HAMMER = 21,
     DIAMOND_HAMMER = 32,
 };
@@ -134,6 +137,7 @@ enum type {
 typedef enum item item;
 
 void InitPlayer(Player *);
+
 void printTest(Player);
 
-void MovePlayer(Player*);
+#endif
