@@ -3,8 +3,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
+struct Armor{
+    int id;
+    char * name;
+    int protection;
+};
+typedef struct Armor Armor;
 
-typedef struct Player Player;
+struct healthPotion{
+    int id;
+    char *name;
+    int quantity;
+    int pvRestore;
+};
+typedef struct healthPotion healthPotion;
 
 struct Weapon {
     int id;
@@ -25,6 +38,7 @@ typedef struct Tools Tools;
 
 struct Resource {
     int id;
+    char *name;
     int quantity;
 };
 typedef struct Resource Resource;
@@ -36,6 +50,8 @@ struct Item {
         struct Weapon weapon;
         struct Tools tools;
         struct Resource resource;
+        struct Armor armor;
+        struct healthPotion heal;
     };
 };
 typedef struct Item Item;
@@ -49,7 +65,7 @@ struct Player {
     int coord_y;
     Item inventory[10];
 };
-
+typedef struct Player Player;
 enum entity {
     PORTAL1_2 = -3,
     PORTAL2_3 = -2,
@@ -85,11 +101,14 @@ typedef enum resource resource;
 enum weaponEnum {
     WOODEN_SWORD = 1,
     STONE_SWORD = 8,
-    STONE_SPEAR = 9,
-    STONE_HAMMER = 10,
     IRON_SWORD = 19,
+    DIAMOND_SWORD = 30,
+    STONE_SPEAR = 9,
     IRON_SPEAR = 20,
+    DIAMOND_SPEAR = 31,
+    STONE_HAMMER = 10,
     IRON_HAMMER = 21,
+    DIAMOND_HAMMER = 32,
 };
 typedef enum weaponEnum weaponEnum;
 enum tools {
@@ -109,8 +128,16 @@ enum type {
     RESOURCE = 3,
 };
 typedef enum tools tools;
-typedef enum tools tools;
+enum type {
+    WEAPON = 1,
+    TOOL = 2,
+    RESOURCE = 3,
+    HEAL = 4,
+    ARMOR = 5,
+};
+typedef enum item item;
 
 void InitPlayer(Player *);
-
 void printTest(Player);
+
+void MovePlayer(Player*);
