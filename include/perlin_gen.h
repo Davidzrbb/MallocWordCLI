@@ -7,6 +7,6 @@
 
 #include <math.h>
 
-float perlin2d(float x, float y, float freq, int depth);
+float perlin2d(float x, float y, float freq, int depth, int seed);
 
 #endif //MALLOC_WORLD_PERLIN_GEN_H

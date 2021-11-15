@@ -3,8 +3,7 @@
 //
 #include "movement.h"
 
-void movement(Player *player, int ***map_list) {
-    int stop=0;
+void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn) {
     int success;
     char direction;
     do{
@@ -39,8 +38,10 @@ int goForward(Player *player, int add_x, int add_y, int **actual_map, int id_map
     int success;
 
      if(next_case>= PLANT1 & next_case <= WOOD3){
-       success = 1;//CollectRessouce;
+         //CollectRessouce();
+       success = 1;
        if(!success){
+           printf("\nvous ne pouvez pas recolter la ressource");
            return 0;
        }
          player->coord_x+=add_x;
@@ -52,6 +53,9 @@ int goForward(Player *player, int add_x, int add_y, int **actual_map, int id_map
          //interactWithPnj
      }else if(next_case>=12){
          success = 1;//interactWithMonster
+         if(success == 1){
+
+         }
          if(!success){
              return 2;
          }
