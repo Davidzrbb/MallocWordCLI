@@ -122,12 +122,8 @@ enum tools {
     IRON_BILLHOOK = 24,
     IRON_AX = 25,
 };
-enum type {
-    WEAPON = 1,
-    TOOL = 2,
-    RESOURCE = 3,
-};
 typedef enum tools tools;
+
 enum type {
     WEAPON = 1,
     TOOL = 2,
