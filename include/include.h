@@ -61,6 +61,8 @@ struct Player {
     int level;
     int currentHealthPoints;
     int maxHealthpoints;
+    int coord_x;
+    int coord_y;
     Item inventory[10];
 };
 typedef struct Player Player;
@@ -119,6 +121,11 @@ enum tools {
     IRON_PICKAXE = 23,
     IRON_BILLHOOK = 24,
     IRON_AX = 25,
+};
+enum type {
+    WEAPON = 1,
+    TOOL = 2,
+    RESOURCE = 3,
 };
 typedef enum tools tools;
 enum type {
