@@ -8,7 +8,7 @@
 
 #include "include.h"
 
-void movement(Player *player, int ***actual_map);
+void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn);
 int goForward(Player *player, int add_x, int add_y, int **actual_map, int id_map);
 void changeMap(Player *player, int id_portal);
 

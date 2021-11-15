@@ -138,6 +138,9 @@ typedef enum item item;
 
 void InitPlayer(Player *);
 
+int** createTable(int size);
+void fill_tab(int **tab,int size);
+
 void printTest(Player);
 
 #endif

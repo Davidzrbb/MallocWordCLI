@@ -22,34 +22,45 @@ int main(int argc, const char *argv[]) {
 //Print
     //printTest(PlayerStruct);
 
-    int **map1;
-    map1 = malloc(sizeof(int *) * 8);
-    for (int i = 0; i < 8; ++i) {
-        map1[i] = malloc(sizeof(int) * 8);
-    }
-    int **map2;
-    map2 = malloc(sizeof(int *) * 10);
-    for (int i = 0; i < 10; ++i) {
-        map2[i] = malloc(sizeof(int) * 10);
-    }
-    int **map3;
-    map3 = malloc(sizeof(int *) * 12);
-    for (int i = 0; i < 12; ++i) {
-        map3[i] = malloc(sizeof(int) * 12);
-    }
+    int **map1 = createTable(8);
+    int **map1_cpy = createTable(8);
+    int **map1_respawn = createTable(8);
+    int **map2 = createTable(10);
+    int **map2_cpy = createTable(10);
+    int **map2_respawn = createTable(10);
+    int **map3  = createTable(12);
+    int **map3_cpy = createTable(12);
+    int **map3_respawn= createTable(12);
 
     int *** map_list = malloc(sizeof (map1)+sizeof (map2)+sizeof (map3));
     map_list[0]=map1;
     map_list[1]=map2;
-    map_list[2]=map3;
+    map_list[3]=map3;
 
-    generate_land(map_list[0], 8, 8, 1);
-    generate_land(map_list[1], 10, 10, 2);
-    generate_land(map_list[2], 12, 12, 3);
+    int *** map_list_cpy = malloc(sizeof (map1_cpy) + sizeof (map2_cpy) + sizeof (map3_cpy));
+    map_list_cpy[0]=map1_cpy;
+    map_list_cpy[1]=map2_cpy;
+    map_list_cpy[3]=map3_cpy;
 
-    movement(&PlayerStruct, map_list);
-    //PnjFix
-    //pnjChoice(&PlayerStruct, stock);
+    int *** map_list_respawn = malloc(sizeof (map1_cpy) + sizeof (map2_cpy) + sizeof (map3_cpy));
+    map_list[0]=map1_respawn;
+    map_list[1]=map2_respawn;
+    map_list[3]=map3_respawn;
+
+
+    generate_land(map1, 8, 8, 1);  //map1
+    generate_land(map2, 10, 10, 2); //map 2
+    generate_land(map3, 12, 12, 3); //map 3
+    generate_land(map1_cpy, 8, 8, 1);  //map 1 cpy
+    generate_land(map2_cpy, 10, 10, 2); //map 2 cpy
+    generate_land(map3_cpy, 12, 12, 3); //map 3 cpy
+    fill_tab(map1_respawn,8);
+    fill_tab(map2_respawn,8);
+    fill_tab(map3_respawn,8);
+
+
+    movement(&PlayerStruct, map_list, map_list_cpy, map_list_cpy);
+
     return 0;
 }
 
