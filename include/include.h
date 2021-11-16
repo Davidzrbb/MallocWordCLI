@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 typedef struct Player Player;
+
 
 struct Weapon {
     int id;
@@ -113,6 +115,9 @@ enum type {
 };
 typedef enum tools tools;
 typedef enum tools tools;
+
+
+static int  mapsSize[3]={8,10,12};
 
 void InitPlayer(Player *);
 
