@@ -2,13 +2,11 @@
 #include "../include/pnjService.h"
 #include "../include/collecteResource.h"
 #include "map.h"
-#include "../include/include.h"
 #include "movement.h"
 
 int main(int argc, const char *argv[]) {
     Player playerStruct;
 
-    create_map();
     //Stat du joueur au début de la partie
     //initPlayer(&playerStruct);
 
@@ -35,12 +33,12 @@ int main(int argc, const char *argv[]) {
     int *** map_list = malloc(sizeof (map1)+sizeof (map2)+sizeof (map3));
     map_list[0]=map1;
     map_list[1]=map2;
-    map_list[3]=map3;
+    map_list[2]=map3;
 
     int *** map_list_cpy = malloc(sizeof (map1_cpy) + sizeof (map2_cpy) + sizeof (map3_cpy));
     map_list_cpy[0]=map1_cpy;
     map_list_cpy[1]=map2_cpy;
-    map_list_cpy[3]=map3_cpy;
+    map_list_cpy[2]=map3_cpy;
 
     int *** map_list_respawn = malloc(sizeof (map1_cpy) + sizeof (map2_cpy) + sizeof (map3_cpy));
     map_list_respawn[0]=map1_respawn;
@@ -59,7 +57,7 @@ int main(int argc, const char *argv[]) {
     fill_tab(map3_respawn,12);
 
 
-    movement(&PlayerStruct, map_list, map_list_cpy, map_list_respawn);
+    movement(&PlayerStruct, map_list, map_list_cpy, map_list_respawn,stock);
 
     return 0;
 }
@@ -100,26 +98,34 @@ void InitPlayer(Player *firstPlayer) {
     firstPlayer->level = 1;
     firstPlayer->currentHealthPoints = 100;
     firstPlayer->maxHealthpoints = 100;
-    firstPlayer->inventory[0][0] =  1;
-    firstPlayer->inventory[0][1] =  10;
-    firstPlayer->inventory[0][2] =  1;
 
-    firstPlayer->inventory[1][0] =  2;
-    firstPlayer->inventory[1][1] =  10;
-    firstPlayer->inventory[1][2] =  0;
-
-    firstPlayer->inventory[2][0] =  3;
-    firstPlayer->inventory[2][1] =  10;
-    firstPlayer->inventory[2][2] =  0;
-
-    firstPlayer->inventory[3][0] =  4;
-    firstPlayer->inventory[3][1] =  10;
-    firstPlayer->inventory[3][2] =  0;
+    firstPlayer->inventory[0] = *WeaponSword;
+    firstPlayer->inventory[1] = *ToolsPickaxe;
+    firstPlayer->inventory[2] = *ToolsBillhook;
+    firstPlayer->inventory[3] = *ToolsAx;
 
     firstPlayer->coord_x = 1;
     firstPlayer->coord_y = 0;
 
     firstPlayer->actual_map = 1;
+}
+
+int** createTable(int n){
+
+    int** table = malloc(sizeof(int*) * n);
+    for(int i = 0; i < n; i++){
+        table[i] = malloc(sizeof(int)*n);
+    }
+
+    return table;
+}
+
+void fill_tab(int **tab,int size){
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            tab[i][j]=0;
+        }
+    }
 }
 
 

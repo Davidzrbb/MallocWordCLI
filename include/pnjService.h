@@ -1,3 +1,8 @@
+#ifndef MALLOC_PNJSERVICE_H
+#define MALLOC_PNJSERVICE_H
+
+#include "include.h"
+
 typedef struct PnjLinkedList PnjLinkedList;
 struct PnjLinkedList {
     Item *data;
@@ -59,3 +64,6 @@ void displayItemCraftSection(AllItemCraft *, int);
 extern int countDelet;
 extern int choicePnj;
 extern int sizeInv;
+
+
+#endif

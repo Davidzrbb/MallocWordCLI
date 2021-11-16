@@ -1,9 +1,11 @@
 //
 // Created by lucas on 28/10/2021.
 //
+#include <pnjService.h>
 #include "movement.h"
+#include "collecteResource.h"
 
-void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn) {
+void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
     int success;
     char direction;
     do{
@@ -13,16 +15,16 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
         printf("%c\n",direction);
         switch (direction) {
             case 'l':
-                success= goForward(player, -1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn);
+                success= goForward(player, -1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
             case 'r':
-                success= goForward(player, 1, 0, player->actual_map, map_list, map_list_cpy,map_list_respawn);
+                success= goForward(player, 1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
             case 't':
-                success= goForward(player, 0, -1, player->actual_map, map_list, map_list_cpy, map_list_respawn);
+                success= goForward(player, 0, -1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
             case 'b':
-                success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn);
+                success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
             default :
                 printf("???\n");
@@ -33,7 +35,8 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
 }
 
 
-int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_list_map, int ***actual_map_list_cpy,int ***actual_map_list_respawn) {
+int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_list_map, int ***actual_map_list_cpy,
+              int ***actual_map_list_respawn, PnjLinkedList *stock) {
 
     if(player->coord_y+add_y<0 || player->coord_y+add_y>mapsSize[id_map-1]-1 || player->coord_x+add_x<0 || player->coord_x+add_x>mapsSize[id_map-1]-1){ //verifie bordure map
         printf("pasparla ");
@@ -42,7 +45,7 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
     int next_case = actual_list_map[id_map][player->coord_y+add_y][player->coord_x+add_x];
     int success =1;
      if(next_case>= PLANT1 & next_case <= WOOD3){
-         //succes=CollectRessouce();
+       success=collecteRessources(player,next_case);
        if(!success){
            printf("\nvous ne pouvez pas recolter la ressource");
            return 0;
@@ -53,7 +56,7 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
          player->coord_x+=add_x;
          player->coord_y+=add_y;
      } else if(next_case==NPC){
-         //interactWithPnj
+         pnjChoice(player,stock);
      }else if(next_case>=12){
          //succes=interactWithMonster
          if(success == 1){
