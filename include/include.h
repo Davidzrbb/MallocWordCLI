@@ -21,6 +21,7 @@ struct healthPotion{
 };
 typedef struct healthPotion healthPotion;
 
+
 struct Weapon {
     int id;
     char *name;
@@ -135,6 +136,9 @@ enum type {
     ARMOR = 5,
 };
 typedef enum item item;
+
+
+static int  mapsSize[3]={8,10,12};
 
 void InitPlayer(Player *);
 

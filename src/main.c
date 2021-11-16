@@ -43,9 +43,9 @@ int main(int argc, const char *argv[]) {
     map_list_cpy[3]=map3_cpy;
 
     int *** map_list_respawn = malloc(sizeof (map1_cpy) + sizeof (map2_cpy) + sizeof (map3_cpy));
-    map_list[0]=map1_respawn;
-    map_list[1]=map2_respawn;
-    map_list[3]=map3_respawn;
+    map_list_respawn[0]=map1_respawn;
+    map_list_respawn[1]=map2_respawn;
+    map_list_respawn[2]=map3_respawn;
 
 
     generate_land(map1, 8, 8, 1);  //map1
@@ -55,11 +55,11 @@ int main(int argc, const char *argv[]) {
     generate_land(map2_cpy, 10, 10, 2); //map 2 cpy
     generate_land(map3_cpy, 12, 12, 3); //map 3 cpy
     fill_tab(map1_respawn,8);
-    fill_tab(map2_respawn,8);
-    fill_tab(map3_respawn,8);
+    fill_tab(map2_respawn,10);
+    fill_tab(map3_respawn,12);
 
 
-    movement(&PlayerStruct, map_list, map_list_cpy, map_list_cpy);
+    movement(&PlayerStruct, map_list, map_list_cpy, map_list_respawn);
 
     return 0;
 }
@@ -119,7 +119,7 @@ void InitPlayer(Player *firstPlayer) {
     firstPlayer->coord_x = 1;
     firstPlayer->coord_y = 0;
 
-    firstPlayer->actual_map = 0;
+    firstPlayer->actual_map = 1;
 }
 
 
