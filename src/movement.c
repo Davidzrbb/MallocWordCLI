@@ -4,6 +4,7 @@
 #include <pnjService.h>
 #include "movement.h"
 #include "collecteResource.h"
+#include "save.h"
 
 void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
     int success;
@@ -14,17 +15,20 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
         direction = getchar();
         printf("%c\n",direction);
         switch (direction) {
-            case 'l':
+            case 'q':
                 success= goForward(player, -1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
-            case 'r':
+            case 'd':
                 success= goForward(player, 1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
-            case 't':
+            case 'z':
                 success= goForward(player, 0, -1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
-            case 'b':
+            case 's':
                 success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
+                break;
+            case 't':
+                success = saveFile(mapsSize, map_list, player);
                 break;
             default :
                 printf("???\n");

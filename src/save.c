@@ -4,23 +4,22 @@
 
 #include "../include/save.h"
 
+int saveFile(int * mapSize,int *** map_list, Player *player){
 
-savefile(int * mapSize,int *** map_list){
+    FILE* file = fopen("saveFile.txt","w");
 
-    File * file = fopen("saveFile.txt","a");
-
-    fprintf( file, "===MAP===");
+    fprintf( file, "===MAP===\n");
 
     for (int i = 0; i < 3; ++i) {
         fprintf( file, "--ZONE%d--",i);
         for (int j = 0; j < mapSize[i]; ++j) {
             fprintf(file,"\n");
             for (int k = 0; k <  mapSize[i]; ++k) {
-                fprintf(file, "%d ",map_list[i][j][k])
+                fprintf(file, "%d ",map_list[i][j][k]);
             }
         }
     }
 
-
-    fprint
+    fclose(file);
+    return 2;
 }

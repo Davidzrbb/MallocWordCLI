@@ -7,7 +7,7 @@
 
 #include "include.h"
 
-void saveFile(int *mapSize,int *** map_list);
+int saveFile(int *mapSize, int ***map_list, Player *player);
 
 
 #endif //MALLOCWORLD_SAVE_H
