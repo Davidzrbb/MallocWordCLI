@@ -7,7 +7,7 @@
 void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = -1;
-    Item nvItem;
+    Item* nvItem;
     int index;
     int verif = 0;
 
@@ -24,7 +24,19 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
         scanf("%d", &stockItem);
         for (int i = 0; i < 10; i++) {
             if (playerStruct->inventory[i].tools.id == stockItem) {
-                nvItem = playerStruct->inventory[i];
+                nvItem = malloc(sizeof(Item));
+                nvItem->type = playerStruct->inventory[i].type;
+                switch (nvItem->type) {
+                    case WEAPON:
+                        nvItem->weapon.id = playerStruct->inventory[i].weapon.id;
+                        nvItem->weapon.name = playerStruct->inventory[i].weapon.name;
+                        nvItem->weapon.actual_durabiulity = playerStruct->inventory[i].weapon.actual_durabiulity;
+                        nvItem->weapon.damage = playerStruct->inventory[i].weapon.damage;
+                        nvItem->weapon.max_durability = playerStruct->inventory[i].weapon.max_durability;
+                        break;
+                        //... TODO
+                }
+
                 verif = 1;
                 index = stockItem;
             }
@@ -40,7 +52,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
             deleteElementInventory(playerStruct->inventory,
                                    sizeof(playerStruct->inventory) / sizeof(playerStruct->inventory[0]),
                                    index);
-            insertionToStock(&nvItem, stock);
+            insertionToStock(nvItem, stock);
             saveFile(playerStruct, stock);
             displayStock(playerStruct, stock);
 
