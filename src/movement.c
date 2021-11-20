@@ -7,11 +7,11 @@
 #include "save.h"
 
 void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
-    int success;
+    int success = 0;
     char direction;
     do{
         printf("%d/%d ",player->coord_y,player->coord_x);
-        printf("tu veux aller ou gros tas? (l,r,t,b)");
+        printf("tu veux aller ou gros tas? (q,d,z,s)");
         direction = getchar();
         printf("%c\n",direction);
         switch (direction) {
