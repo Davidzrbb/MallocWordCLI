@@ -34,17 +34,16 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
         }
         countMov += 1;
         if (countMov == 10) {
-
             countMov = 0;
         }
-        fflush(stdin);
+       fflush(stdin);
+
     } while (success != 2);   //tant que player pas mort ou arret de la partie
 }
 
 
 int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_list_map, int ***actual_map_list_cpy,
               int ***actual_map_list_respawn, PnjLinkedList *stock) {
-
     if (player->coord_y + add_y < 0 || player->coord_y + add_y > mapsSize[id_map - 1] - 1 ||
         player->coord_x + add_x < 0 || player->coord_x + add_x > mapsSize[id_map - 1] - 1) { //verifie bordure map
         printf("pas par la ");
@@ -64,7 +63,8 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         player->coord_x += add_x;
         player->coord_y += add_y;
     } else if (next_case == NPC) {
-        stock = pnjChoice(player, stock);
+        pnjChoice(player, stock);
+
     } else if (next_case >= 12) {
         //succes=interactWithMonster
         if (success == 1) {

@@ -42,8 +42,8 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
                                    index);
             insertionToStock(&nvItem, stock);
             saveFile(playerStruct, stock);
-
             displayStock(playerStruct, stock);
+
         }
 
     } else {
@@ -80,13 +80,13 @@ void initStructStock(PnjLinkedList *stock) {
 }
 
 
-void insertionToStock(Item *nvItem, PnjLinkedList *actualStockPos) {
-    if (actualStockPos == NULL) {
-        actualStockPos = malloc(sizeof(PnjLinkedList));
-        actualStockPos->data = nvItem;
-        actualStockPos->next = NULL;
+void insertionToStock(Item *nvItem, PnjLinkedList *stock) {
+    if (stock == NULL) {
+        stock = malloc(sizeof(PnjLinkedList));
+        stock->data = nvItem;
+        stock->next = NULL;
     } else {
-        PnjLinkedList *cache = actualStockPos;
+        PnjLinkedList *cache = stock;
         while (cache->next != NULL) {
             cache = cache->next;
         }
@@ -140,7 +140,7 @@ PnjLinkedList *deleteElementLinkedList(Player *playerStruct, PnjLinkedList *stoc
     if (previous->data->weapon.id == choiceRecover) {
         sizeInv = 0;
         for (int i = 0; i < 10; i++) {
-            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 4) {
+            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 6) {
                 sizeInv++;
             }
         }

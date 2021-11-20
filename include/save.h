@@ -6,7 +6,6 @@
 #define MALLOCWORDCLI_SAVE_H
 #include "include.h"
 #include "pnjService.h"
-
 void startChoice();
 void saveFile(Player *, PnjLinkedList *);
 #endif //MALLOCWORDCLI_SAVE_H

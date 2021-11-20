@@ -39,7 +39,6 @@ void pnjChoice(Player *playerStruct, PnjLinkedList *stock) {
 
             default :
                 printf("\n Choix non disponible\n");
-
         }
     }
 
