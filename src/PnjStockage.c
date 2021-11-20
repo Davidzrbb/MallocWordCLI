@@ -34,7 +34,8 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
                 printf("\nVotre item n'est pas dans votre inventaire !\n");
 
             }
-            pnjChoice(playerStruct, stock);
+            //pnjChoice(playerStruct, stock);
+            return;
         } else {
             ++countDelet;
             deleteElementInventory(playerStruct->inventory,
