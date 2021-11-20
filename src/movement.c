@@ -34,6 +34,7 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
         }
         countMov += 1;
         if (countMov == 10) {
+            saveFile(player, stock);
             countMov = 0;
         }
        fflush(stdin);
