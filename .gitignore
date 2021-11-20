@@ -98,3 +98,5 @@ cmake-build-debug/MallocWordCLI.pdb
 cmake-build-debug/Testing/Temporary/LastTest.log
 
 CMakeLists.txt
+
+*.obj

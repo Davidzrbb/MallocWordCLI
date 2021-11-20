@@ -1,6 +1,8 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
 
+#include "../include/save.h"
+
 
 void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
@@ -8,7 +10,6 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
     Item nvItem;
     int index;
     int verif = 0;
-
 
     if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
         printf("\nVeuillez choisir l'item a stocker:\n");
@@ -40,6 +41,8 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
                                    sizeof(playerStruct->inventory) / sizeof(playerStruct->inventory[0]),
                                    index);
             insertionToStock(&nvItem, stock);
+            saveFile(playerStruct, stock);
+
             displayStock(playerStruct, stock);
         }
 
@@ -76,6 +79,7 @@ void initStructStock(PnjLinkedList *stock) {
     stock->data->tools.name = malloc(sizeof(char *));
 }
 
+
 void insertionToStock(Item *nvItem, PnjLinkedList *actualStockPos) {
     if (actualStockPos == NULL) {
         actualStockPos = malloc(sizeof(PnjLinkedList));
@@ -93,18 +97,6 @@ void insertionToStock(Item *nvItem, PnjLinkedList *actualStockPos) {
     }
 }
 
-void displayStock(Player *playerStruct, PnjLinkedList *stock) {
-    printf("\nVotre stock : \n");
-    PnjLinkedList *cache = stock;
-    while (cache->next != NULL) {
-        printf("%d = %s \n", cache->data->weapon.id, cache->data->weapon.name);
-        cache = cache->next;
-    }
-    if (choicePnj == 3) {
-        pnjStock(playerStruct, stock);
-    }
-}
-
 void recoverItemStockToInventory(Player *playerStruct, PnjLinkedList *stock) {
     if (stock->next != NULL) {
         int choiceRecover = 0;
@@ -118,9 +110,22 @@ void recoverItemStockToInventory(Player *playerStruct, PnjLinkedList *stock) {
                 recoverItemStockToInventory(playerStruct, stock);
             }
         }
+        //   saveFile(playerStruct, stock);
         pnjChoice(playerStruct, stock);
     } else {
         printf("\nVotre stock est vide !\n");
+    }
+}
+
+void displayStock(Player *playerStruct, PnjLinkedList *stock) {
+    printf("\nVotre stock : \n");
+    PnjLinkedList *cache = stock;
+    while (cache->next != NULL) {
+        printf("%d = %s \n", cache->data->weapon.id, cache->data->weapon.name);
+        cache = cache->next;
+    }
+    if (choicePnj == 3) {
+        pnjStock(playerStruct, stock);
     }
 }
 

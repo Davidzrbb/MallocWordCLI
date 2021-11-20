@@ -1,13 +1,15 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
+#include "../include/save.h"
 
 int countDelet = 0;
 int choicePnj = -1;
-int sizeInv =0;
+int sizeInv = 0;
 
 void pnjChoice(Player *playerStruct, PnjLinkedList *stock) {
-    /* Création du nouvel élément */
-    while (choicePnj != 0) {
+    choicePnj = -1;
+
+    while (choicePnj != 0 && choicePnj != 5) {
         printf("\n Bonjour, je suis le pnj que souhaitez vous faire ? \n 1 = Reparer vos items \n 2 = Craft \n 3 = Deposer un item \n 4 = Recuperer un item \n "
                "0 = Quitter \n Votre choix : ");
 
@@ -40,6 +42,9 @@ void pnjChoice(Player *playerStruct, PnjLinkedList *stock) {
 
         }
     }
+
+    /* Création du nouvel élément */
+
 
 }
 

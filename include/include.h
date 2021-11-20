@@ -6,14 +6,15 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-struct Armor{
+#include <time.h>
+struct Armor {
     int id;
-    char * name;
+    char *name;
     int protection;
 };
 typedef struct Armor Armor;
 
-struct healthPotion{
+struct healthPotion {
     int id;
     char *name;
     int quantity;
@@ -138,13 +139,15 @@ enum type {
 typedef enum item item;
 
 
-static int  mapsSize[3]={8,10,12};
+static int mapsSize[3] = {8, 10, 12};
 
 void InitPlayer(Player *);
 
-int** createTable(int size);
-void fill_tab(int **tab,int size);
+int **createTable(int size);
+
+void fill_tab(int **tab, int size);
 
 void printTest(Player);
+
 
 #endif

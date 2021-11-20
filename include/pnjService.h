@@ -3,6 +3,7 @@
 
 #include "include.h"
 
+
 typedef struct PnjLinkedList PnjLinkedList;
 struct PnjLinkedList {
     Item *data;
@@ -39,11 +40,11 @@ void deleteElementInventory(Item inventory[], int sizeArr, int index);
 
 void insertionToStock(Item *, PnjLinkedList *);
 
+void recoverItemStockToInventory(Player *, PnjLinkedList *);
+
 void displayStock(Player *, PnjLinkedList *);
 
 void initStructStock(PnjLinkedList *);
-
-void recoverItemStockToInventory(Player *, PnjLinkedList *);
 
 PnjLinkedList *deleteElementLinkedList(Player *, PnjLinkedList *, int);
 
@@ -51,13 +52,13 @@ void craftItem(Player *);
 
 void initArrayCraftItem(AllItemCraft *);
 
-int* verifItemCraft(AllItemCraft *, Player *);
+int *verifItemCraft(AllItemCraft *, Player *);
 
 void createItemCraft(AllItemCraft *, Player *, int);
 
 void displayItemCraft(AllItemCraft *);
 
-void addItemCraft(AllItemCraft *, Player *, const int*);
+void addItemCraft(AllItemCraft *, Player *, const int *);
 
 void displayItemCraftSection(AllItemCraft *, int);
 
