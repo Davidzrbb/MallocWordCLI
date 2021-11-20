@@ -1,6 +1,7 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
 #include "../include/save.h"
+#include "../include/map.h"
 
 void startChoice() {
     int saveChoice = 0;
@@ -56,6 +57,17 @@ void saveFile(Player *player, PnjLinkedList *stock) {
                 fprintf(fichier, "{1}@{%d}\n", cache->data->weapon.id);
             }
             cache = cache->next;
+        }
+        fprintf(fichier, "===MAP===\n");
+
+        for (int i = 0; i < 3; ++i) {
+            fprintf(fichier, "--ZONE%d--", i);
+            for (int j = 0; j < mapSize[i]; ++j) {
+                fprintf(fichier, "\n");
+                for (int k = 0; k < mapSize[i]; ++k) {
+                    fprintf(fichier, "%d ", map_list[i][j][k]);
+                }
+            }
         }
         fclose(fichier);
     }
