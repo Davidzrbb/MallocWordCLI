@@ -142,8 +142,6 @@ static int  mapsSize[3]={8,10,12};
 
 void InitPlayer(Player *);
 
-int** createTable(int size);
-void fill_tab(int **tab,int size);
 
 void printTest(Player);
 
