@@ -30,7 +30,7 @@ struct AllItemCraft {
 };
 typedef struct AllItemCraft AllItemCraft;
 
-void startChoice(Player *, PnjLinkedList *);
+void startChoice();
 
 void pnjChoice(Player *, PnjLinkedList *);
 
@@ -68,11 +68,15 @@ void initNewMap(Player *player, PnjLinkedList *stock);
 
 void initStartGame(Player *, PnjLinkedList *);
 
+void charge(Player *, PnjLinkedList *, bool,AllItemCraft *);
+
 void freeAll(PnjLinkedList *, Player *);
 
 extern int countDelet;
 extern int choicePnj;
 extern int sizeInv;
+extern char nameFileManuelle[50];
+extern char nameFileAuto[50];
 
 
 #endif

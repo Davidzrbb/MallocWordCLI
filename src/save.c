@@ -3,41 +3,100 @@
 #include "../include/save.h"
 #include "../include/map.h"
 
+char nameFileManuelle[50] = "";
+char nameFileAuto[50] = "";
 
-void startChoice(Player *player, PnjLinkedList *stock) {
-    dateNow();
+void startChoice() {
     int saveChoice = 0;
+    int typeCharge = 0;
+    int validationManuelle = -1;
+    int validationAuto = -1;
+
+    Player *player = malloc(sizeof(Player));
+    PnjLinkedList *stock = malloc(sizeof(PnjLinkedList));
+    AllItemCraft *allItemCraft = malloc(sizeof(AllItemCraft));
+    initArrayCraftItem(allItemCraft);
     while (saveChoice != 1 && saveChoice != 2) {
         printf("\nCharger une partie ! Taper 1\n");
-        printf("\nNouvelle partie ! Taper 2\n");
+        printf("Nouvelle partie ! Taper 2\n");
         scanf("%d", &saveChoice);
-    }
-    //charge
-    if (saveChoice == 1) {
 
+        //charge
+        if (saveChoice == 1) {
+            printf("\nVoir les charges automatiques ! Taper 1\n");
+            printf("Voir les charges manuelles ! Taper 2\n");
+            scanf("%d", &typeCharge);
+            //charge auto
+            if (typeCharge == 1) {
+                if (strcmp(nameFileAuto, "") == 0) {
+                    printf("\nVous n'avez pas de charge auto !\n");
+                    saveChoice = 0;
+                } else {
+                    printf("\nDerniere sauvegarde auto %s \n", nameFileAuto);
+                    printf("\nConfirmer ! Taper 1\n");
+                    printf("Retour ! Taper 0\n");
+                    scanf("%d", &validationAuto);
+                    if (validationAuto == 1) {
+                        saveChoice = 1;
+                    } else {
+                        saveChoice = 0;
+                    }
+                }
+            }
+            //charge manuelle
+            if (typeCharge == 2) {
+                if (strcmp(nameFileManuelle, "") == 0) {
+                    printf("\nVous n'avez pas de charge manuelle !\n");
+                    saveChoice = 0;
+                } else {
+                    printf("\nDerniere sauvegarde manuelle %s\n", nameFileManuelle);
+                    printf("\nConfirmer ! Taper 1\n");
+                    printf("Retour ! Taper 0\n");
+                    scanf("%d", &validationManuelle);
+                    if (validationManuelle == 1) {
+                        saveChoice = 1;
+                    } else {
+                        saveChoice = 0;
+                    }
+                }
+            }
+        }
     }
     //New partie
     if (saveChoice == 2) {
         initStartGame(player, stock);
     }
+
+    if (validationAuto == 1) {
+        charge(player, stock, true, allItemCraft);
+    }
+
+    if (validationManuelle == 1) {
+        charge(player, stock, false, allItemCraft);
+    }
+    initStructStock(stock);
 }
 
 int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto) {
 
     PnjLinkedList *cache = stock;
 
-    char date[100];
+    char date[100] = "";
     strcpy(date, dateNow());
     char path[100] = "";
 
     if (verifSaveAuto == true) {
         strcat(path, "..\\saveauto\\");
+        strcat(path, date);
+        strcpy(nameFileAuto, date);
     }
     if (verifSaveAuto == false) {
         strcat(path, "..\\save\\");
+        strcat(path, date);
+        strcpy(nameFileManuelle, date);
     }
 
-    strcat(path, date);
+
     strcat(path, ".txt");
 
     FILE *fichier = NULL;
@@ -96,4 +155,88 @@ char *dateNow() {
     time_t timestamp = time(NULL);
     strftime(buffer, sizeof(buffer), "%A %d %B %Y - %Hh%Mm%Ss", localtime(&timestamp));
     return buffer;
+}
+
+void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCraft *allItemCraft) {
+
+    char path[50] = "";
+    if (verifSaveAuto == true) {
+        strcat(path, "..\\saveauto\\");
+        strcat(path, nameFileAuto);
+        strcat(path, ".txt");
+    }
+    if (verifSaveAuto == false) {
+        strcat(path, "..\\save\\");
+        strcat(path, nameFileManuelle);
+        strcat(path, ".txt");
+    }
+
+    FILE *filePointer;
+    int bufferLength = 255;
+    char buffer[255];
+    int i;
+    int n;
+    int v;
+    char str[5];
+    int count = 0;
+
+    filePointer = fopen(path, "r");
+
+    while (fgets(buffer, bufferLength, filePointer)) {
+
+        sscanf(buffer, "%c%d%c%c%c%d%c%c%c%d", str, &i, str, str, str, &n, str, str, str, &v);
+        printf("COUNT :%d", count);
+        printf("LINE : %d %d %d\n", i, n, v);
+
+        if (count == 2) {
+            player->experience = i;
+        }
+        if (count == 3) {
+            player->currentHealthPoints = i;
+            player->maxHealthpoints = n;
+        }
+        if (count >= 5 && count < 15) {
+            initPlayerCharge(n, player, allItemCraft,count);
+        }
+        count += 1;
+    }
+    fclose(filePointer);
+}
+
+void initPlayerCharge(int id, Player *playerStruct, AllItemCraft *allItemCraft, int count) {
+    count -= 5;
+    if (id != 0) {
+        for (int i = 0; i < 25; i++) {
+            if (allItemCraft->itemCraft[i].idCreation == id) {
+                if (allItemCraft->itemCraft[i].type == TOOL) {
+                    playerStruct->inventory[count].tools.id = id;
+                    playerStruct->inventory[count].tools.name = allItemCraft->itemCraft[i].name;
+                    playerStruct->inventory[count].tools.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
+                    playerStruct->inventory[count].tools.max_durability = allItemCraft->itemCraft[i].max_durability;
+                    playerStruct->inventory[count].type= TOOL;
+                }
+                if (allItemCraft->itemCraft[i].type == WEAPON) {
+                    playerStruct->inventory[count].weapon.id = id;
+                    playerStruct->inventory[count].weapon.name = allItemCraft->itemCraft[i].name;
+                    playerStruct->inventory[count].weapon.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
+                    playerStruct->inventory[count].weapon.max_durability = allItemCraft->itemCraft[i].max_durability;
+                    playerStruct->inventory[count].weapon.damage = allItemCraft->itemCraft[i].damage;
+                    playerStruct->inventory[count].type= WEAPON;
+                }
+                if (allItemCraft->itemCraft[i].type == ARMOR) {
+                    playerStruct->inventory[count].armor.id = id;
+                    playerStruct->inventory[count].armor.name = allItemCraft->itemCraft[i].name;
+                    playerStruct->inventory[count].armor.protection = allItemCraft->itemCraft[i].protection;
+                    playerStruct->inventory[count].type= ARMOR;
+                }
+                if (allItemCraft->itemCraft[i].type == HEAL) {
+                    playerStruct->inventory[count].heal.id = id;
+                    playerStruct->inventory[count].heal.name = allItemCraft->itemCraft[i].name;
+                    playerStruct->inventory[count].heal.quantity = allItemCraft->itemCraft[i].quantity;
+                    playerStruct->inventory[count].heal.pvRestore = allItemCraft->itemCraft[i].pvRestore;
+                    playerStruct->inventory[count].type= HEAL;
+                }
+            }
+        }
+    }
 }

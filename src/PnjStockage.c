@@ -8,6 +8,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = -1;
     Item *nvItem = malloc(sizeof (Item));
+    nvItem->tools.name = malloc(sizeof (char *));
     int index;
     int verif = 0;
 

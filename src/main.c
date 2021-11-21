@@ -9,17 +9,14 @@
 int main(int argc, const char *argv[]) {
     //choix charge ou nouvelle partie
 
-    Player PlayerStruct;
-    //PnjLinkedList stock;
-    PnjLinkedList *stock = malloc(sizeof(PnjLinkedList));
-    startChoice(&PlayerStruct, stock);
+    startChoice();
 
     return 0;
 }
 
 void initStartGame(Player *player, PnjLinkedList *stock) {
-    initStructStock(stock);
     InitPlayer(player);
+    initStructStock(stock);
     initNewMap(player, stock);
 }
 
@@ -65,6 +62,7 @@ void initNewMap(Player *player, PnjLinkedList *stock) {
 }
 
 void InitPlayer(Player *firstPlayer) {
+
     Item *WeaponSword = malloc(sizeof(Item));
     WeaponSword->weapon.damage = 1;
     WeaponSword->weapon.name = "epee en bois";
@@ -109,6 +107,13 @@ void InitPlayer(Player *firstPlayer) {
     firstPlayer->inventory[1] = *ToolsPickaxe;
     firstPlayer->inventory[2] = *ToolsBillhook;
     firstPlayer->inventory[3] = *ToolsAx;
+    firstPlayer->inventory[4].tools.name = malloc(sizeof(char *));
+    firstPlayer->inventory[5].tools.name = malloc(sizeof(char *));
+    firstPlayer->inventory[6].tools.name = malloc(sizeof(char *));
+    firstPlayer->inventory[7].tools.name = malloc(sizeof(char *));
+    firstPlayer->inventory[8].tools.name = malloc(sizeof(char *));
+    firstPlayer->inventory[9].tools.name = malloc(sizeof(char *));
+
 
 }
 
@@ -131,10 +136,10 @@ void fill_tab(int **tab, int size) {
 }
 
 void freeAll(PnjLinkedList *stock, Player *player) {
-
     if (stock->next != NULL) {
         freeAll(stock->next, player);
     }
+    free(player);
     free(stock);
 }
 

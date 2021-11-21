@@ -8,10 +8,9 @@
 #include "include.h"
 #include "pnjService.h"
 
-void startChoice(Player *player, PnjLinkedList *stock);
-
 int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto);
 
 char *dateNow();
 
+void initPlayerCharge(int id,Player*,AllItemCraft*,int);
 #endif //MALLOCWORDCLI_SAVE_H

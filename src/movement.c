@@ -29,8 +29,7 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
                 success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
             case 't':
-                saveFile(mapsSize, map_list, player, stock,false);
-                success = 2;
+                success = saveFile(mapsSize, map_list, player, stock,false);
                 break;
             default :
                 printf("???\n");

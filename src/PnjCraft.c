@@ -4,8 +4,9 @@
 
 void craftItem(Player *playerStruct) {
     //init tab craft
-    AllItemCraft allItemCraft;
-    initArrayCraftItem(&allItemCraft);
+    ArrayItemCraft *arrayItemCraft= malloc(sizeof (ArrayItemCraft));
+    AllItemCraft* allItemCraft = malloc(sizeof (AllItemCraft));
+    initArrayCraftItem(allItemCraft);
     int choiceCraft = -1;
     while (choiceCraft == -1) {
         printf("\n 1 = Voir tous les crafts \n 2 = Crafter un nouvelle item \n 0 = Quitter \n Votre choix : ");
@@ -15,11 +16,11 @@ void craftItem(Player *playerStruct) {
         switch (choiceCraft) {
 
             case 1:
-                displayItemCraft(&allItemCraft);
+                displayItemCraft(allItemCraft);
                 break;
 
             case 2 :
-                createItemCraft(&allItemCraft, playerStruct, 0);
+                createItemCraft(allItemCraft, playerStruct, 0);
                 break;
 
             case 0 :
@@ -29,6 +30,8 @@ void craftItem(Player *playerStruct) {
                 printf("\n Choix non disponible\n");
         }
     }
+    free(allItemCraft);
+    free(arrayItemCraft);
 }
 
 void displayItemCraft(AllItemCraft *allItemCraft) {
@@ -634,3 +637,4 @@ void initArrayCraftItem(AllItemCraft *allItemCraft) {
     allItemCraft->itemCraft[23] = *healTwo;
     allItemCraft->itemCraft[24] = *healThree;
 }
+
