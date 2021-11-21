@@ -10,6 +10,7 @@
 #include "map.h"
 
 void initMaps(int ****map_list, int ****map_list_cpy, int ****map_list_respawn);
+void freeMaps(int ***map_list, int ***map_list_cpy, int ***map_list_respawn);
 
 
 #endif //MALLOC_WORLD_INITS_H

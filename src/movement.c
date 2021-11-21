@@ -1,9 +1,8 @@
 //
 // Created by lucas on 28/10/2021.
 //
-#include <pnjService.h>
+
 #include "movement.h"
-#include "collecteResource.h"
 
 void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
     int success;
@@ -32,6 +31,7 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
             }
         fflush(stdin);
     } while (success!=2);   //tant que player pas mort ou arret de la partie
+    freeMaps(map_list,map_list_cpy,map_list_respawn);
 }
 
 

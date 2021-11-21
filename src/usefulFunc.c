@@ -31,3 +31,13 @@ int** malloc2Darray(int size){
 
     return table;
 }
+
+void free3Darray(int ***tab, int size, int nb_tab) {
+    for (int i = 0; i < nb_tab; ++i) {
+        for (int y = 0; y < size; ++y) {
+            free(tab[y]);
+        }
+        free(tab[i]);
+    }
+    free(tab);
+}

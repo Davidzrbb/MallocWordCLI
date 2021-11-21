@@ -11,7 +11,7 @@ void initMaps(int ****map_list, int ****map_list_cpy, int ****map_list_respawn){
     int **map2 = malloc2Darray(10);
     int **map2_cpy = malloc2Darray(10);
     int **map2_respawn = malloc2Darray(10);
-    int **map3  = malloc2Darray(12);
+    int **map3 = malloc2Darray(12);
     int **map3_cpy = malloc2Darray(12);
     int **map3_respawn= malloc2Darray(12);
 
@@ -37,5 +37,11 @@ void initMaps(int ****map_list, int ****map_list_cpy, int ****map_list_respawn){
     generate_land(map_list_cpy[0][1], 10, 10, 2); //map 2 cpy
     generate_land(map_list_cpy[0][2], 12, 12, 3); //map 3 cpy
 
+}
 
+
+void freeMaps(int ***map_list, int ***map_list_cpy, int ***map_list_respawn){
+    free3Darray(map_list, 8, 3);
+    free3Darray(map_list, 10, 3);
+    free3Darray(map_list, 12, 3);
 }
