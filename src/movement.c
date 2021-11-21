@@ -3,27 +3,32 @@
 //
 
 #include "movement.h"
+#include "collecteResource.h"
+#include "save.h"
 
 void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
-    int success;
+    int success=0;
     char direction;
     do{
         printf("%d/%d ",player->coord_y,player->coord_x);
-        printf("tu veux aller ou gros tas? (l,r,t,b)");
+        printf("tu veux aller ou gros tas? (q,d,z,s)");
         direction = getchar();
         printf("%c\n",direction);
         switch (direction) {
-            case 'l':
+            case 'q':
                 success= goForward(player, -1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
-            case 'r':
+            case 'd':
                 success= goForward(player, 1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
-            case 't':
+            case 'z':
                 success= goForward(player, 0, -1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
-            case 'b':
+            case 's':
                 success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
+                break;
+            case 't':
+                success = saveFile(mapsSize, map_list, player);
                 break;
             default :
                 printf("???\n");
@@ -31,7 +36,6 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
             }
         fflush(stdin);
     } while (success!=2);   //tant que player pas mort ou arret de la partie
-    freeMaps(map_list,map_list_cpy,map_list_respawn);
 }
 
 
