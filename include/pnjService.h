@@ -30,6 +30,8 @@ struct AllItemCraft {
 };
 typedef struct AllItemCraft AllItemCraft;
 
+void startChoice(Player *, PnjLinkedList *);
+
 void pnjChoice(Player *, PnjLinkedList *);
 
 void pnjFix(Player *);
@@ -61,6 +63,12 @@ void displayItemCraft(AllItemCraft *);
 void addItemCraft(AllItemCraft *, Player *, const int *);
 
 void displayItemCraftSection(AllItemCraft *, int);
+
+void initNewMap(Player *player, PnjLinkedList *stock);
+
+void initStartGame(Player *, PnjLinkedList *);
+
+void freeAll(PnjLinkedList *, Player *);
 
 extern int countDelet;
 extern int choicePnj;

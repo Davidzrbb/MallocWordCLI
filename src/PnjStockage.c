@@ -7,7 +7,7 @@
 void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = -1;
-    Item *nvItem;
+    Item *nvItem = malloc(sizeof (Item));
     int index;
     int verif = 0;
 

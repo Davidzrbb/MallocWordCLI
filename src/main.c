@@ -1,9 +1,10 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
 #include "../include/collecteResource.h"
-#include "../include/save.h"
+
 #include "map.h"
 #include "movement.h"
+
 
 int main(int argc, const char *argv[]) {
     //choix charge ou nouvelle partie
@@ -11,13 +12,18 @@ int main(int argc, const char *argv[]) {
     Player PlayerStruct;
     //PnjLinkedList stock;
     PnjLinkedList *stock = malloc(sizeof(PnjLinkedList));
-    initStructStock(stock);
-    //Stat du Player au début de la partie
-    InitPlayer(&PlayerStruct);
-    saveFile(&PlayerStruct,stock);
-//Print
-    //printTest(PlayerStruct);
+    startChoice(&PlayerStruct, stock);
 
+    return 0;
+}
+
+void initStartGame(Player *player, PnjLinkedList *stock) {
+    initStructStock(stock);
+    InitPlayer(player);
+    initNewMap(player, stock);
+}
+
+void initNewMap(Player *player, PnjLinkedList *stock) {
     int **map1 = createTable(8);
     int **map1_cpy = createTable(8);
     int **map1_respawn = createTable(8);
@@ -55,9 +61,7 @@ int main(int argc, const char *argv[]) {
     fill_tab(map3_respawn, 12);
 
 
-    movement(&PlayerStruct, map_list, map_list_cpy, map_list_respawn, stock);
-
-    return 0;
+    movement(player, map_list, map_list_cpy, map_list_respawn, stock);
 }
 
 void InitPlayer(Player *firstPlayer) {
@@ -126,7 +130,13 @@ void fill_tab(int **tab, int size) {
     }
 }
 
+void freeAll(PnjLinkedList *stock, Player *player) {
 
+    if (stock->next != NULL) {
+        freeAll(stock->next, player);
+    }
+    free(stock);
+}
 
 
 

@@ -3,7 +3,9 @@
 #include "../include/save.h"
 #include "../include/map.h"
 
-void startChoice() {
+
+void startChoice(Player *player, PnjLinkedList *stock) {
+    dateNow();
     int saveChoice = 0;
     while (saveChoice != 1 && saveChoice != 2) {
         printf("\nCharger une partie ! Taper 1\n");
@@ -16,17 +18,31 @@ void startChoice() {
     }
     //New partie
     if (saveChoice == 2) {
-
+        initStartGame(player, stock);
     }
 }
 
-void saveFile(Player *player, PnjLinkedList *stock) {
+int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto) {
 
     PnjLinkedList *cache = stock;
 
+    char date[100];
+    strcpy(date, dateNow());
+    char path[100] = "";
+
+    if (verifSaveAuto == true) {
+        strcat(path, "..\\saveauto\\");
+    }
+    if (verifSaveAuto == false) {
+        strcat(path, "..\\save\\");
+    }
+
+    strcat(path, date);
+    strcat(path, ".txt");
+
     FILE *fichier = NULL;
 
-    fichier = fopen("..\\save\\savePlayer.txt", "w+");
+    fichier = fopen(path, "w+");
 
     if (fichier != NULL) {
         fprintf(fichier, "=== PLAYER ===\n{LEVEL}\n{%d}/{0}\n{%d}/{%d}\n-- INVENTORY --\n", player->experience,
@@ -61,7 +77,7 @@ void saveFile(Player *player, PnjLinkedList *stock) {
         fprintf(fichier, "===MAP===\n");
 
         for (int i = 0; i < 3; ++i) {
-            fprintf(fichier, "--ZONE%d--", i);
+            fprintf(fichier, "\n--ZONE%d--", i);
             for (int j = 0; j < mapSize[i]; ++j) {
                 fprintf(fichier, "\n");
                 for (int k = 0; k < mapSize[i]; ++k) {
@@ -71,5 +87,13 @@ void saveFile(Player *player, PnjLinkedList *stock) {
         }
         fclose(fichier);
     }
+    return 2;
+}
 
+char *dateNow() {
+    // Renvoie l'heure actuelle
+    char buffer[256];
+    time_t timestamp = time(NULL);
+    strftime(buffer, sizeof(buffer), "%A %d %B %Y - %Hh%Mm%Ss", localtime(&timestamp));
+    return buffer;
 }
