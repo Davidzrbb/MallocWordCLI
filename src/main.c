@@ -8,9 +8,7 @@
 
 int main(int argc, const char *argv[]) {
     //choix charge ou nouvelle partie
-
     startChoice();
-
     return 0;
 }
 
@@ -139,8 +137,8 @@ void freeAll(PnjLinkedList *stock, Player *player) {
     if (stock->next != NULL) {
         freeAll(stock->next, player);
     }
-    free(player);
     free(stock);
+    free(player);
 }
 
 

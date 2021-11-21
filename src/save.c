@@ -14,8 +14,11 @@ void startChoice() {
 
     Player *player = malloc(sizeof(Player));
     PnjLinkedList *stock = malloc(sizeof(PnjLinkedList));
+
     AllItemCraft *allItemCraft = malloc(sizeof(AllItemCraft));
     initArrayCraftItem(allItemCraft);
+
+
     while (saveChoice != 1 && saveChoice != 2) {
         printf("\nCharger une partie ! Taper 1\n");
         printf("Nouvelle partie ! Taper 2\n");
@@ -170,9 +173,18 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
         strcat(path, nameFileManuelle);
         strcat(path, ".txt");
     }
-
-    FILE *filePointer;
-    int bufferLength = 255;
+    //LIRE LE NOMBRE DE LIGNE
+    FILE *fichier;
+    fichier = fopen(path, "r");
+    int c;
+    int nLignes = 0;
+    while ((c = fgetc(fichier)) != EOF) {
+        if (c == '\n')
+            nLignes++;
+    }
+    fclose(fichier);
+    FILE *file;
+    int bufferLength = nLignes;
     char buffer[255];
     int i;
     int n;
@@ -180,9 +192,9 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
     char str[5];
     int count = 0;
 
-    filePointer = fopen(path, "r");
+    file = fopen(path, "r");
 
-    while (fgets(buffer, bufferLength, filePointer)) {
+    while (fgets(buffer, bufferLength, file)) {
 
         sscanf(buffer, "%c%d%c%c%c%d%c%c%c%d", str, &i, str, str, str, &n, str, str, str, &v);
         printf("COUNT :%d", count);
@@ -196,11 +208,11 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
             player->maxHealthpoints = n;
         }
         if (count >= 5 && count < 15) {
-            initPlayerCharge(n, player, allItemCraft,count);
+            initPlayerCharge(n, player, allItemCraft, count);
         }
         count += 1;
     }
-    fclose(filePointer);
+    fclose(file);
 }
 
 void initPlayerCharge(int id, Player *playerStruct, AllItemCraft *allItemCraft, int count) {
@@ -213,7 +225,7 @@ void initPlayerCharge(int id, Player *playerStruct, AllItemCraft *allItemCraft, 
                     playerStruct->inventory[count].tools.name = allItemCraft->itemCraft[i].name;
                     playerStruct->inventory[count].tools.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
                     playerStruct->inventory[count].tools.max_durability = allItemCraft->itemCraft[i].max_durability;
-                    playerStruct->inventory[count].type= TOOL;
+                    playerStruct->inventory[count].type = TOOL;
                 }
                 if (allItemCraft->itemCraft[i].type == WEAPON) {
                     playerStruct->inventory[count].weapon.id = id;
@@ -221,20 +233,20 @@ void initPlayerCharge(int id, Player *playerStruct, AllItemCraft *allItemCraft, 
                     playerStruct->inventory[count].weapon.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
                     playerStruct->inventory[count].weapon.max_durability = allItemCraft->itemCraft[i].max_durability;
                     playerStruct->inventory[count].weapon.damage = allItemCraft->itemCraft[i].damage;
-                    playerStruct->inventory[count].type= WEAPON;
+                    playerStruct->inventory[count].type = WEAPON;
                 }
                 if (allItemCraft->itemCraft[i].type == ARMOR) {
                     playerStruct->inventory[count].armor.id = id;
                     playerStruct->inventory[count].armor.name = allItemCraft->itemCraft[i].name;
                     playerStruct->inventory[count].armor.protection = allItemCraft->itemCraft[i].protection;
-                    playerStruct->inventory[count].type= ARMOR;
+                    playerStruct->inventory[count].type = ARMOR;
                 }
                 if (allItemCraft->itemCraft[i].type == HEAL) {
                     playerStruct->inventory[count].heal.id = id;
                     playerStruct->inventory[count].heal.name = allItemCraft->itemCraft[i].name;
                     playerStruct->inventory[count].heal.quantity = allItemCraft->itemCraft[i].quantity;
                     playerStruct->inventory[count].heal.pvRestore = allItemCraft->itemCraft[i].pvRestore;
-                    playerStruct->inventory[count].type= HEAL;
+                    playerStruct->inventory[count].type = HEAL;
                 }
             }
         }
