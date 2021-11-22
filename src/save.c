@@ -91,12 +91,12 @@ int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock
 
     if (verifSaveAuto == true) {
         strcat(path, "..\\saveauto\\");
-        strcat(path, date);
+        strcat(path, "saveAuto");
         strcpy(nameFileAuto, date);
     }
     if (verifSaveAuto == false) {
         strcat(path, "..\\save\\");
-        strcat(path, date);
+        strcat(path, "saveManuelle");
         strcpy(nameFileManuelle, date);
     }
 
@@ -166,12 +166,12 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
     char path[50] = "";
     if (verifSaveAuto == true) {
         strcat(path, "..\\saveauto\\");
-        strcat(path, nameFileAuto);
+        strcat(path, "saveAuto");
         strcat(path, ".txt");
     }
     if (verifSaveAuto == false) {
         strcat(path, "..\\save\\");
-        strcat(path, nameFileManuelle);
+        strcat(path, "saveManuelle");
         strcat(path, ".txt");
     }
     //LIRE LE NOMBRE DE LIGNE
@@ -188,7 +188,6 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
             if (nLignes >= 16) {
                 if (c == 61) {
                     stopStock = nLignes;
-                    printf("\nSTOP STOCK : %d\n", stopStock);
                 }
             }
         }
@@ -198,7 +197,6 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
     FILE *file;
     int bufferLength = nLignes;
     char buffer[255];
-    int verifBuffer;
     int i;
     int n;
     int v;
@@ -208,8 +206,6 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
     file = fopen(path, "r");
     while (fgets(buffer, bufferLength, file)) {
         sscanf(buffer, "%c%d%c%c%c%d%c%c%c%d", str, &i, str, str, str, &n, str, str, str, &v);
-        printf("COUNT :%d", count);
-        printf("LINE : %d %d %d\n", i, n, v);
 
         if (count == 2) {
             player->experience = i;
