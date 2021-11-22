@@ -36,6 +36,13 @@ struct healthPotion{
 };
 typedef struct healthPotion healthPotion;
 
+enum enumHealthPotion {
+    HEAL1 = 15,
+    HEAL2 = 26,
+    HEAL3 = 34,
+};
+typedef enum enumHealthPotion enumHealthPotion;
+
 struct Weapon{
     char * name;
     int id;

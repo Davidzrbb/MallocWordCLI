@@ -114,100 +114,23 @@ void attackMonster(Player* player, Monster* monster) {
         }
     }
     if(player -> currentHealthPoints != 0){
-        
-        switch (idMonster) {
-            case  1:
-
-                switch(armorId){
-                    case 0 :
-                        player -> currentHealthPoints -= monster -> damage;
-                        break;
-                        
-                    case 11 :
-                        player -> currentHealthPoints = player -> currentHealthPoints - (monster -> damage * 0.9);
-                        break;
-                        
-                    case 22 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.8);
-                        break;
-                        
-                    case 33 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.6);
-                        break;
-                        
-                    default:
-                        break;
-                }
-                break;
-
-            case  2:
-                switch(armorId){
-                    case 0 :
-                        player -> currentHealthPoints -= monster -> damage;
-                        break;
-                        
-                    case 11 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.9);
-                        break;
-                        
-                    case 22 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.8);
-                        break;
-                        
-                    case 33 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.6);
-                        break;
-                        
-                    default:
-                        break;
-                }
-                break;
-
-            case 3:
-                switch(armorId){
-                    case 0 :
-                        player -> currentHealthPoints -= monster -> damage;
-                        break;
-
-                    case 11 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.9);
-                        break;
-                        
-                    case 22 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.8);
-                        break;
-                        
-                    case 33 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.6);
-                        break;
-                        
-                    default:
-                        break;
-                }
+        switch(armorId){
+            case 0 :
+                player -> currentHealthPoints -= monster -> damage;
                 break;
                 
-            case 4:
-                switch(armorId){
-                    case 0 :
-                        player -> currentHealthPoints -= monster -> damage;
-                        break;
-
-                    case 11 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.9);
-                        break;
-                        
-                    case 22 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.8);
-                        break;
-                        
-                    case 33 :
-                        player -> currentHealthPoints -= (monster -> damage * 0.6);
-                        break;
-                        
-                    default:
-                        break;
-                }
+            case 11 :
+                player -> currentHealthPoints = player -> currentHealthPoints - (monster -> damage * 0.9);
                 break;
+                
+            case 22 :
+                player -> currentHealthPoints -= (monster -> damage * 0.8);
+                break;
+                
+            case 33 :
+                player -> currentHealthPoints -= (monster -> damage * 0.6);
+                break;
+                
             default:
                 break;
         }
@@ -221,56 +144,73 @@ void attackMonster(Player* player, Monster* monster) {
 //UTILISATION DE SOINS
 void healPlayer(Player* player){
     int hpToRestore = 0;
+    int choice = 0;
+    int indexHP1 = 0;
+    int indexHP2 = 0;
+    int indexHP3 = 0;
     hpToRestore = ((player -> maxHealthpoints) - (player -> currentHealthPoints));
-    
-    for(int i = 0; i < 10; i++){
-        
+    for( int i = 0; i < 10; i++){
         if(player -> inventory[i].type == 4){
-            
-            switch (player -> inventory[i].healhPotion.id){
-                    
-                case  1:
-                    if((hpToRestore >= 30 && hpToRestore < 80) && player -> inventory[i].healhPotion.quantity != 0){
-                        player -> currentHealthPoints += 30;
-                        player -> inventory[i].healhPotion.quantity -=1;
-                        printf("\n +30 Hp \n");
-                    }
-                    
-                    else{
-                        printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
-                    }
-                    break;
-                    
-                case 2 :
-                    if(hpToRestore >= 80 && hpToRestore < 200 && player -> inventory[i].healhPotion.quantity != 0 ){
-                        player -> currentHealthPoints += 80;
-                        player -> inventory[i].healhPotion.quantity -=1;
-                        printf("\n +80 Hp \n");
-                    }
-                    
-                    else{
-                        printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
-                    }
-                    break;
-                    
-                case  3 :
-                    if(hpToRestore >= 200 && player -> inventory[i].healhPotion.quantity != 0){
-                        player -> currentHealthPoints += 200;
-                        player -> inventory[i].healhPotion.quantity -=1;
-                        printf("\n +200 Hp \n");
-                    }
-                    
-                    else{
-                        printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
-                    }
-                    
-                    break;
-                    
-                default:
-                    break;
+            if(player -> inventory[i].healhPotion.id == 11){
+                indexHP1 = i;
             }
+            
+            if(player -> inventory[i].healhPotion.id == 26){
+                indexHP2 = i;
+            }
+            
+            if(player -> inventory[i].healhPotion.id == 34){
+                indexHP3 = i;
+            }
+            
+            printf("\n %d - %s" ,player->inventory[i].healhPotion.id ,player -> inventory[i].healhPotion.name);
         }
     }
+    scanf("%d",&choice);
+        switch (choice){
+            case  11:
+                if(player -> inventory[indexHP1].healhPotion.quantity != 0){
+                    player -> currentHealthPoints += 30;
+                    player -> inventory[indexHP1].healhPotion.quantity -=1;
+                    printf("\n +30 Hp \n");
+                }
+                
+                else{
+                    printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
+                }
+                break;
+                
+            case 26 :
+                if(player -> inventory[indexHP2].healhPotion.quantity != 0 ){
+                    player -> currentHealthPoints += 80;
+                    player -> inventory[indexHP2].healhPotion.quantity -=1;
+                    printf("\n +80 Hp \n");
+                }
+                
+                else{
+                    printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
+                }
+                break;
+                
+            case  34 :
+                if(player -> inventory[indexHP3].healhPotion.quantity != 0){
+                    player -> currentHealthPoints += 200;
+                    player -> inventory[indexHP2].healhPotion.quantity -=1;
+                    printf("\n +200 Hp \n");
+                }
+                
+                else{
+                    printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
+                }
+                
+                break;
+                
+            default:
+                break;
+        }
+        if(player -> currentHealthPoints > player -> maxHealthpoints){
+            player -> currentHealthPoints = player -> maxHealthpoints;
+        }
 }
 
 //LANCEMENT DU COMBAT
@@ -310,7 +250,12 @@ void combat(Player * player, Monster* monster){
                 break;
                 
             case 2:
-                healPlayer(player);
+                if(player -> currentHealthPoints == player->maxHealthpoints){
+                    printf("VOS PV SONT AUX MAXIMUM");
+                }
+                else{
+                    healPlayer(player);
+                }
                 break;
                 
             case 3:

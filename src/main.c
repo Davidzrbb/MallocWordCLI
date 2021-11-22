@@ -44,7 +44,7 @@ void InitPlayer(Player* firstPlayer) {
     DiamondSword->weapon.name ="Diamondsword";
     DiamondSword->weapon.damage= 1;
     DiamondSword->weapon.max_durability = 10;
-    DiamondSword->weapon.actual_durabiulity  = 0;
+    DiamondSword->weapon.actual_durabiulity  = 10;
     DiamondSword->weapon.id = DIAMOND_SWORD;
     DiamondSword->type = WEAPON;
 
@@ -75,21 +75,21 @@ void InitPlayer(Player* firstPlayer) {
     hp1 -> type = HEALTHPOTION;
     hp1 -> healhPotion.quantity = 1;
     hp1 -> healhPotion.pvRestore = 30;
-    hp1 -> healhPotion.id = 1;
+    hp1 -> healhPotion.id = 11;
     
     Item *hp2 = malloc(sizeof(Item));
     hp2 -> healhPotion.name = "hp2";
     hp2 -> type = HEALTHPOTION;
     hp2 -> healhPotion.quantity = 1;
     hp2 -> healhPotion.pvRestore = 80;
-    hp2 -> healhPotion.id = 2;
+    hp2 -> healhPotion.id = 26;
     
     Item *hp3 = malloc(sizeof(Item));
     hp3 -> healhPotion.name = "hp3";
     hp3 -> type = HEALTHPOTION;
     hp3 -> healhPotion.quantity = 1;
     hp3 -> healhPotion.pvRestore = 200;
-    hp3 -> healhPotion.id = 3;
+    hp3 -> healhPotion.id = 34;
     
     Item *armor1 = malloc(sizeof(Item));
     armor1 -> armor.name = "chestplate11";
@@ -99,8 +99,8 @@ void InitPlayer(Player* firstPlayer) {
 
 
     firstPlayer->level = 1;
-    firstPlayer->currentHealthPoints = 74;
-    firstPlayer->maxHealthpoints = 450;
+    firstPlayer->currentHealthPoints = 380;
+    firstPlayer->maxHealthpoints = 400;
     firstPlayer->currentExperience=0;
     firstPlayer->maxExperience = 50;
     firstPlayer->inventory[0] = *WeaponSword ;
