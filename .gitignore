@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 .idea/MallocWordCLI.iml
 
 .idea/misc.xml
@@ -96,5 +97,10 @@ cmake-build-debug/MallocWordCLI.ilk
 cmake-build-debug/MallocWordCLI.pdb
 
 cmake-build-debug/Testing/Temporary/LastTest.log
+=======
+.idea/
+
+cmake-build-debug/
+>>>>>>> FightLevelling
 
 CMakeLists.txt

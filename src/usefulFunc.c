@@ -4,7 +4,7 @@
 
 #include "usefulFunc.h"
 
-int **print2DIntTab(int **tab, int x, int y) {
+void print2DIntTab(int **tab, int x, int y) {
 
     for (int i = 0; i < x; ++i) {
         for (int j = 0; j < y; ++j) {
@@ -12,6 +12,7 @@ int **print2DIntTab(int **tab, int x, int y) {
         }
         printf("\n");
     }
+
 }
 
 void fill_tab(int **tab,int size){

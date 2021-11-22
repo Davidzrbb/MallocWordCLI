@@ -66,8 +66,6 @@ void deleteElementInventory(Item inventory[], int sizeArr, int index) {
             break;
         }
     }
-
-
 }
 
 void initStructStock(PnjLinkedList *stock) {

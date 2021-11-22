@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 
-int **print2DIntTab(int **tab, int x, int y);
+void print2DIntTab(int **tab, int x, int y);
 
 void fill_tab(int **tab,int size);
 

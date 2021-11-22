@@ -6,12 +6,20 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+
 struct Armor{
     int id;
     char * name;
     int protection;
 };
 typedef struct Armor Armor;
+
+enum armor {
+    STONE_CHESTPLATE = 11,
+    IRON_CHESTPLATE = 22,
+    DIAMOND_CHESTPLATE = 33,
+};
+typedef enum armor armor;
 
 struct healthPotion{
     int id;
@@ -21,6 +29,12 @@ struct healthPotion{
 };
 typedef struct healthPotion healthPotion;
 
+enum enumHealthPotion {
+    HEAL1 = 15,
+    HEAL2 = 26,
+    HEAL3 = 34,
+};
+typedef enum enumHealthPotion enumHealthPotion;
 
 struct Weapon {
     int id;
@@ -59,17 +73,22 @@ struct Item {
 };
 typedef struct Item Item;
 
-typedef struct Player Player;
 struct Player {
     int experience;
     int level;
-    int currentHealthPoints;
-    int maxHealthpoints;
+    int currentExperience;
+    int maxExperience;
+    float currentHealthPoints;
+    float maxHealthpoints;
     int actual_map;
     int coord_x;
     int coord_y;
+    Item currentWeapon;
     Item inventory[10];
 };
+typedef struct Player Player;
+
+
 enum entity {
     PORTAL1_2 = -3,
     PORTAL2_3 = -2,
@@ -127,7 +146,6 @@ enum tools {
     IRON_AX = 25,
 };
 typedef enum tools tools;
-
 enum type {
     WEAPON = 1,
     TOOL = 2,
@@ -135,14 +153,37 @@ enum type {
     HEAL = 4,
     ARMOR = 5,
 };
-typedef enum item item;
+typedef enum type type;
 
+struct Monster
+{
+    int id;
+    char* name;
+    int currentLife;
+    int maxLife;
+    float damage;
+    int experience;
+    int zone;
+};
+typedef struct Monster Monster;
+
+struct AllMonster{
+    Monster allMonster[10];
+};
+
+typedef struct AllMonster AllMonster;
 
 static int  mapsSize[3]={8,10,12};
-
 void InitPlayer(Player *);
-
-
 void printTest(Player);
+void attackPlayer(Player* player, Monster* monster, Weapon*);
+void attackMonster(Player* player, Monster* monster);
+void addLevel(Player * player);
+void initMonster(AllMonster*);
+void printMonster(AllMonster);
+Weapon weaponChoice(Player *);
+void combat(Player *, Monster*);
+void printHealth(Player * player, Monster * monster);
+
 
 #endif
