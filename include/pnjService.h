@@ -68,9 +68,11 @@ void initNewMap(Player *player, PnjLinkedList *stock);
 
 void initStartGame(Player *, PnjLinkedList *);
 
-void charge(Player *, PnjLinkedList *, bool,AllItemCraft *);
+void charge(Player *, PnjLinkedList *, bool, AllItemCraft *);
 
-void freeAll(PnjLinkedList *, Player *);
+void initStockCharge(int, PnjLinkedList *, AllItemCraft *);
+
+void freeStock(PnjLinkedList *);
 
 extern int countDelet;
 extern int choicePnj;

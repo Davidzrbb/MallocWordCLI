@@ -29,7 +29,7 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
                 success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
                 break;
             case 't':
-                success = saveFile(mapsSize, map_list, player, stock,false);
+                success = saveFile(mapsSize, map_list, player, stock, false);
                 break;
             default :
                 printf("???\n");
@@ -37,14 +37,16 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
         }
         countMov += 1;
         if (countMov == 10) {
-            saveFile(mapsSize, map_list, player, stock,true);
+            saveFile(mapsSize, map_list, player, stock, true);
             countMov = 0;
         }
         fflush(stdin);
 
     } while (success != 2);   //tant que player pas mort ou arret de la partie
-    freeAll(stock,player);
-    startChoice(player, stock);
+    freeStock(stock);
+    free(player);
+    //test
+    startChoice();
 }
 
 

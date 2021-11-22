@@ -71,13 +71,14 @@ void startChoice() {
     }
 
     if (validationAuto == 1) {
+        initStructStock(stock);
         charge(player, stock, true, allItemCraft);
     }
 
     if (validationManuelle == 1) {
+        initStructStock(stock);
         charge(player, stock, false, allItemCraft);
     }
-    initStructStock(stock);
 }
 
 int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto) {
@@ -178,14 +179,26 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
     fichier = fopen(path, "r");
     int c;
     int nLignes = 0;
+    int stopStock = 0;
     while ((c = fgetc(fichier)) != EOF) {
-        if (c == '\n')
+        if (c == '\n') {
             nLignes++;
+        }
+        if (stopStock == 0) {
+            if (nLignes >= 16) {
+                if (c == 61) {
+                    stopStock = nLignes;
+                    printf("\nSTOP STOCK : %d\n", stopStock);
+                }
+            }
+        }
+
     }
     fclose(fichier);
     FILE *file;
     int bufferLength = nLignes;
     char buffer[255];
+    int verifBuffer;
     int i;
     int n;
     int v;
@@ -193,9 +206,7 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
     int count = 0;
 
     file = fopen(path, "r");
-
     while (fgets(buffer, bufferLength, file)) {
-
         sscanf(buffer, "%c%d%c%c%c%d%c%c%c%d", str, &i, str, str, str, &n, str, str, str, &v);
         printf("COUNT :%d", count);
         printf("LINE : %d %d %d\n", i, n, v);
@@ -209,6 +220,9 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
         }
         if (count >= 5 && count < 15) {
             initPlayerCharge(n, player, allItemCraft, count);
+        }
+        if (count > 15 && count < stopStock) {
+            initStockCharge(n, stock, allItemCraft);
         }
         count += 1;
     }
@@ -251,4 +265,41 @@ void initPlayerCharge(int id, Player *playerStruct, AllItemCraft *allItemCraft, 
             }
         }
     }
+}
+
+void initStockCharge(int id, PnjLinkedList *stock, AllItemCraft *allItemCraft) {
+    Item *nvItem = malloc(sizeof(Item));
+    for (int i = 0; i < 25; i++) {
+        if (allItemCraft->itemCraft[i].idCreation == id) {
+            if (allItemCraft->itemCraft[i].type == TOOL) {
+                nvItem->tools.id = id;
+                nvItem->tools.name = allItemCraft->itemCraft[i].name;
+                nvItem->tools.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
+                nvItem->tools.max_durability = allItemCraft->itemCraft[i].max_durability;
+                nvItem->type = TOOL;
+            }
+            if (allItemCraft->itemCraft[i].type == WEAPON) {
+                nvItem->weapon.id = id;
+                nvItem->weapon.name = allItemCraft->itemCraft[i].name;
+                nvItem->weapon.actual_durabiulity = allItemCraft->itemCraft[i].actual_durabiulity;
+                nvItem->weapon.max_durability = allItemCraft->itemCraft[i].max_durability;
+                nvItem->weapon.damage = allItemCraft->itemCraft[i].damage;
+                nvItem->type = WEAPON;
+            }
+            if (allItemCraft->itemCraft[i].type == ARMOR) {
+                nvItem->armor.id = id;
+                nvItem->armor.name = allItemCraft->itemCraft[i].name;
+                nvItem->armor.protection = allItemCraft->itemCraft[i].protection;
+                nvItem->type = ARMOR;
+            }
+            if (allItemCraft->itemCraft[i].type == HEAL) {
+                nvItem->heal.id = id;
+                nvItem->heal.name = allItemCraft->itemCraft[i].name;
+                nvItem->heal.quantity = allItemCraft->itemCraft[i].quantity;
+                nvItem->heal.pvRestore = allItemCraft->itemCraft[i].pvRestore;
+                nvItem->type = HEAL;
+            }
+        }
+    }
+    insertionToStock(nvItem, stock);
 }

@@ -1,9 +1,6 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
 
-#include "../include/save.h"
-
-
 void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = -1;
@@ -81,7 +78,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     } else {
         printf("\nVous n'avez plus d'item dans votre inventaire\n");
-        pnjChoice(playerStruct, stock);
+        return;
     }
 
 }
@@ -126,6 +123,7 @@ void insertionToStock(Item *nvItem, PnjLinkedList *stock) {
         cache->next = malloc(sizeof(PnjLinkedList *));
         cache->data = nvItem;
         cache = cache->next;
+        cache->data = NULL;
         cache->next = NULL;
     }
 }

@@ -133,12 +133,12 @@ void fill_tab(int **tab, int size) {
     }
 }
 
-void freeAll(PnjLinkedList *stock, Player *player) {
+void freeStock(PnjLinkedList *stock) {
     if (stock->next != NULL) {
-        freeAll(stock->next, player);
+        freeStock(stock->next);
     }
+    stock = malloc(sizeof(PnjLinkedList));
     free(stock);
-    free(player);
 }
 
 
