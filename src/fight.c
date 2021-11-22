@@ -36,8 +36,10 @@ Weapon weaponChoice(Player * player){
 //AFFICHAGE DE LA VIE DU PERSO ET DU MONSTRE
 void printHealth(Player * player, Monster * monster){
     player->currentWeapon = player->inventory[0];
-    printf("PLAYER LIFE : %f \n " ,player->currentHealthPoints);
-    printf("MONSTER LIFE : %d \n" ,monster -> currentLife);
+    printf("\n PLAYER LIFE : %f \n " ,player->currentHealthPoints);
+    printf("\n MONSTER LIFE : %d \n" ,monster -> currentLife);
+    //DEBUG
+    printf("\n PLAYER XP : %d \n " ,player->currentExperience);
 }
 
 //ATTAQUE DU JOUEUR SUR UN MONSTRE
@@ -104,11 +106,19 @@ void attackPlayer(Player* player, Monster* monster, Weapon* weapon) {
 void attackMonster(Player* player, Monster* monster) {
     int idMonster = 0;
     idMonster = monster -> id;
+    int armorId = 0;
+    for (int i = 0; i<10;i++){
+        if(player->inventory[i].type == 5){
+            armorId = player->inventory[i].armor.id;
+
+        }
+    }
     if(player -> currentHealthPoints != 0){
         
         switch (idMonster) {
             case  1:
-                switch(player -> inventory -> armor.id){
+
+                switch(armorId){
                     case 0 :
                         player -> currentHealthPoints -= monster -> damage;
                         break;
@@ -117,7 +127,7 @@ void attackMonster(Player* player, Monster* monster) {
                         player -> currentHealthPoints = player -> currentHealthPoints - (monster -> damage * 0.9);
                         break;
                         
-                    case 21 :
+                    case 22 :
                         player -> currentHealthPoints -= (monster -> damage * 0.8);
                         break;
                         
@@ -131,7 +141,7 @@ void attackMonster(Player* player, Monster* monster) {
                 break;
 
             case  2:
-                switch(player -> inventory -> armor.id){
+                switch(armorId){
                     case 0 :
                         player -> currentHealthPoints -= monster -> damage;
                         break;
@@ -140,7 +150,7 @@ void attackMonster(Player* player, Monster* monster) {
                         player -> currentHealthPoints -= (monster -> damage * 0.9);
                         break;
                         
-                    case 21 :
+                    case 22 :
                         player -> currentHealthPoints -= (monster -> damage * 0.8);
                         break;
                         
@@ -154,16 +164,39 @@ void attackMonster(Player* player, Monster* monster) {
                 break;
 
             case 3:
-                switch(player -> inventory -> armor.id){
+                switch(armorId){
                     case 0 :
                         player -> currentHealthPoints -= monster -> damage;
                         break;
-                        
+
                     case 11 :
                         player -> currentHealthPoints -= (monster -> damage * 0.9);
                         break;
                         
-                    case 21 :
+                    case 22 :
+                        player -> currentHealthPoints -= (monster -> damage * 0.8);
+                        break;
+                        
+                    case 33 :
+                        player -> currentHealthPoints -= (monster -> damage * 0.6);
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+                
+            case 4:
+                switch(armorId){
+                    case 0 :
+                        player -> currentHealthPoints -= monster -> damage;
+                        break;
+
+                    case 11 :
+                        player -> currentHealthPoints -= (monster -> damage * 0.9);
+                        break;
+                        
+                    case 22 :
                         player -> currentHealthPoints -= (monster -> damage * 0.8);
                         break;
                         
@@ -189,63 +222,54 @@ void attackMonster(Player* player, Monster* monster) {
 void healPlayer(Player* player){
     int hpToRestore = 0;
     hpToRestore = ((player -> maxHealthpoints) - (player -> currentHealthPoints));
-    if(player -> inventory -> healhPotion.quantity != 0){
-        switch (player -> inventory -> healhPotion.id ){
-            case  1:
-                if(hpToRestore >= 30 && hpToRestore < 80){
-                    player -> currentHealthPoints += 30;
-                    player -> inventory -> healhPotion.quantity -=1;
-                }
-                else{
-                    printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
-                }
-                break;
-                
-            case 2 :
-                if(hpToRestore >= 80 && hpToRestore < 200){
-                    player -> currentHealthPoints += 80;
-                    player -> inventory -> healhPotion.quantity -=1;
-                }
-                else{
-                    printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
-                }
-                break;
-                
-            case  3 :
-                if(hpToRestore >= 200){
-                    player -> currentHealthPoints += 200;
-                    player -> inventory -> healhPotion.quantity -=1;
-                }
-                else{
-                    printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
-                }
-                break;
-                
-            default:
-                break;
+    
+    for(int i = 0; i < 10; i++){
+        
+        if(player -> inventory[i].type == 4){
             
-//    if(hpToRestore >= 30 && hpToRestore < 80){
-//        for(int i=0 ; i<10; i++){
-//            if(player -> inventory -> healhPotion.pvRestore == 30)
-//                player-> currentHealthPoints +=30;
-//        }
-//    }
-//    if(hpToRestore >= 80 && hpToRestore < 200){
-//        for(int i=0 ; i<10; i++){
-//            if(player -> inventory -> healhPotion.pvRestore == 80)
-//                player-> currentHealthPoints +=80;
-//        }
-//    }
-//    if(hpToRestore >= 200){
-//        for(int i=0 ; i<10; i++){
-//            if(player -> inventory -> healhPotion.pvRestore == 200)
-//                player-> currentHealthPoints +=200;
-//        }
-//    }
-//    else{
-//        printf("\n Vous ne pouvez pas utiliser de potion de soins \n ");
-//    }
-}
+            switch (player -> inventory[i].healhPotion.id){
+                    
+                case  1:
+                    if((hpToRestore >= 30 && hpToRestore < 80) && player -> inventory[i].healhPotion.quantity != 0){
+                        player -> currentHealthPoints += 30;
+                        player -> inventory[i].healhPotion.quantity -=1;
+                        printf("\n +30 Hp \n");
+                    }
+                    
+                    else{
+                        printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
+                    }
+                    break;
+                    
+                case 2 :
+                    if(hpToRestore >= 80 && hpToRestore < 200 && player -> inventory[i].healhPotion.quantity != 0 ){
+                        player -> currentHealthPoints += 80;
+                        player -> inventory[i].healhPotion.quantity -=1;
+                        printf("\n +80 Hp \n");
+                    }
+                    
+                    else{
+                        printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
+                    }
+                    break;
+                    
+                case  3 :
+                    if(hpToRestore >= 200 && player -> inventory[i].healhPotion.quantity != 0){
+                        player -> currentHealthPoints += 200;
+                        player -> inventory[i].healhPotion.quantity -=1;
+                        printf("\n +200 Hp \n");
+                    }
+                    
+                    else{
+                        printf("\n Vous ne pouvez pas utiliser de potion de soins \n");
+                    }
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
     }
 }
 
@@ -253,30 +277,42 @@ void healPlayer(Player* player){
 void combat(Player * player, Monster* monster){
     int statut = 0;
     printf("\n ATTENTION UN MONSTRE AU LOIN !!! \n");
+    
     while((player -> currentHealthPoints > 0) && (monster -> currentLife > 0) && (statut == 0)){
         printf("Que souahitez vous faire ? \n 1 - Combattre \n 2 - Se Soigner \n 3 - Fuir \n");
         int choix;
         scanf("%d", &choix);
         Weapon w;
+        
         switch (choix) {
             case 1 :
                 w = weaponChoice((player));
                 attackPlayer(player, monster, &w);
                 attackMonster(player, monster);
+                //DEBUG
                 printHealth(player, monster);
-                if(monster -> currentLife == 0){
+                
+                if(monster -> currentLife <= 0){
                     printf("\n Vous avez tué le monstre \n");
                     player -> currentExperience += monster -> experience;
-                    printf("DURABILITY : %f", w.actual_durabiulity);
+                    printf("\n +%d XP \n" ,monster->experience);
+                    if (player->currentExperience >= player->maxExperience) {
+                        int ajustXp = player->currentExperience - player->maxExperience;
+                        addLevel(player);
+                        player -> currentExperience +=ajustXp;
+                    }
                 }
                 if(player -> currentHealthPoints <= 0){
                     printf("\n Vous êtes mort ! \n ");
                 }
-                
+                //DEBUG
+                printHealth(player, monster);
                 break;
+                
             case 2:
                 healPlayer(player);
                 break;
+                
             case 3:
                 printf("C'est dommage tu as préféré fuire\n");
                 statut = 1;
