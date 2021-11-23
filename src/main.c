@@ -14,6 +14,12 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+void initStartGame(Player *player, PnjLinkedList *stock) {
+    InitPlayer(player);
+    initStructStock(stock);
+    initNewMap(player, stock);
+}
+
 void initNewMap(Player *player, PnjLinkedList *stock) {
     int **map1 = createTable(8);
     int **map1_cpy = createTable(8);
@@ -58,10 +64,10 @@ void initNewMap(Player *player, PnjLinkedList *stock) {
 void InitPlayer(Player *firstPlayer) {
 
     Item *WeaponSword = malloc(sizeof(Item));
-    WeaponSword->weapon.name ="epee en bois";
-    WeaponSword->weapon.damage= 1;
+    WeaponSword->weapon.name = "epee en bois";
+    WeaponSword->weapon.damage = 1;
     WeaponSword->weapon.max_durability = 10;
-    WeaponSword->weapon.actual_durabiulity  = 10;
+    WeaponSword->weapon.actual_durabiulity = 10;
     WeaponSword->weapon.id = WOODEN_SWORD;
     WeaponSword->type = WEAPON;
 
@@ -72,37 +78,37 @@ void InitPlayer(Player *firstPlayer) {
     ToolsPickaxe->tools.id = STONE_PICKAXE;
     ToolsPickaxe->type = TOOL;
 
-    Item  *ToolsBillhook = malloc(sizeof(Item));
-    ToolsBillhook->tools.name ="serpette en bois";
-    ToolsBillhook->tools.max_durability=10;
-    ToolsBillhook->tools.actual_durabiulity=10;
-    ToolsBillhook->tools.id= WOODEN_BILLHOOK;
-    ToolsBillhook->type= TOOL;
+    Item *ToolsBillhook = malloc(sizeof(Item));
+    ToolsBillhook->tools.name = "serpette en bois";
+    ToolsBillhook->tools.max_durability = 10;
+    ToolsBillhook->tools.actual_durabiulity = 10;
+    ToolsBillhook->tools.id = WOODEN_BILLHOOK;
+    ToolsBillhook->type = TOOL;
 
 
     Item *ToolsAx = malloc(sizeof(Item));
-    ToolsAx->tools.name ="hache en bois";
-    ToolsAx->tools.max_durability=10;
-    ToolsAx->tools.actual_durabiulity=10;
+    ToolsAx->tools.name = "hache en bois";
+    ToolsAx->tools.max_durability = 10;
+    ToolsAx->tools.actual_durabiulity = 10;
     ToolsAx->tools.id = WOODEN_AX;
-    ToolsAx->type= TOOL;
+    ToolsAx->type = TOOL;
 
 
     firstPlayer->level = 1;
     firstPlayer->currentHealthPoints = 100;
     firstPlayer->maxHealthpoints = 100;
-    firstPlayer->currentExperience=0;
+    firstPlayer->currentExperience = 0;
     firstPlayer->maxExperience = 50;
     firstPlayer->coord_x = 1;
     firstPlayer->coord_y = 0;
     firstPlayer->actual_map = 1;
-    firstPlayer->inventory[0] = *WeaponSword ;
-    firstPlayer->inventory[1] = *ToolsPickaxe ;
-    firstPlayer->inventory[2] = *ToolsBillhook ;
-    firstPlayer->inventory[3] = *ToolsAx ;
+    firstPlayer->inventory[0] = *WeaponSword;
+    firstPlayer->inventory[1] = *ToolsPickaxe;
+    firstPlayer->inventory[2] = *ToolsBillhook;
+    firstPlayer->inventory[3] = *ToolsAx;
 }
 
-int** createTable(int n){
+int **createTable(int n) {
 
     int **table = malloc(sizeof(int *) * n);
     for (int i = 0; i < n; i++) {
