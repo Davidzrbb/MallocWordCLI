@@ -104,3 +104,5 @@ cmake-build-debug/
 >>>>>>> FightLevelling
 
 CMakeLists.txt
+
+*.obj

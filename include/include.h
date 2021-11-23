@@ -6,10 +6,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <time.h>
 
-struct Armor{
+struct Armor {
     int id;
-    char * name;
+    char *name;
     int protection;
 };
 typedef struct Armor Armor;
@@ -185,5 +186,9 @@ Weapon weaponChoice(Player *);
 void combat(Player *, Monster*);
 void printHealth(Player * player, Monster * monster);
 
+int** createTable(int size);
+void fill_tab(int **tab,int size);
+
+void printTest(Player);
 
 #endif

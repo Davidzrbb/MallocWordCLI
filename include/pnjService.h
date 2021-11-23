@@ -3,6 +3,7 @@
 
 #include "include.h"
 
+
 typedef struct PnjLinkedList PnjLinkedList;
 struct PnjLinkedList {
     Item *data;
@@ -29,6 +30,8 @@ struct AllItemCraft {
 };
 typedef struct AllItemCraft AllItemCraft;
 
+void startChoice();
+
 void pnjChoice(Player *, PnjLinkedList *);
 
 void pnjFix(Player *);
@@ -39,11 +42,11 @@ void deleteElementInventory(Item inventory[], int sizeArr, int index);
 
 void insertionToStock(Item *, PnjLinkedList *);
 
+void recoverItemStockToInventory(Player *, PnjLinkedList *);
+
 void displayStock(Player *, PnjLinkedList *);
 
 void initStructStock(PnjLinkedList *);
-
-void recoverItemStockToInventory(Player *, PnjLinkedList *);
 
 PnjLinkedList *deleteElementLinkedList(Player *, PnjLinkedList *, int);
 
@@ -51,19 +54,31 @@ void craftItem(Player *);
 
 void initArrayCraftItem(AllItemCraft *);
 
-int* verifItemCraft(AllItemCraft *, Player *);
+int *verifItemCraft(AllItemCraft *, Player *);
 
 void createItemCraft(AllItemCraft *, Player *, int);
 
 void displayItemCraft(AllItemCraft *);
 
-void addItemCraft(AllItemCraft *, Player *, const int*);
+void addItemCraft(AllItemCraft *, Player *, const int *);
 
 void displayItemCraftSection(AllItemCraft *, int);
+
+void initNewMap(Player *player, PnjLinkedList *stock);
+
+void initStartGame(Player *, PnjLinkedList *);
+
+void charge(Player *, PnjLinkedList *, bool, AllItemCraft *);
+
+void initStockCharge(int, PnjLinkedList *, AllItemCraft *);
+
+void freeStock(PnjLinkedList *);
 
 extern int countDelet;
 extern int choicePnj;
 extern int sizeInv;
+extern char nameFileManuelle[50];
+extern char nameFileAuto[50];
 
 
 #endif

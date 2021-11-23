@@ -1,14 +1,13 @@
 #include "../include/include.h"
 #include "../include/pnjService.h"
 
-
 void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = -1;
-    Item nvItem;
+    Item *nvItem = malloc(sizeof(Item));
+    nvItem->tools.name = malloc(sizeof(char *));
     int index;
     int verif = 0;
-
 
     if (countDelet < sizeof(playerStruct->inventory[0].tools.id)) {
         printf("\nVeuillez choisir l'item a stocker:\n");
@@ -23,7 +22,40 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
         scanf("%d", &stockItem);
         for (int i = 0; i < 10; i++) {
             if (playerStruct->inventory[i].tools.id == stockItem) {
-                nvItem = playerStruct->inventory[i];
+                nvItem = malloc(sizeof(Item));
+                nvItem->type = playerStruct->inventory[i].type;
+                switch (nvItem->type) {
+                    case WEAPON:
+                        nvItem->weapon.id = playerStruct->inventory[i].weapon.id;
+                        nvItem->weapon.name = playerStruct->inventory[i].weapon.name;
+                        nvItem->weapon.actual_durabiulity = playerStruct->inventory[i].weapon.actual_durabiulity;
+                        nvItem->weapon.damage = playerStruct->inventory[i].weapon.damage;
+                        nvItem->weapon.max_durability = playerStruct->inventory[i].weapon.max_durability;
+                        break;
+                    case TOOL:
+                        nvItem->tools.id = playerStruct->inventory[i].tools.id;
+                        nvItem->tools.name = playerStruct->inventory[i].tools.name;
+                        nvItem->tools.actual_durabiulity = playerStruct->inventory[i].tools.actual_durabiulity;
+                        nvItem->tools.max_durability = playerStruct->inventory[i].tools.max_durability;
+                        break;
+                    case RESOURCE:
+                        nvItem->resource.id = playerStruct->inventory[i].resource.id;
+                        nvItem->resource.name = playerStruct->inventory[i].resource.name;
+                        nvItem->resource.quantity = playerStruct->inventory[i].resource.quantity;
+                        break;
+                    case ARMOR:
+                        nvItem->armor.id = playerStruct->inventory[i].armor.id;
+                        nvItem->armor.name = playerStruct->inventory[i].armor.name;
+                        nvItem->armor.protection = playerStruct->inventory[i].armor.protection;
+                        break;
+                    case HEAL:
+                        nvItem->heal.id = playerStruct->inventory[i].armor.id;
+                        nvItem->heal.name = playerStruct->inventory[i].heal.name;
+                        nvItem->heal.quantity = playerStruct->inventory[i].heal.quantity;
+                        nvItem->heal.pvRestore = playerStruct->inventory[i].heal.pvRestore;
+                        break;
+                }
+
                 verif = 1;
                 index = stockItem;
             }
@@ -33,24 +65,25 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
                 printf("\nVotre item n'est pas dans votre inventaire !\n");
 
             }
-            pnjChoice(playerStruct, stock);
+            return;
         } else {
             ++countDelet;
             deleteElementInventory(playerStruct->inventory,
                                    sizeof(playerStruct->inventory) / sizeof(playerStruct->inventory[0]),
                                    index);
-            insertionToStock(&nvItem, stock);
+            insertionToStock(nvItem, stock);
             displayStock(playerStruct, stock);
+
         }
 
     } else {
         printf("\nVous n'avez plus d'item dans votre inventaire\n");
-        pnjChoice(playerStruct, stock);
+        return;
     }
 
 }
 
-void deleteElementInventory(Item inventory[], int sizeArr, int index) {
+void deleteElementInventory(Item *inventory, int sizeArr, int index) {
     int i;
     int j;
 
@@ -74,32 +107,22 @@ void initStructStock(PnjLinkedList *stock) {
     stock->data->tools.name = malloc(sizeof(char *));
 }
 
-void insertionToStock(Item *nvItem, PnjLinkedList *actualStockPos) {
-    if (actualStockPos == NULL) {
-        actualStockPos = malloc(sizeof(PnjLinkedList));
-        actualStockPos->data = nvItem;
-        actualStockPos->next = NULL;
+
+void insertionToStock(Item *nvItem, PnjLinkedList *stock) {
+    if (stock == NULL) {
+        stock = malloc(sizeof(PnjLinkedList));
+        stock->data = nvItem;
+        stock->next = NULL;
     } else {
-        PnjLinkedList *cache = actualStockPos;
+        PnjLinkedList *cache = stock;
         while (cache->next != NULL) {
             cache = cache->next;
         }
         cache->next = malloc(sizeof(PnjLinkedList *));
         cache->data = nvItem;
         cache = cache->next;
+        cache->data = NULL;
         cache->next = NULL;
-    }
-}
-
-void displayStock(Player *playerStruct, PnjLinkedList *stock) {
-    printf("\nVotre stock : \n");
-    PnjLinkedList *cache = stock;
-    while (cache->next != NULL) {
-        printf("%d = %s \n", cache->data->weapon.id, cache->data->weapon.name);
-        cache = cache->next;
-    }
-    if (choicePnj == 3) {
-        pnjStock(playerStruct, stock);
     }
 }
 
@@ -116,9 +139,22 @@ void recoverItemStockToInventory(Player *playerStruct, PnjLinkedList *stock) {
                 recoverItemStockToInventory(playerStruct, stock);
             }
         }
+        //   saveFile(playerStruct, stock);
         pnjChoice(playerStruct, stock);
     } else {
         printf("\nVotre stock est vide !\n");
+    }
+}
+
+void displayStock(Player *playerStruct, PnjLinkedList *stock) {
+    printf("\nVotre stock : \n");
+    PnjLinkedList *cache = stock;
+    while (cache->next != NULL) {
+        printf("%d = %s \n", cache->data->weapon.id, cache->data->weapon.name);
+        cache = cache->next;
+    }
+    if (choicePnj == 3) {
+        pnjStock(playerStruct, stock);
     }
 }
 
@@ -133,7 +169,7 @@ PnjLinkedList *deleteElementLinkedList(Player *playerStruct, PnjLinkedList *stoc
     if (previous->data->weapon.id == choiceRecover) {
         sizeInv = 0;
         for (int i = 0; i < 10; i++) {
-            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 4) {
+            if (playerStruct->inventory[i].type > 0 && playerStruct->inventory[i].type < 6) {
                 sizeInv++;
             }
         }
