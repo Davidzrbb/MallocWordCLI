@@ -4,8 +4,8 @@
 
 void craftItem(Player *playerStruct) {
     //init tab craft
-    ArrayItemCraft *arrayItemCraft= malloc(sizeof (ArrayItemCraft));
-    AllItemCraft* allItemCraft = malloc(sizeof (AllItemCraft));
+    ArrayItemCraft *arrayItemCraft = malloc(sizeof(ArrayItemCraft));
+    AllItemCraft *allItemCraft = malloc(sizeof(AllItemCraft));
     initArrayCraftItem(allItemCraft);
     int choiceCraft = -1;
     while (choiceCraft == -1) {
@@ -173,6 +173,12 @@ void addItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, const int *v
 
                         printf("\nIl vous reste %d %s\n", playerStruct->inventory[i].resource.quantity,
                                playerStruct->inventory[i].resource.name);
+                        //supression si quantity =0
+                        if (playerStruct->inventory[i].resource.quantity == 0) {
+                            deleteElementInventory(playerStruct->inventory,
+                                                   sizeof(playerStruct->inventory) / sizeof(playerStruct->inventory[0]),
+                                                   playerStruct->inventory[i].resource.id);
+                        }
 
                     }
                     if (playerStruct->inventory[i].resource.id ==
@@ -198,6 +204,19 @@ void addItemCraft(AllItemCraft *allItemCraft, Player *playerStruct, const int *v
                                        playerStruct->inventory[k].resource.quantity,
                                        playerStruct->inventory[k].resource.name);
 
+                                //supression si quantity =0
+                                if (playerStruct->inventory[i].resource.quantity == 0) {
+                                    deleteElementInventory(playerStruct->inventory,
+                                                           sizeof(playerStruct->inventory) /
+                                                           sizeof(playerStruct->inventory[0]),
+                                                           playerStruct->inventory[i].resource.id);
+                                }
+                                if (playerStruct->inventory[k].resource.quantity == 0) {
+                                    deleteElementInventory(playerStruct->inventory,
+                                                           sizeof(playerStruct->inventory) /
+                                                           sizeof(playerStruct->inventory[0]),
+                                                           playerStruct->inventory[k].resource.id);
+                                }
                             }
                         }
                     }

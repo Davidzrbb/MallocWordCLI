@@ -4,8 +4,8 @@
 void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
     int stockItem = -1;
-    Item *nvItem = malloc(sizeof (Item));
-    nvItem->tools.name = malloc(sizeof (char *));
+    Item *nvItem = malloc(sizeof(Item));
+    nvItem->tools.name = malloc(sizeof(char *));
     int index;
     int verif = 0;
 
@@ -83,7 +83,7 @@ void pnjStock(Player *playerStruct, PnjLinkedList *stock) {
 
 }
 
-void deleteElementInventory(Item inventory[], int sizeArr, int index) {
+void deleteElementInventory(Item *inventory, int sizeArr, int index) {
     int i;
     int j;
 
@@ -99,8 +99,6 @@ void deleteElementInventory(Item inventory[], int sizeArr, int index) {
             break;
         }
     }
-
-
 }
 
 void initStructStock(PnjLinkedList *stock) {
