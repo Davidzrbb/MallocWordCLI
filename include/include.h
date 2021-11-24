@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-#include <time.h>
+
 
 struct Armor {
     int id;
