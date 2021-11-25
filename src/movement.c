@@ -7,7 +7,8 @@
 #include "save.h"
 
 
-void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
+void movement(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, Player *player, PnjLinkedList *stock,
+              int *nb_line, int *nb_col) {
     int success = 0;
     char direction;
     int countMov = 0;
@@ -47,7 +48,6 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
     freeStock(stock);
     free(player);
     //test
-    startChoice();
 }
 
 

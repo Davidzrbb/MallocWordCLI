@@ -11,7 +11,8 @@
 #include "pnjService.h"
 #include "inits.h"
 
-void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock);
+void movement(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, Player *player, PnjLinkedList *stock,
+              int *nb_line, int *nb_col);
 int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_list_map, int ***actual_map_list_cpy,
               int ***actual_map_list_respawn, PnjLinkedList *stock);
 void changeMap(Player *player, int id_portal);

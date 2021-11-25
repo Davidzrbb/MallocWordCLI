@@ -66,9 +66,7 @@ void displayItemCraftSection(AllItemCraft *, int);
 
 void initNewMap(Player *player, PnjLinkedList *stock);
 
-void initStartGame(Player *, PnjLinkedList *);
-
-void charge(Player *, PnjLinkedList *, bool, AllItemCraft *);
+void charge(bool);
 
 void initStockCharge(int, PnjLinkedList *, AllItemCraft *);
 
