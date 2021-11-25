@@ -75,7 +75,6 @@ struct Item {
 typedef struct Item Item;
 
 struct Player {
-    int experience;
     int level;
     int currentExperience;
     int maxExperience;
