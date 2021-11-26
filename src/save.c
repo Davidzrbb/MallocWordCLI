@@ -39,8 +39,8 @@ int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock
                 }
             }
         }
-        fprintf(fichier, "\n=== PLAYER ===\n{%d}\n{%f}/{%d}\n{%f}/{%f}\n-- INVENTORY --\n", player->level,player->maxHealthpoints-player->currentExperience,
-                player->currentExperience,
+        fprintf(fichier, "\n=== PLAYER ===\n{%d}\n{%d}/{%d}\n{%f}/{%f}\n-- INVENTORY --\n", player->level,
+                player->currentExperience, player->maxExperience - player->currentExperience,
                 player->currentHealthPoints, player->maxHealthpoints);
         for (int i = 0; i < 10; i++) {
             if (player->inventory[i].type > 0 && player->inventory[i].type < 6) {
@@ -115,15 +115,9 @@ void charge(bool verifSaveAuto) {
         if (c == '\n') {
             nLignes++;
         }
-//        if(c == ){}
-        if (stopStock == 0) {
-            if (nLignes >= 16) {
-                if (c == 61) {
-                    stopStock = nLignes;
-                }
-            }
+        if (c == 73) {
+            startInventory = nLignes;
         }
-
     }
     fclose(fichier);
     FILE *file;
@@ -132,28 +126,42 @@ void charge(bool verifSaveAuto) {
     int i;
     int n;
     int v;
+    float vie;
+    float viemax;
     char str[5];
     int count = 0;
+    int index = 0;
 
     file = fopen(path, "r");
     while (fgets(buffer, bufferLength, file)) {
-        sscanf(buffer, "%c%d%c%c%c%d%c%c%c%d", str, &i, str, str, str, &n, str, str, str, &v);
+        if (count == startInventory - 1) {
+            sscanf(buffer, "%c%f%c%c%c%f%c%c%c%d", str, &vie, str, str, str, &viemax, str, str, str, &v);
 
-        if (count == 2) {
+        } else {
+            sscanf(buffer, "%c%d%c%c%c%d%c%c%c%d", str, &i, str, str, str, &n, str, str, str, &v);
+
+        }
+        if (count == startInventory - 3) {
+            player->level = i;
+        }
+        if (count == startInventory - 2) {
             player->currentExperience = i;
+            player->maxExperience = n;
         }
-        if (count == 3) {
-            player->currentHealthPoints = i;
-            player->maxHealthpoints = n;
+        if (count == startInventory - 1) {
+            player->currentHealthPoints = vie;
+            player->maxHealthpoints = viemax;
         }
-        if (count >= 5 && count < 15) {
-            initPlayerCharge(n, player, allItemCraft, count);
+        if (count > startInventory && count < startInventory + 9) {
+            initPlayerCharge(n, player, allItemCraft, index);
+            index += 1;
         }
-        if (count > 15 && count < stopStock) {
+        if (count > startInventory + 9) {
             initStockCharge(n, stock, allItemCraft);
         }
         count += 1;
     }
+
     fclose(file);
     LoadMap(&map_list, &map_list_cpy, &map_list_respawn, path, nb_line, nb_col);
     movement(map_list, map_list_cpy, map_list_respawn, player, stock, nb_line, nb_col);
@@ -254,7 +262,7 @@ void LoadMap(int ****map_list, int ****map_list_cpy, int ****map_list_respawn, c
 }
 
 void initPlayerCharge(int id, Player *playerStruct, AllItemCraft *allItemCraft, int count) {
-    count -= 5;
+    // count -= 5;
     if (id != 0) {
         for (int i = 0; i < 25; i++) {
             if (allItemCraft->itemCraft[i].idCreation == id) {
