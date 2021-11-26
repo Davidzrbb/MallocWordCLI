@@ -8,9 +8,11 @@
 #include "include.h"
 #include "usefulFunc.h"
 #include "map.h"
+#include "pnjService.h"
+#include "movement.h"
 
-void initMaps(int ****map_list, int ****map_list_cpy, int ****map_list_respawn);
+void initMaps(int * nb_line,int * nb_col,int ****map_list, int ****map_list_cpy, int ****map_list_respawn);
 void freeMaps(int ***map_list, int ***map_list_cpy, int ***map_list_respawn);
-
+void initStartGame();
 
 #endif //MALLOC_WORLD_INITS_H

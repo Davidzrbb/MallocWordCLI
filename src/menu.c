@@ -1,6 +1,4 @@
-#include "../include/include.h"
-#include "../include/pnjService.h"
-#include "../include/map.h"
+#include "menu.h"
 
 void startChoice() {
     int saveChoice = 0;
@@ -8,16 +6,11 @@ void startChoice() {
     int validationManuelle = -1;
     int validationAuto = -1;
 
-    Player *player = malloc(sizeof(Player));
-    PnjLinkedList *stock = malloc(sizeof(PnjLinkedList));
 
-    AllItemCraft *allItemCraft = malloc(sizeof(AllItemCraft));
-    initArrayCraftItem(allItemCraft);
-
-
-    while (saveChoice != 1 && saveChoice != 2) {
+    while (saveChoice != 3) {
         printf("\nCharger une partie ! Taper 1\n");
         printf("Nouvelle partie ! Taper 2\n");
+        printf("Quitter Taper 3\n");
         scanf("%d", &saveChoice);
 
         //charge
@@ -60,19 +53,18 @@ void startChoice() {
                 }
             }
         }
-    }
-    //New partie
-    if (saveChoice == 2) {
-        initStartGame(player, stock);
-    }
 
-    if (validationAuto == 1) {
-        initStructStock(stock);
-        charge(player, stock, true, allItemCraft);
-    }
+        //New partie
+        if (saveChoice == 2) {
+            initStartGame();
+        }
 
-    if (validationManuelle == 1) {
-        initStructStock(stock);
-        charge(player, stock, false, allItemCraft);
+        if (validationAuto == 1) {
+            charge(true);
+        }
+
+        if (validationManuelle == 1) {
+            charge(false);
+        }
     }
 }

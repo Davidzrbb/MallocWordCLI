@@ -187,7 +187,7 @@ void combat(Player *, Monster*);
 void printHealth(Player * player, Monster * monster);
 
 int** createTable(int size);
-void fill_tab(int **tab,int size);
+void fill_tab(int **tab, int size_line, int size_col);
 
 void printTest(Player);
 

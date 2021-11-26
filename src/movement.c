@@ -2,14 +2,13 @@
 // Created by lucas on 28/10/2021.
 //
 #include <pnjService.h>
-#include <fvec.h>
 #include "movement.h"
 #include "collecteResource.h"
 #include "save.h"
 
 
-void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock,
-              AllMonster * allMonster) {
+void movement(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, Player *player, PnjLinkedList *stock,
+              int *nb_line, int *nb_col,AllMonster * allMonster) {
     int success = 0;
     char direction;
     int countMov = 0;
@@ -70,6 +69,7 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         success = collecteRessources(player, next_case);
         if (!success) {
             printf("\nvous ne pouvez pas recolter la ressource");
+            return 0;
         }
         player->coord_x += add_x;
         player->coord_y += add_y;
@@ -121,7 +121,7 @@ void changeMap(Player *player, int id_portal) {
     }
 
     for (int j = 0; j < ; ++j) {
-        
+
     }
 
 

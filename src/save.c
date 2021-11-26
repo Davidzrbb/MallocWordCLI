@@ -1,7 +1,4 @@
-#include "../include/include.h"
-#include "../include/pnjService.h"
 #include "../include/save.h"
-#include "../include/map.h"
 
 char nameFileManuelle[50] = "";
 char nameFileAuto[50] = "";
@@ -17,12 +14,10 @@ int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock
     char path[100] = "";
 
     if (verifSaveAuto == true) {
-        strcat(path, "..\\saveauto\\");
         strcat(path, "saveAuto");
         strcpy(nameFileAuto, date);
     }
     if (verifSaveAuto == false) {
-        strcat(path, "..\\save\\");
         strcat(path, "saveManuelle");
         strcpy(nameFileManuelle, date);
     }
@@ -88,16 +83,25 @@ char *dateNow() {
     return buffer;
 }
 
-void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCraft *allItemCraft) {
+void charge(bool verifSaveAuto) {
+
+    int*** map_list;
+    int*** map_list_cpy;
+    int*** map_list_respawn;
+    int* nb_line= malloc(sizeof (int )*3);
+    int* nb_col= malloc(sizeof (int )*3);
+    Player *player = malloc(sizeof(Player));
+    PnjLinkedList *stock = malloc(sizeof(PnjLinkedList));
+    initStructStock(stock);
+    AllItemCraft *allItemCraft = malloc(sizeof(AllItemCraft));
+    initArrayCraftItem(allItemCraft);
 
     char path[50] = "";
     if (verifSaveAuto == true) {
-        strcat(path, "..\\saveauto\\");
         strcat(path, "saveAuto");
         strcat(path, ".txt");
     }
     if (verifSaveAuto == false) {
-        strcat(path, "..\\save\\");
         strcat(path, "saveManuelle");
         strcat(path, ".txt");
     }
@@ -148,6 +152,103 @@ void charge(Player *player, PnjLinkedList *stock, bool verifSaveAuto, AllItemCra
             initStockCharge(n, stock, allItemCraft);
         }
         count += 1;
+    }
+    fclose(file);
+    LoadMap(&map_list, &map_list_cpy, &map_list_respawn, path, nb_line, nb_col);
+    movement(map_list, map_list_cpy, map_list_respawn, player, stock, nb_line, nb_col);
+}
+
+int count_nb_col(char *fileName, int nb_map) {
+
+    FILE * file = fopen(fileName,"a+");//todo recuperer le nom du fichier et pas fichier en dur
+    char * line = malloc(sizeof (char)*255);
+    fgets(line,255,file);
+    int count_map=0;
+    int nb_col=0;
+    char car=0;
+    while(count_map<nb_map)
+    {
+        fgets(line, 255, file);
+        if (line[0] == '-') {
+            count_map++;
+            fgets(line, 255, file);
+        }
+    }
+    while (car != '\n'){
+        car= fgetc(file);
+        if(car == ' ' || car == '\n') {
+            nb_col++;
+        }
+    }
+    fclose(file);
+    return nb_col;
+}
+int count_nb_line(char *fileName, int nb_map) {
+
+    FILE * file = fopen(fileName,"a+");//todo recuperer le nom du fichier et pas fichier en dur
+    char * line = malloc(sizeof (char)*255);
+    fgets(line,255,file);
+    int count_map=0;
+    int nb_line=0;
+    char car=0;
+    while(count_map<nb_map)
+    {
+        fgets(line, 255, file);
+        if (line[0] == '-') {
+            count_map++;
+        }
+    }
+    while (car != '=' && car!='-'){
+        car= fgetc(file);
+        if(car == '\n') {
+            nb_line++;
+        }
+    }
+    fclose(file);
+    return nb_line;
+}
+
+void LoadMap(int ****map_list, int ****map_list_cpy, int ****map_list_respawn, char *path, int *nb_line, int *nb_col) {
+    srand( time( NULL ) );
+    int randMonster;
+    FILE * file = fopen(path,"a+");//todo recuperer le nom du fichier et pas fichier en dur
+    char * line = malloc(sizeof (char)*255);
+    fgets(line,255,file); //enleve ==map==
+    int gap=1;
+    for (int i = 0; i < 3; ++i) {
+        nb_line[i] = count_nb_line(path, i+1);
+        nb_col[i] = count_nb_col(path, i+1);
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        fgets(line,255,file);
+        for (int y = 0; y < nb_line[i]; ++y) {
+            fgets(line,255,file);
+            char * strToken = strtok ( line, " ");
+            int x = 0;
+            while ( strToken != NULL ) {
+                if(atoi(strToken)>11 && atoi(strToken)<99 ){
+                    randMonster=rand() % 3;
+                    if(i==0){
+                        map_list[0][i][y][x]=randMonster+90;
+                        map_list_cpy[0][i][y][x]=randMonster+96;
+                    } else if(i==1){
+                        map_list[0][i][y][x]=randMonster+93;
+                        map_list_cpy[0][i][y][x]=randMonster+96;
+                    } else{
+                        map_list[0][i][y][x]=randMonster+96;
+                        map_list_cpy[0][i][y][x]=randMonster+96;
+                    }
+                } else{
+                    map_list[0][i][y][x]=atoi(strToken);
+                    map_list_cpy[0][i][y][x]=atoi(strToken);
+                }
+                strToken = strtok ( NULL, " ");
+                x++;
+            }
+            x=0;
+        }
+        gap=nb_line[i];
     }
     fclose(file);
 }
