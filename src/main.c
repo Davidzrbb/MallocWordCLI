@@ -1,3 +1,4 @@
+#include <fvec.h>
 #include "../include/include.h"
 #include "../include/pnjService.h"
 #include "../include/collecteResource.h"
@@ -58,7 +59,7 @@ void initNewMap(Player *player, PnjLinkedList *stock) {
     fill_tab(map3_respawn, 12);
 
 
-    movement(player, map_list, map_list_cpy, map_list_respawn, stock);
+    movement(player, map_list, map_list_cpy, map_list_respawn, stock, result);
 }
 
 void InitPlayer(Player *firstPlayer) {

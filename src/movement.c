@@ -2,12 +2,14 @@
 // Created by lucas on 28/10/2021.
 //
 #include <pnjService.h>
+#include <fvec.h>
 #include "movement.h"
 #include "collecteResource.h"
 #include "save.h"
 
 
-void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock) {
+void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_list_respawn, PnjLinkedList *stock,
+              AllMonster * allMonster) {
     int success = 0;
     char direction;
     int countMov = 0;
@@ -18,16 +20,20 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
         printf("%c\n", direction);
         switch (direction) {
             case 'q':
-                success = goForward(player, -1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
+                success = goForward(player, -1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock,
+                                    allMonster);
                 break;
             case 'd':
-                success = goForward(player, 1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
+                success = goForward(player, 1, 0, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock,
+                                    allMonster);
                 break;
             case 'z':
-                success = goForward(player, 0, -1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
+                success = goForward(player, 0, -1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock,
+                                    allMonster);
                 break;
             case 's':
-                success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock);
+                success = goForward(player, 0, 1, player->actual_map, map_list, map_list_cpy, map_list_respawn, stock,
+                                    allMonster);
                 break;
             case 't':
                 success = saveFile(mapsSize, map_list, player, stock, false);
@@ -52,7 +58,7 @@ void movement(Player *player, int ***map_list, int ***map_list_cpy, int ***map_l
 
 
 int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_list_map, int ***actual_map_list_cpy,
-              int ***actual_map_list_respawn, PnjLinkedList *stock) {
+              int ***actual_map_list_respawn, PnjLinkedList *stock, AllMonster *allMonster) {
     if (player->coord_y + add_y < 0 || player->coord_y + add_y > mapsSize[id_map - 1] - 1 ||
         player->coord_x + add_x < 0 || player->coord_x + add_x > mapsSize[id_map - 1] - 1) { //verifie bordure map
         printf("pas par la ");
@@ -64,7 +70,6 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         success = collecteRessources(player, next_case);
         if (!success) {
             printf("\nvous ne pouvez pas recolter la ressource");
-            return 0;
         }
         player->coord_x += add_x;
         player->coord_y += add_y;
@@ -73,14 +78,19 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         player->coord_y += add_y;
     } else if (next_case == NPC) {
         pnjChoice(player, stock);
-
     } else if (next_case >= 12) {
-        //succes=interactWithMonster
-        if (success == 1) {
-
+        Monster * actual_monster = malloc(sizeof(Monster));
+        for (int i=0;i<0;i++){
+            if(actual_monster->id==next_case) {
+                actual_monster=allMonster->allMonster[i];
+            }
         }
-        player->coord_x += add_x;
-        player->coord_y += add_y;
+            success=combat(player,actual_monster);
+        }
+        if (success == 1) {
+            player->coord_x += add_x;
+            player->coord_y += add_y;
+        }
     } else if (next_case == PORTAL1_2 || next_case == PORTAL2_3) {
         changeMap(player, next_case);
     }
@@ -92,7 +102,7 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
 
 void changeMap(Player *player, int id_portal) {
 
-    if (player->level < 3 && id_portal == -3) {
+    if (player->level < 3 && id_portal == -3) {         //verif lvl
         printf("\nreviens au niveau 3 ");
         return;
     } else if (player->level < 7 && id_portal == -2) {
@@ -108,6 +118,10 @@ void changeMap(Player *player, int id_portal) {
         player->actual_map = 1; // map3->map2
     } else {
         player->actual_map = 2; // map2->map3
+    }
+
+    for (int j = 0; j < ; ++j) {
+        
     }
 
 

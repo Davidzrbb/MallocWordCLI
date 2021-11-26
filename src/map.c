@@ -57,6 +57,7 @@ void generate_land(int **map_list, int x, int y, int map_id) {
     } else{
         map_list[0][y - 1] = PORTAL2_3;
     }
+    if(map_id==1)map_list[1][0]=1;
 
     print2DIntTab(map_list, x, y);
     printf("\n");

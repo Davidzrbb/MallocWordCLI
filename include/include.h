@@ -169,7 +169,7 @@ struct Monster
 typedef struct Monster Monster;
 
 struct AllMonster{
-    Monster allMonster[10];
+    Monster * allMonster[10];
 };
 
 typedef struct AllMonster AllMonster;

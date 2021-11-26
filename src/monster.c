@@ -104,16 +104,16 @@ void initMonster(AllMonster * allMonster){
     finalBoss -> zone = 3;
 
     
-    allMonster -> allMonster[0] = *wolf;
-    allMonster -> allMonster[1] = *creeper;
-    allMonster -> allMonster[2] = *cheetah;
-    allMonster -> allMonster[3] = *Creep3;
-    allMonster -> allMonster[4] = *Creep4;
-    allMonster -> allMonster[5] = *Creep5;
-    allMonster -> allMonster[6] = *Creep6;
-    allMonster -> allMonster[7] = *Creep7;
-    allMonster -> allMonster[8] = *Creep8;
-    allMonster -> allMonster[8] = *finalBoss;
+    allMonster -> allMonster[0] = wolf;
+    allMonster -> allMonster[1] = creeper;
+    allMonster -> allMonster[2] = cheetah;
+    allMonster -> allMonster[3] = Creep3;
+    allMonster -> allMonster[4] = Creep4;
+    allMonster -> allMonster[5] = Creep5;
+    allMonster -> allMonster[6] = Creep6;
+    allMonster -> allMonster[7] = Creep7;
+    allMonster -> allMonster[8] = Creep8;
+    allMonster -> allMonster[8] = finalBoss;
     
     
 }
