@@ -75,8 +75,7 @@ void freeStock(PnjLinkedList *);
 extern int countDelet;
 extern int choicePnj;
 extern int sizeInv;
-extern char nameFileManuelle[50];
-extern char nameFileAuto[50];
+
 
 
 #endif

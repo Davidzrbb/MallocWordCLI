@@ -5,7 +5,7 @@ void startChoice() {
     int typeCharge = 0;
     int validationManuelle = -1;
     int validationAuto = -1;
-
+    FILE *file;
 
     while (saveChoice != 3) {
         printf("\nCharger une partie ! Taper 1\n");
@@ -20,36 +20,27 @@ void startChoice() {
             scanf("%d", &typeCharge);
             //charge auto
             if (typeCharge == 1) {
-                if (strcmp(nameFileAuto, "") == 0) {
+
+                file = fopen("saveAuto.txt", "r");
+                if (file) {
+                    fclose(file);
+                    validationAuto = 1;
+                    saveChoice = 1;
+                } else {
                     printf("\nVous n'avez pas de charge auto !\n");
                     saveChoice = 0;
-                } else {
-                    printf("\nDerniere sauvegarde auto %s \n", nameFileAuto);
-                    printf("\nConfirmer ! Taper 1\n");
-                    printf("Retour ! Taper 0\n");
-                    scanf("%d", &validationAuto);
-                    if (validationAuto == 1) {
-                        saveChoice = 1;
-                    } else {
-                        saveChoice = 0;
-                    }
                 }
             }
             //charge manuelle
             if (typeCharge == 2) {
-                if (strcmp(nameFileManuelle, "") == 0) {
+                file = fopen("saveManuelle.txt", "r");
+                if (file) {
+                    fclose(file);
+                    validationManuelle = 1;
+                    saveChoice = 1;
+                } else {
                     printf("\nVous n'avez pas de charge manuelle !\n");
                     saveChoice = 0;
-                } else {
-                    printf("\nDerniere sauvegarde manuelle %s\n", nameFileManuelle);
-                    printf("\nConfirmer ! Taper 1\n");
-                    printf("Retour ! Taper 0\n");
-                    scanf("%d", &validationManuelle);
-                    if (validationManuelle == 1) {
-                        saveChoice = 1;
-                    } else {
-                        saveChoice = 0;
-                    }
                 }
             }
         }
