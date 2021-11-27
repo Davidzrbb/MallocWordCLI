@@ -12,8 +12,9 @@
 #include "map.h"
 #include "movement.h"
 
-int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto);
-void LoadMap(int ****map_list, int ****map_list_cpy, int ****map_list_respawn, char *path, int *nb_line, int *nb_col);
+int saveFile(int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto, int *nb_line, int *nb_col);
+void LoadMap(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, char *path, int *nb_line, int *nb_col,
+             Player *player);
 char *dateNow();
 
 void initPlayerCharge(int id,Player*,AllItemCraft*,int);

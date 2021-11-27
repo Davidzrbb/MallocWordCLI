@@ -1,7 +1,8 @@
 #include "menu.h"
 
 void startChoice() {
-    int saveChoice = 0;
+    int saveChoice=0;
+    char buffer[10];
     int typeCharge = 0;
     int validationManuelle = -1;
     int validationAuto = -1;
@@ -11,7 +12,10 @@ void startChoice() {
         printf("\nCharger une partie ! Taper 1\n");
         printf("Nouvelle partie ! Taper 2\n");
         printf("Quitter Taper 3\n");
-        scanf("%d", &saveChoice);
+        fgets(buffer,10,stdin);
+        fflush(stdin);
+        saveChoice = atoi(buffer);
+        system("cls");
 
         //charge
         if (saveChoice == 1) {

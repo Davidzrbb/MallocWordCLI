@@ -12,7 +12,7 @@ void print2DIntTab(int **tab, int x, int y) {
         }
         printf("\n");
     }
-
+    fflush(stdout);
 }
 
 void fill_tab(int **tab, int size_line, int size_col) {

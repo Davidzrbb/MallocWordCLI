@@ -4,7 +4,7 @@ char nameFileManuelle[50] = "";
 char nameFileAuto[50] = "";
 
 
-int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto) {
+int saveFile(int ***map_list, Player *player, PnjLinkedList *stock, bool verifSaveAuto, int *nb_line, int *nb_col) {
 
     PnjLinkedList *cache = stock;
     char date[100] = "";
@@ -32,9 +32,9 @@ int saveFile(int *mapSize, int ***map_list, Player *player, PnjLinkedList *stock
 
         for (int i = 0; i < 3; ++i) {
             fprintf(fichier, "\n--ZONE%d--", i);
-            for (int j = 0; j < mapSize[i]; ++j) {
+            for (int j = 0; j < nb_line[i]; ++j) {
                 fprintf(fichier, "\n");
-                for (int k = 0; k < mapSize[i]; ++k) {
+                for (int k = 0; k < nb_col[i]; ++k) {
                     fprintf(fichier, "%d ", map_list[i][j][k]);
                 }
             }
@@ -84,9 +84,9 @@ char *dateNow() {
 
 void charge(bool verifSaveAuto) {
 
-    int ***map_list;
-    int ***map_list_cpy;
-    int ***map_list_respawn;
+    int ***map_list= malloc(sizeof (int **)*3);
+    int ***map_list_cpy= malloc(sizeof (int **)*3);
+    int ***map_list_respawn= malloc(sizeof (int **)*3);
     int *nb_line = malloc(sizeof(int) * 3);
     int *nb_col = malloc(sizeof(int) * 3);
     Player *player = malloc(sizeof(Player));
@@ -94,6 +94,8 @@ void charge(bool verifSaveAuto) {
     initStructStock(stock);
     AllItemCraft *allItemCraft = malloc(sizeof(AllItemCraft));
     initArrayCraftItem(allItemCraft);
+    AllMonster  allMonster;
+    initMonster(&allMonster);
 
     char path[50] = "";
     if (verifSaveAuto == true) {
@@ -163,8 +165,8 @@ void charge(bool verifSaveAuto) {
     }
 
     fclose(file);
-    LoadMap(&map_list, &map_list_cpy, &map_list_respawn, path, nb_line, nb_col);
-    movement(map_list, map_list_cpy, map_list_respawn, player, stock, nb_line, nb_col);
+    LoadMap(map_list, map_list_cpy, map_list_respawn, path, nb_line, nb_col, player);
+    movement(map_list, map_list_cpy, map_list_respawn, player, stock, nb_line, nb_col,&allMonster);
 }
 
 int count_nb_col(char *fileName, int nb_map) {
@@ -216,7 +218,8 @@ int count_nb_line(char *fileName, int nb_map) {
     return nb_line;
 }
 
-void LoadMap(int ****map_list, int ****map_list_cpy, int ****map_list_respawn, char *path, int *nb_line, int *nb_col) {
+void LoadMap(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, char *path, int *nb_line, int *nb_col,
+             Player *player) {
     srand(time(NULL));
     int randMonster;
     FILE *file = fopen(path, "a+");//todo recuperer le nom du fichier et pas fichier en dur
@@ -227,34 +230,40 @@ void LoadMap(int ****map_list, int ****map_list_cpy, int ****map_list_respawn, c
         nb_line[i] = count_nb_line(path, i + 1);
         nb_col[i] = count_nb_col(path, i + 1);
     }
-
+    initMaps(nb_line,nb_col,map_list,map_list_cpy,map_list_respawn);
     for (int i = 0; i < 3; ++i) {
         fgets(line, 255, file);
-        for (int y = 0; y < nb_line[i]; ++y) {
+        for (int x = 0; x < nb_line[i]; ++x) {
             fgets(line, 255, file);
             char *strToken = strtok(line, " ");
-            int x = 0;
+            int y = 0;
             while (strToken != NULL) {
                 if (atoi(strToken) > 11 && atoi(strToken) < 99) {
                     randMonster = rand() % 3;
                     if (i == 0) {
-                        map_list[0][i][y][x] = randMonster + 90;
-                        map_list_cpy[0][i][y][x] = randMonster + 96;
+                        map_list[i][x][y] = randMonster + 90;
+                        map_list_cpy[i][x][y] = randMonster + 96;
                     } else if (i == 1) {
-                        map_list[0][i][y][x] = randMonster + 93;
-                        map_list_cpy[0][i][y][x] = randMonster + 96;
+                        map_list[i][x][y] = randMonster + 93;
+                        map_list_cpy[i][x][y] = randMonster + 96;
                     } else {
-                        map_list[0][i][y][x] = randMonster + 96;
-                        map_list_cpy[0][i][y][x] = randMonster + 96;
+                        map_list[i][x][y] = randMonster + 96;
+                        map_list_cpy[i][x][y] = randMonster + 96;
                     }
-                } else {
-                    map_list[0][i][y][x] = atoi(strToken);
-                    map_list_cpy[0][i][y][x] = atoi(strToken);
+                } else if(atoi(strToken)==1) {
+                    player->actual_map=i;
+                    player->coord_x=x;
+                    player->coord_y=y;
+                    map_list[i][x][y] = atoi(strToken);
+                    map_list_cpy[i][x][y] = atoi(strToken);
+                }else {
+                    map_list[i][x][y] = atoi(strToken);
+                    map_list_cpy[i][x][y] = atoi(strToken);
                 }
                 strToken = strtok(NULL, " ");
-                x++;
+                y++;
             }
-            x = 0;
+            y = 0;
         }
         gap = nb_line[i];
     }

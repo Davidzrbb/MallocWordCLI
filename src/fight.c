@@ -4,7 +4,7 @@
 //
 //  Created by Marwan Khalil on 19/10/2021.
 //
-#include <stdio.h>
+
 #include "include.h"
 #include "pnjService.h"
 
@@ -237,16 +237,17 @@ void healPlayer(Player *player) {
 }
 
 //LANCEMENT DU COMBAT
-void combat(Player *player, Monster *monster) {
-    int statut = 0;
+int combat(Player * player, Monster* monster) {
+    srand(time(NULL));
+    int result = 0;
+    int aleat;
     printf("\n ATTENTION UN MONSTRE AU LOIN !!! \n");
 
-    while ((player->currentHealthPoints > 0) && (monster->currentLife > 0) && (statut == 0)) {
+    while ((player->currentHealthPoints > 0) && (monster->currentLife > 0)) {
         printf("Que souahitez vous faire ? \n 1 - Combattre \n 2 - Se Soigner \n 3 - Fuir \n");
         int choix;
         scanf("%d", &choix);
         Weapon w;
-
         switch (choix) {
             case 1 :
                 w = weaponChoice((player));
@@ -263,13 +264,16 @@ void combat(Player *player, Monster *monster) {
                         int ajustXp = player->currentExperience - player->maxExperience;
                         addLevel(player);
                         player->currentExperience += ajustXp;
+                        monster->currentLife = monster->maxLife;
                     }
+                    return 1;
                 }
                 if (player->currentHealthPoints <= 0) {
                     printf("\n Vous êtes mort ! \n ");
+                    monster->currentLife = monster->maxLife;
+                    return 0;
+
                 }
-                //DEBUG
-                printHealth(player, monster);
                 break;
 
             case 2:
@@ -281,14 +285,22 @@ void combat(Player *player, Monster *monster) {
                 break;
 
             case 3:
-                printf("C'est dommage tu as préféré fuire\n");
-                statut = 1;
+                aleat = rand() % 100;
+                if (aleat <= 33) {
+                    printf("C'est dommage tu as préféré fuire\n");
+                    printf("\n \n %d \n \n", aleat);
+                    monster->currentLife = monster->maxLife;
+                    return 2;
+
+                } else {
+                    printf("Dommage pas cette fois ci reste au combat\n");
+                    printf(" \n \n %d \n \n", aleat);
+                }
                 break;
 
             default:
                 break;
         }
     }
-
-
+    return result;
 }

@@ -7,8 +7,6 @@
 
 
 int main(int argc, const char *argv[]) {
-    AllMonster allMonster;
-    initMonster(&allMonster);
     startChoice();
     return 0;
 }
@@ -55,7 +53,7 @@ void InitPlayer(Player *firstPlayer) {
     firstPlayer->maxExperience = 50;
     firstPlayer->coord_x = 1;
     firstPlayer->coord_y = 0;
-    firstPlayer->actual_map = 1;
+    firstPlayer->actual_map = 0;
     firstPlayer->inventory[0] = *WeaponSword;
     firstPlayer->inventory[1] = *ToolsPickaxe;
     firstPlayer->inventory[2] = *ToolsBillhook;

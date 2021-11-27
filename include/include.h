@@ -105,7 +105,7 @@ enum entity {
     PLANT3 = 9,
     ROCK3 = 10,
     WOOD3 = 11,
-    END8BOSS = 99,
+    END_BOSS = 99,
 };
 typedef enum entity entity;
 
@@ -173,7 +173,6 @@ struct AllMonster{
 
 typedef struct AllMonster AllMonster;
 
-static int  mapsSize[3]={8,10,12};
 void InitPlayer(Player *);
 void printTest(Player);
 void attackPlayer(Player* player, Monster* monster, Weapon*);
@@ -182,7 +181,7 @@ void addLevel(Player * player);
 void initMonster(AllMonster*);
 void printMonster(AllMonster);
 Weapon weaponChoice(Player *);
-void combat(Player *, Monster*);
+int combat(Player *, Monster*);
 void printHealth(Player * player, Monster * monster);
 
 int** createTable(int size);
