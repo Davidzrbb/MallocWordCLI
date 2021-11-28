@@ -22,6 +22,7 @@ void startChoice() {
             printf("\nVoir les charges automatiques ! Taper 1\n");
             printf("Voir les charges manuelles ! Taper 2\n");
             scanf("%d", &typeCharge);
+            fflush(stdin);
             //charge auto
             if (typeCharge == 1) {
 
@@ -52,6 +53,9 @@ void startChoice() {
         //New partie
         if (saveChoice == 2) {
             initStartGame();
+        }
+        if (saveChoice == 3) {
+            return;
         }
 
         if (validationAuto == 1) {
