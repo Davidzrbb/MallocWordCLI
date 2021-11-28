@@ -151,7 +151,7 @@ void healPlayer(Player *player) {
     hpToRestore = ((player->maxHealthpoints) - (player->currentHealthPoints));
     for (int i = 0; i < 10; i++) {
         if (player->inventory[i].type == 4) {
-            if (player->inventory[i].heal.id == 11) {
+            if (player->inventory[i].heal.id == 15) {
                 indexHP1 = i;
                 heal1 = true;
             }
@@ -172,7 +172,7 @@ void healPlayer(Player *player) {
         }
     }
 
-    if (choice == 11 && heal1 == false) {
+    if (choice == 15 && heal1 == false) {
         verifHeal = false;
     }
     if (choice == 26 && heal2 == false) {
@@ -187,7 +187,7 @@ void healPlayer(Player *player) {
     }
     if (verifHeal != false && verifHealExist != 0) {
         switch (choice) {
-            case 11:
+            case 15:
                 if (player->inventory[indexHP1].heal.quantity != 0) {
                     player->currentHealthPoints += 30;
                     player->inventory[indexHP1].heal.quantity -= 1;
@@ -278,7 +278,7 @@ int combat(Player *player, Monster *monster) {
                 if (player->currentHealthPoints <= 0) {
                     printf("\n Vous êtes mort ! \n ");
                     monster->currentLife = monster->maxLife;
-                    return 0;
+                    return 2;
 
                 }
                 break;
@@ -294,15 +294,13 @@ int combat(Player *player, Monster *monster) {
             case 3:
                 aleat = rand() % 100;
                 if (aleat <= 33) {
-                    printf("C'est dommage tu as préféré fuire\n");
-                    printf("\n \n %d \n \n", aleat);
+                    printf("C'est dommage tu as prefere fuire\n");
                     monster->currentLife = monster->maxLife;
-                    return 2;
+                    return 0;
 
                 } else {
                     printf("Dommage pas cette fois ci reste au combat\n");
                     attackMonster(player, monster);
-                    //printf(" \n \n %d \n \n", aleat);
                 }
                 break;
 

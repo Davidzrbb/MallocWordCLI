@@ -36,7 +36,6 @@ void InitPlayer(Player *firstPlayer) {
     ToolsBillhook->tools.id = WOODEN_BILLHOOK;
     ToolsBillhook->type = TOOL;
 
-
     Item *ToolsAx = malloc(sizeof(Item));
     ToolsAx->tools.name = "hache en bois";
     ToolsAx->tools.max_durability = 10;

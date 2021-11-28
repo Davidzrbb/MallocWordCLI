@@ -73,10 +73,11 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         pnjChoice(player, stock);
         return success;
     } else if (next_case >= 12) {
-    //    Monster *actual_monster = malloc(sizeof(Monster));
+        //    Monster *actual_monster = malloc(sizeof(Monster));
         for (int i = 0; i < 10; i++) {
             if (allMonster->allMonster[i]->id == next_case) {
                 success = combat(player, allMonster->allMonster[i]);
+               break;
             }
         }
         if (success)actual_map_list_respawn[player->actual_map][player->coord_x + add_x][player->coord_y + add_y] = 15;
