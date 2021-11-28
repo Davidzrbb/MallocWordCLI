@@ -74,8 +74,4 @@ void initMaps(int *nb_line, int *nb_col, int ***map_list, int ***map_list_cpy, i
 }
 
 
-void freeMaps(int ***map_list, int ***map_list_cpy, int ***map_list_respawn) {
-    free3Darray(map_list, 8, 3);
-    free3Darray(map_list, 10, 3);
-    free3Darray(map_list, 12, 3);
-}
+

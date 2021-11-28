@@ -182,7 +182,7 @@ void healPlayer(Player *player) {
         verifHeal = false;
     }
 
-    if(verifHealExist == 0){
+    if (verifHealExist == 0) {
         printf("Vous n'avez pas de potion !");
     }
     if (verifHeal != false && verifHealExist != 0) {
@@ -273,6 +273,7 @@ int combat(Player *player, Monster *monster) {
                         player->currentExperience += ajustXp;
                         monster->currentLife = monster->maxLife;
                     }
+                    monster->currentLife = monster->maxLife;
                     return 1;
                 }
                 if (player->currentHealthPoints <= 0) {
@@ -308,5 +309,6 @@ int combat(Player *player, Monster *monster) {
                 break;
         }
     }
+    monster->currentLife = monster->maxLife;
     return result;
 }

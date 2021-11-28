@@ -15,7 +15,7 @@ void addLevel(Player * player){
             player -> maxHealthpoints = 110;
             player -> currentHealthPoints = 110;
             player -> currentExperience = 0;
-            player -> maxExperience = 50;
+            player -> maxExperience = 10;
             printf("\n LVL UP : 2 \n");
 
             
