@@ -1,7 +1,3 @@
-//
-// Created by lucas on 23/10/2021.
-//
-
 #include "usefulFunc.h"
 
 void print2DIntTab(int **tab, int x, int y) {

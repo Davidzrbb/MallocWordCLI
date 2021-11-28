@@ -77,7 +77,7 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         for (int i = 0; i < 10; i++) {
             if (allMonster->allMonster[i]->id == next_case) {
                 success = combat(player, allMonster->allMonster[i]);
-               break;
+                break;
             }
         }
         if (success)actual_map_list_respawn[player->actual_map][player->coord_x + add_x][player->coord_y + add_y] = 15;
@@ -94,6 +94,7 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         player->coord_y +=
                 add_y;
         actual_list_map[id_map][player->coord_x][player->coord_y] = 1;
+        print2DIntTab(actual_list_map[player->actual_map], nb_line[player->actual_map], nb_col[player->actual_map]);
         refresh_map(actual_list_map, actual_map_list_cpy, actual_map_list_respawn, player, nb_line, nb_col
         );
     }
@@ -152,16 +153,15 @@ void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***
 }
 
 
-void
-refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, Player *player, int *nb_line, int *nb_col) {
+void refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, Player *player, int *nb_line, int *nb_col) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < nb_line[i]; ++j) {
             for (int k = 0; k < nb_col[i]; ++k) {
-                if (list_map_respawn[i][j][k] > 1) {
+                if (list_map_respawn[i][j][k] >= 1) {
                     list_map_respawn[i][j][k]--;
-                    if (list_map_respawn[i][j][k] == 0 && player->coord_x == k && player->coord_y == j) {
+                    if (list_map_respawn[i][j][k] == 0 && player->coord_x == j && player->coord_y == k) {
                         list_map_respawn[i][j][k] = 1;
-                    } else if (list_map_respawn[i][j][k] == 0) {
+                    } else if(list_map_respawn[i][j][k] == 0){
                         list_map[i][j][k] = list_map_cpy[i][j][k];
                     }
                 }

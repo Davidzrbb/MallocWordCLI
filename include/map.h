@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 
-void generate_land(int **map_list, int x, int y, int map_id);
+void generate_land(int **map_list, int x, int y, int map_id, int **map_cpy);
 
 
 
