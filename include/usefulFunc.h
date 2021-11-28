@@ -15,6 +15,6 @@ void fill_tab(int **tab, int size_line, int size_col);
 
 int** malloc2Darray(int size_line,int size_col);
 
-void free3Darray(int ***tab, int *nb_line, int *nb_col);
+void free3Darray(int ***tab, int *nb_line);
 
 #endif //MALLOC_WORLD_USEFULFUNC_H

@@ -29,14 +29,12 @@ int **malloc2Darray(int size_line, int size_col) {
     return table;
 }
 
-void free3Darray(int ***tab, int *nb_line, int *nb_col) {
+void free3Darray(int ***tab, int *nb_line) {
     for (int i = 0; i < 3; ++i) {
-        for (int j = 0;j < nb_col[i]; ++j) {
-            for (int y = 0; y < nb_line[i]; ++y) {
-                free(tab[j][y]);
-            }
-            free(tab[j]);
+        for (int y = 0; y < nb_line[i]; ++y) {
+            free(tab[i][y]);
         }
+        free(tab[i]);
     }
     free(tab);
 }

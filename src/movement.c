@@ -49,16 +49,15 @@ void movement(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, Pla
     }   //tant que player pas mort ou arret de la partie
     freeStock(stock);
     free(player);
-    //freeMaps(map_list, map_list_cpy, map_list_respawn, nb_line, nb_col);
-    //free(nb_col);
-    //free(nb_line);
+    freeMaps(map_list, map_list_cpy, map_list_respawn, nb_line);
+    free(nb_col);
+    free(nb_line);
 }
 
-void freeMaps(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, int *nb_line, int *nb_col) {
-    free3Darray(map_list, nb_line, nb_col);
-    free3Darray(map_list_cpy, nb_line, nb_col);
-    free3Darray(map_list_respawn, nb_line, nb_col);
-
+void freeMaps(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, int *nb_line) {
+    free3Darray(map_list, nb_line);
+    free3Darray(map_list_cpy, nb_line);
+    free3Darray(map_list_respawn, nb_line);
 }
 
 int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_list_map, int ***actual_map_list_cpy,

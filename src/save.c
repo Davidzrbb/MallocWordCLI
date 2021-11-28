@@ -163,7 +163,7 @@ void charge(bool verifSaveAuto) {
             initPlayerCharge(n, player, allItemCraft, index);
             index += 1;
         }
-        if (count > startInventory + 9 && count < stopStock-3) {
+        if (count > startInventory + 9 && count < stopStock - 3) {
             initStockCharge(n, stock, allItemCraft);
         }
         count += 1;
@@ -206,18 +206,16 @@ int count_nb_line(char *fileName, int nb_map) {
     fgets(line, 255, file);
     int count_map = 0;
     int nb_line = 0;
-    char car = 0;
     while (count_map < nb_map) {
         fgets(line, 255, file);
         if (line[0] == '-') {
             count_map++;
         }
     }
-    while (car != '=' && car != '-') {
-        car = fgetc(file);
-        if (car == '\n') {
-            nb_line++;
-        }
+    line[0] = ' ';
+    while (line[0] != '=' && (line[0] != '-' && line[1] != '-')) {
+        fgets(line, 255, file);
+        nb_line++;
     }
     fclose(file);
     return nb_line;
@@ -234,7 +232,10 @@ void LoadMap(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, char
     for (int i = 0; i < 3; ++i) {
         nb_line[i] = count_nb_line(path, i + 1);
         nb_col[i] = count_nb_col(path, i + 1);
+        printf("LINE : %d", nb_line[i]);
+        printf("COL : %d", nb_col[i]);
     }
+
     initMaps(nb_line, nb_col, map_list, map_list_cpy, map_list_respawn);
     for (int i = 0; i < 3; ++i) {
         fgets(line, 255, file);
@@ -271,7 +272,9 @@ void LoadMap(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, char
             y = 0;
         }
         gap = nb_line[i];
+        print2DIntTab(map_list[i], nb_line[i], nb_col[i]);
     }
+
     fclose(file);
 }
 
