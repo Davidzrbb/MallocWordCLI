@@ -12,7 +12,6 @@ int main(int argc, const char *argv[]) {
 }
 
 
-
 void InitPlayer(Player *firstPlayer) {
 
     Item *WeaponSword = malloc(sizeof(Item));
@@ -44,7 +43,6 @@ void InitPlayer(Player *firstPlayer) {
     ToolsAx->tools.actual_durabiulity = 10;
     ToolsAx->tools.id = WOODEN_AX;
     ToolsAx->type = TOOL;
-
 
     firstPlayer->level = 1;
     firstPlayer->currentHealthPoints = 100;

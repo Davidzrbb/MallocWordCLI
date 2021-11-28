@@ -8,11 +8,11 @@
 
 
 void movement(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, Player *player, PnjLinkedList *stock,
-              int *nb_line, int *nb_col,AllMonster * allMonster) {
+              int *nb_line, int *nb_col, AllMonster *allMonster) {
     int success = 0;
-    char direction=NULL;
+    char direction = NULL;
     int countMov = 0;
-    while (success != 2){
+    while (success != 2) {
         print2DIntTab(map_list[player->actual_map], nb_line[player->actual_map], nb_col[player->actual_map]);
         printf("tu veux aller ou gros tas? (q,d,z,s)");
         direction = getchar();
@@ -61,38 +61,43 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
         return 0;
     }
     int next_case = actual_list_map[id_map][player->coord_x + add_x][player->coord_y + add_y];
-    int success=0;
+    int success = 0;
     if (next_case >= PLANT1 && next_case <= WOOD3) {
         success = collecteRessources(player, next_case);
         if (success) {
-            actual_map_list_respawn[player->actual_map][player->coord_x + add_x][player->coord_y + add_y]=10;
+            actual_map_list_respawn[player->actual_map][player->coord_x + add_x][player->coord_y + add_y] = 10;
         }
     } else if (next_case == FREE) {
-        success=1;
+        success = 1;
     } else if (next_case == NPC) {
         pnjChoice(player, stock);
         return success;
     } else if (next_case >= 12) {
-        Monster * actual_monster = malloc(sizeof(Monster));
-        for (int i=0;i<0;i++){
-            if(actual_monster->id==next_case) {
-                actual_monster=allMonster->allMonster[i];
+    //    Monster *actual_monster = malloc(sizeof(Monster));
+        for (int i = 0; i < 10; i++) {
+            if (allMonster->allMonster[i]->id == next_case) {
+                success = combat(player, allMonster->allMonster[i]);
             }
         }
-            success=combat(player,actual_monster);
-            if(success)actual_map_list_respawn[player->actual_map][player->coord_x + add_x][player->coord_y + add_y]=15;
-        } else if (next_case == PORTAL1_2 || next_case == PORTAL2_3) {
-        changeMap(player, next_case, nb_line, nb_col, actual_list_map);
-        return success;
+        if (success)actual_map_list_respawn[player->actual_map][player->coord_x + add_x][player->coord_y + add_y] = 15;
+    } else if (next_case == PORTAL1_2 || next_case == PORTAL2_3) {
+        changeMap(player, next_case, nb_line, nb_col, actual_list_map
+        );
+        return
+                success;
     }
     if (success) {
-        actual_list_map[id_map][player->coord_x][player->coord_y]=0;
-        player->coord_x += add_x;
-        player->coord_y += add_y;
-        actual_list_map[id_map][player->coord_x][player->coord_y]=1;
-        refresh_map(actual_list_map, actual_map_list_cpy, actual_map_list_respawn, player, nb_line, nb_col);
+        actual_list_map[id_map][player->coord_x][player->coord_y] = 0;
+        player->coord_x +=
+                add_x;
+        player->coord_y +=
+                add_y;
+        actual_list_map[id_map][player->coord_x][player->coord_y] = 1;
+        refresh_map(actual_list_map, actual_map_list_cpy, actual_map_list_respawn, player, nb_line, nb_col
+        );
     }
-    return success;
+    return
+            success;
 }
 
 void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***actual_list_map) {
@@ -105,7 +110,7 @@ void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***
 //        printf("reviens au niveau 7");
 //        return;
 //    }
-    actual_list_map[player->actual_map][player->coord_x][player->coord_y]=0;
+    actual_list_map[player->actual_map][player->coord_x][player->coord_y] = 0;
     if (id_portal == PORTAL1_2 && player->actual_map == 0) {              //actual map 0 = map1
         player->actual_map = 1;  //map1->map2                             // actual map 1 = map2
     } else if (id_portal == PORTAL1_2 && player->actual_map == 1) {      //actual map 2 = map3
@@ -118,26 +123,26 @@ void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***
 
     for (int x = 0; x < nb_line[player->actual_map]; ++x) {
         for (int y = 0; y < nb_col[player->actual_map]; ++y) {
-            if (actual_list_map[player->actual_map][x][y] == id_portal){
-                if (actual_list_map[player->actual_map][x][y-1]==FREE){
-                    actual_list_map[player->actual_map][x][y-1]=PLAYER;
-                    player->coord_x=x;
-                    player->coord_y=y-1;
+            if (actual_list_map[player->actual_map][x][y] == id_portal) {
+                if (actual_list_map[player->actual_map][x][y - 1] == FREE) {
+                    actual_list_map[player->actual_map][x][y - 1] = PLAYER;
+                    player->coord_x = x;
+                    player->coord_y = y - 1;
                     return;
-                }else if (actual_list_map[player->actual_map][x-1][y]==FREE){
-                    player->coord_x=x-1;
-                    player->coord_y=y;
-                    actual_list_map[player->actual_map][x-1][y]=PLAYER;
+                } else if (actual_list_map[player->actual_map][x - 1][y] == FREE) {
+                    player->coord_x = x - 1;
+                    player->coord_y = y;
+                    actual_list_map[player->actual_map][x - 1][y] = PLAYER;
                     return;
-                }else if (actual_list_map[player->actual_map][x][y+1]==FREE){
-                    player->coord_x=x;
-                    player->coord_y=y+1;
-                    actual_list_map[player->actual_map][x][y+1]=PLAYER;
+                } else if (actual_list_map[player->actual_map][x][y + 1] == FREE) {
+                    player->coord_x = x;
+                    player->coord_y = y + 1;
+                    actual_list_map[player->actual_map][x][y + 1] = PLAYER;
                     return;
-                }else{
-                    actual_list_map[player->actual_map][x+1][y]=PLAYER;
-                    player->coord_x=x+1;
-                    player->coord_y=y;
+                } else {
+                    actual_list_map[player->actual_map][x + 1][y] = PLAYER;
+                    player->coord_x = x + 1;
+                    player->coord_y = y;
                     return;
                 }
             }
@@ -146,7 +151,8 @@ void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***
 }
 
 
-void refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, Player *player, int *nb_line, int *nb_col) {
+void
+refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, Player *player, int *nb_line, int *nb_col) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < nb_line[i]; ++j) {
             for (int k = 0; k < nb_col[i]; ++k) {

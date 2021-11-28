@@ -147,6 +147,7 @@ void healPlayer(Player *player) {
     int indexHP3 = 0;
     bool heal3 = false;
     bool verifHeal = true;
+    int verifHealExist = 0;
     hpToRestore = ((player->maxHealthpoints) - (player->currentHealthPoints));
     for (int i = 0; i < 10; i++) {
         if (player->inventory[i].type == 4) {
@@ -166,9 +167,11 @@ void healPlayer(Player *player) {
             }
 
             printf("\n %d - %s", player->inventory[i].heal.id, player->inventory[i].heal.name);
+            scanf("%d", &choice);
+            verifHealExist = 1;
         }
     }
-    scanf("%d", &choice);
+
     if (choice == 11 && heal1 == false) {
         verifHeal = false;
     }
@@ -178,7 +181,11 @@ void healPlayer(Player *player) {
     if (choice == 34 && heal3 == false) {
         verifHeal = false;
     }
-    if (verifHeal != false) {
+
+    if(verifHealExist == 0){
+        printf("Vous n'avez pas de potion !");
+    }
+    if (verifHeal != false && verifHealExist != 0) {
         switch (choice) {
             case 11:
                 if (player->inventory[indexHP1].heal.quantity != 0) {
@@ -237,7 +244,7 @@ void healPlayer(Player *player) {
 }
 
 //LANCEMENT DU COMBAT
-int combat(Player * player, Monster* monster) {
+int combat(Player *player, Monster *monster) {
     srand(time(NULL));
     int result = 0;
     int aleat;
@@ -294,7 +301,8 @@ int combat(Player * player, Monster* monster) {
 
                 } else {
                     printf("Dommage pas cette fois ci reste au combat\n");
-                    printf(" \n \n %d \n \n", aleat);
+                    attackMonster(player, monster);
+                    //printf(" \n \n %d \n \n", aleat);
                 }
                 break;
 
