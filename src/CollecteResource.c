@@ -168,7 +168,11 @@ int verifItem(Player *inventoryCollect, int nextBox) {
         scanf_s("%d", &choiceItemCollect);
         for (int i = 0; i < 10; i++) {
             if (inventoryCollect->inventory[i].tools.id == choiceItemCollect) {
-                return i;
+                for (int j = 0; j < 3; j++) {
+                    if (tools[j] == choiceItemCollect) {
+                        return i;
+                    }
+                }
             }
         }
     }
@@ -225,7 +229,8 @@ int verifDurability(Player *inventoryCollect, int nextBox, int item) {
         //on enleve % de durabilité
         inventoryCollect->inventory[item].tools.actual_durabiulity -=
                 inventoryCollect->inventory[item].tools.actual_durabiulity / percentage;
-        printf("\nIl vous reste %.2f de durability a %s\n",inventoryCollect->inventory[item].tools.actual_durabiulity,inventoryCollect->inventory[item].tools.name );
+        printf("\nIl vous reste %.2f de durability a %s\n", inventoryCollect->inventory[item].tools.actual_durabiulity,
+               inventoryCollect->inventory[item].tools.name);
         return 0;
     }
     return -1;
