@@ -49,7 +49,7 @@ void movement(int ***map_list, int ***map_list_cpy, int ***map_list_respawn, Pla
     }   //tant que player pas mort ou arret de la partie
     freeStock(stock);
     free(player);
-    freeMaps(map_list, map_list_cpy, map_list_respawn, nb_line);
+    //freeMaps(map_list, map_list_cpy, map_list_respawn, nb_line);
     free(nb_col);
     free(nb_line);
 }

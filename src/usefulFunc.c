@@ -16,6 +16,7 @@ void fill_tab(int **tab, int size_line, int size_col) {
         for (int j = 0; j < size_col; ++j) {
             tab[i][j] = 0;
         }
+    free(tab[i]);
     }
 }
 

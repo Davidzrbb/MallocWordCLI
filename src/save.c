@@ -191,7 +191,8 @@ int count_nb_col(char *fileName, int nb_map) {
     }
     while (car != '\n') {
         car = fgetc(file);
-        if (car == ' ' || car == '\n') {
+
+        if (car == ' ') {
             nb_col++;
         }
     }
@@ -212,8 +213,8 @@ int count_nb_line(char *fileName, int nb_map) {
             count_map++;
         }
     }
-    line[0] = ' ';
-    while (line[0] != '=' && (line[0] != '-' && line[1] != '-')) {
+    fgets(line, 255, file);
+    while (line[0] != '=' && line[1] != '-') {
         fgets(line, 255, file);
         nb_line++;
     }
