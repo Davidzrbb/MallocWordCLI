@@ -104,14 +104,13 @@ int goForward(Player *player, int add_x, int add_y, int id_map, int ***actual_li
 
 void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***actual_list_map) {
 
-    int id_next_map;
-//    if (player->level < 3 && id_portal == PORTAL1_2) {         //verif lvl
-//        printf("\nreviens au niveau 3 ");
-//        return;
-//    } else if (player->level < 7 && id_portal == PORTAL2_3) {
-//        printf("reviens au niveau 7");
-//        return;
-//    }
+    if (player->level < 3 && id_portal == PORTAL1_2) {         //verif lvl
+        printf("\nreviens au niveau 3 ");
+        return;
+    } else if (player->level < 7 && id_portal == PORTAL2_3) {
+        printf("reviens au niveau 7");
+        return;
+    }
     actual_list_map[player->actual_map][player->coord_x][player->coord_y] = 0;
     if (id_portal == PORTAL1_2 && player->actual_map == 0) {              //actual map 0 = map1
         player->actual_map = 1;  //map1->map2                             // actual map 1 = map2
@@ -153,7 +152,8 @@ void changeMap(Player *player, int id_portal, int *nb_line, int *nb_col, int ***
 }
 
 
-void refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, Player *player, int *nb_line, int *nb_col) {
+void
+refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, Player *player, int *nb_line, int *nb_col) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < nb_line[i]; ++j) {
             for (int k = 0; k < nb_col[i]; ++k) {
@@ -161,7 +161,7 @@ void refresh_map(int ***list_map, int ***list_map_cpy, int ***list_map_respawn, 
                     list_map_respawn[i][j][k]--;
                     if (list_map_respawn[i][j][k] == 0 && player->coord_x == j && player->coord_y == k) {
                         list_map_respawn[i][j][k] = 1;
-                    } else if(list_map_respawn[i][j][k] == 0){
+                    } else if (list_map_respawn[i][j][k] == 0) {
                         list_map[i][j][k] = list_map_cpy[i][j][k];
                     }
                 }
